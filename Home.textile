@@ -1,3 +1,3 @@
-Please head to http://code.zhdk.ch/projects/leihs to find the official development wiki for leihs.
+Please head to "http://code.zhdk.ch/projects/leihs":http://code.zhdk.ch/projects/leihs to find the "official development wiki":http://code.zhdk.ch/projects/leihs for leihs.
 
 The wiki at GitHub is not maintained.
