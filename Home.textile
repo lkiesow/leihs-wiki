@@ -1,1 +1,3 @@
-Welcome to the leihs wiki!
+Please head to http://code.zhdk.ch/projects/leihs to find the official development wiki for leihs.
+
+The wiki at GitHub is not maintained.
