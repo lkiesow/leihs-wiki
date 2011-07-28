@@ -1,3 +1,5 @@
+# leihs -- the equipment booking and inventory management system
+
 leihs is a system with which universities or other organizations can **manage and book their equipment**. People can place reservations/bookings on items and then pick them up at e.g. a reservation desk. The system keeps track of who has which items and gives equipment managers time to worry about other things.
 
 ### Live demo
