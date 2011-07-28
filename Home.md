@@ -14,12 +14,12 @@ Normal pass: pass
 
 ### Most important links
 
- * [Installing leihs on your server](Help)
+ * [Installing leihs on your server][Help]
  * [Downloadable packages](http://www.sf.net/projects/leihs) of major releases (2.0, 2.1 etc.) at SourceForge
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
  * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
- * [Commercial support for leihs from the ZHdK](ZHdKCommercialSupport)
+ * [Commercial support for leihs from the ZHdK][ZHdKCommercialSupport]
  * Can't link to that, but there's an IRC channel #leihs on [Freenode](http://freenode.net/) 
 
 ### References (Who uses leihs?)
