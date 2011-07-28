@@ -12,19 +12,12 @@ Website: http://www.psy-q.ch
 Franco Sellitto (sellittf)  
 E-Mail: franco.sellitto@zhdk.ch
 
+## Former team members
+
 **Developer**  
 Tomáš Pospíšek (tpo)  
 E-Mail: tpo_hp@sourcepole.ch  
 Website: [http://www.sourcepole.ch]
-
-**Interaction Designer**  
-Olivier Heitz (snowfish)  
-E-Mail: olivier.heitz@zhdk.ch  
-(Starting in September/October 2010)
-
-
-
-## Former team members
 
 **System Architect**  
 & Lead Developer for **leihs 1.x**  
