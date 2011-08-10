@@ -16,4 +16,4 @@ We have some Rdoc documentation so you see the class structure:
 
 **Commercial support** is available from these companies and individuals:
 
- * Zürich University of the Arts: See page [ZHdK commercial support for leihs](ZHdKCommercialSupport) for our commercial support offers and pricing.
+ * Zürich University of the Arts: See page [ZHdK commercial support for leihs](ZHdK-commercial-support-for-leihs) for our commercial support offers and pricing.
