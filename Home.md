@@ -19,8 +19,7 @@ Normal pass: pass
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
  * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
- * [Commercial support for leihs from the ZHdK](wiki/ZHdKCommercialSupport)
- * Can't link to that, but there's an IRC channel #leihs on [Freenode](http://freenode.net/) 
+ * Commercial support for leihs from the ZHdK: Talk to Ramón about this at ramon.cahenzli@zhdk.ch
 
 ### References (Who uses leihs?)
 
