@@ -105,25 +105,25 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         $ cd /home/leihs
         $ RAILS_ENV=production ./script/server
 
-Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
+    Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
 
-This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
+    This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
 
-Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
+    Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
 13. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
 
-The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
+    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
 
 14. Optional: Speed boost thanks to memcached
 
-You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
+    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
 
         # apt-get install memcached
 
-Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
+    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
 
 
 ## Users, logins and levels 
@@ -366,126 +366,6 @@ If you had existing user levels in your system, these will be automatically conv
         $ RAILS_ENV=production bundle exec rake ts:start
 
 If everything went correctly, you should see leihs coming up at http://localhost:3000 or, if using mod_passenger, at the location you configured. 
-
-
-#### Installation on Mac OS X (not officially supported)
-
-The following steps were tested on Mac OS X 10.5 and 10.6 on an x86. They may also work for later versions.
-
-*Running leihs on Mac OS X is unsupported* at this time. You may try the following steps, but they are not guaranteed to work and no longer updated since Apple stopped producing servers. If you manage to get leihs to work well, feel free to update this installation guide. leihs usually isn't the problem, the problems start when installing all the dependencies on OS X. Environment variables, bundler, compiling native extensions etc. is more easily done on a Linux distribution.
-
-*Make sure you are running Ruby 1.8.x, not Ruby 1.9.x* since leihs is a Rails 2.x project for now and Ruby 1.9.x is not supported by Rails 2.
-
-1. Install Apple Xcode. This is required because some modules may need a C/C++ compiler. XCode is http://developer.apple.com/Tools/[available from Apple] after a free developer registration.
-
-2. Install MySQL 5.0. Use the 32-bit version if you are running OS X Leopard (10.5) but use the 64-bit version if you're on Snow Leopard (10.6). *Make absolutely sure to install the 32-bit version on Leopard (10.5) even if you are running a 64-bit operating system.* Some bugs in Mac OS X's MySQL and Ruby integration make it impossible to continue otherwise.
-
-3. Update the local gem system:
-
-        $ sudo gem update --system 1.5.3
-       
-It is important that you use version 1.5.2 or 1.5.3 or RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses. You may need to download a newer version of RubyGems from rubygems.org and then downgrade to 1.5.3 using the command above.
-
-4. Install the native MySQL gem:
-
-If you are installing on Snow Leopard (OS X 10.6) use the following installation options:
-
-        $ sudo env ARCHFLAGS='-arch x86_64' gem install \ 
-        mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
-
-Please do not copy/paste the above, as that might copy typographic apostrophes instead of single quotes around the "-arch x86_64" option. Please type the lines above into a single line in your terminal instead.
-
-If you are using Leopard (OS X 10.5) or below, use the following string instead:
-
-        $ sudo gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config \
-       --with-mysql-dir=/usr/local/mysql --with-mysql-lib=/usr/local/mysql/lib
-       \ --with-mysql-include=/usr/local/mysql/include 
-
-5. Download the latest version of leihs from our http://sourceforge.net/projects/leihs[SourceForge project page]. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/Users/leihs) to install leihs in. Of course you can use any directory.
-
-6. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
-
-        $ cd /tmp
-        $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
-        $ tar xvfz sphinx-0.9.9.tar.gz
-        $ cd sphinx-0.9.9
-        $ wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
-        $ tar xvfz libstemmer_c.tgz
-        $ ./configure --with-libstemmer && make
-        $ sudo make install
-
-7. Install ImageMagick. On Mac OS X, we recommend using MacPorts and then installing the ImageMagick port:
-
- $ sudo port install imagemagick
-
-Make sure that the ImageMagick binaries (e.g. convert) are in your $PATH. Please consult the Mac OS X documentation to find out how to add paths to your $PATH environment variable. It can be done e.g. by editing /etc/profile and adding the following lines:
-
-        PATH=$PATH:/opt/local/bin
-        export PATH
-
-But Apple may at any point recommend a different approach for configuring your PATH, so please don't take our word for it.
- 
-8. Install the required version of Rails as well as a few gems that cannot be installed automatically:
-
-        $ cd /home/leihs
-        $ sudo gem install -v=2.3.5 rails
-        $ sudo gem install bundler
-        $ sudo gem install rake -v 0.8.7
-        $ bundle install --without cucumber
-
-9. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
-
-        production:
-           adapter: mysql
-           database: leihs2_production
-           encoding: utf8
-           username: root
-           password:
-           host: localhost
-           port: 3306
-
-10. Create and migrate the database:
-
-        $ RAILS_ENV=production rake db:migrate
-        $ RAILS_ENV=production rake db:seed
-
-11. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
-
-        $ cd /home/leihs
-        $ mkdir -p public/images/attachments
-        $ mkdir -p tmp/sessions
-        $ mkdir tmp/cache
-        $ mkdir -p log
-
-12. Configure and start the Sphinx server:
-
-        $ RAILS_ENV=production rake ts:config
-        $ RAILS_ENV=production rake ts:reindex
-        $ RAILS_ENV=production rake ts:start
-
-13. Start the server:
-
-        $ RAILS_ENV=production ./script/server
-
-Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
-
-This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
-
-Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
-
-14. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on Mac OS X. Please see Apple's documentation on launchd for how to do this.
-
-In crontab format, an example job for a production environment would look like this:
-
-        1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
-
-The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
-
-15. Optional: Speed boost thanks to memcached
-
-You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude. Unfortunately, because Apple does not include an official packaging system with Mac OS X , we can't give  specific instructions for installing memcached on OS X.
-
-
 
 
 
