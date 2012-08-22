@@ -1,4 +1,3 @@
-
 # leihs administration and installation guide
 Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
@@ -112,7 +111,7 @@ This gives you a test setup using the pure Ruby WebRick web server. For producti
 
 Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-13. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. +crontab -e+:
+13. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
 
@@ -157,7 +156,7 @@ Open config/LDAP.yml and adapt the configuration to your own LDAP server:
          bind_dn: *****
          bind_pwd: ******
 
-You may have to adapt the +search_field+ option to point at the LDAP attribute that contains your usernames. The +search_field+ dictates what users will have to write in the "Login" field on login.
+You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login.
 
 #### Modifying app/controllers/authenticator/ldap_authentication_controller.rb
 
@@ -168,7 +167,7 @@ On line 33:
         email = users.first.mail if users.first.mail
         email ||= "#{user}@hkb.bfh.ch"
 
-If your LDAP server does not store the e-mail address in the field "mail", change +users.first.mail+ to +users.first.your_email_field_name+. You can also change +"#{user}@hkb.bfh.ch"+ to +"#{user}@your.domain.com"+ so that such an e-mail is automatically constructed out of the user's login plus your domain name. This is useful in case you don't store any e-mail addresses in your LDAP server at all.
+If your LDAP server does not store the e-mail address in the field "mail", change `users.first.mail` to `users.first.your_email_field_name`. You can also change `"#{user}@hkb.bfh.ch"` to `"#{user}@your.domain.com"` so that such an e-mail is automatically constructed out of the user's login plus your domain name. This is useful in case you don't store any e-mail addresses in your LDAP server at all.
 
 On line 52:
 
@@ -176,13 +175,13 @@ On line 52:
         u.lastname = users.first["sn"].to_s
         u.phone = users.first["telephonenumber"].to_s unless users.first["telephonenumber"].blank?
 
-You can add any Ruby code here that extracts this user information from your LDAP. Currently things are set up to point at the default fields from the InetOrgPerson class (givenname, sn, telephonenumber, etc.). This should be okay for most LDAP servers, but feel free to change the strings in e.g. +users.first["givenname"].to_s+ to your own field names. For a field called "firstname", that would change to: +users.first["firstname"].to_s+.
+You can add any Ruby code here that extracts this user information from your LDAP. Currently things are set up to point at the default fields from the InetOrgPerson class (givenname, sn, telephonenumber, etc.). This should be okay for most LDAP servers, but feel free to change the strings in e.g. `users.first["givenname"].to_s` to your own field names. For a field called "firstname", that would change to: `users.first["firstname"].to_s`.
 
 #### Enabling LDAP authentication in the system
 
 Finally, you need to tell leihs that you want to use LDAP, not local database authentication. Start a Rails console inside your leihs directory:
 
- $ RAILS_ENV=production bundle exec ./script/console
+    $ RAILS_ENV=production bundle exec ./script/console
 
 Then enable LDAP authentication and switch off database authentication:
 
@@ -230,7 +229,7 @@ Think of this manager as a "junior manager".
 * May assign levels and permissions (within their own inventory pool) up to and including level 2
 * May create new models
 * May create new items that are not inventory relevant, and the manager may not change this setting
-** These items have "Responsible department" set to their own inventory pool and the manager may not change this setting
+ * These items have "Responsible department" set to their own inventory pool and the manager may not change this setting
 
 #### Manager level 3
 
@@ -239,9 +238,9 @@ Think of this manager as a "senior manager".
 * Everything that levels 1 and 2 can do, plus:
 * Sees the "Inventory" section of leihs
 * Has no restrictions on editing items
-** May create things that are inventory relevant
-** May assign items to any inventory pool as "Responsible department"
-** Using these functions, managers of level 3 can purchase items using their own inventory pool, but assign responsibility for the items to other inventory pools, so those other pools can manage their borrowing and lending independently
+ * May create things that are inventory relevant
+ * May assign items to any inventory pool as "Responsible department"
+ * Using these functions, managers of level 3 can purchase items using their own inventory pool, but assign responsibility for the items to other inventory pools, so those other pools can manage their borrowing and lending independently
 * May manage categories
 
 #### Admin
@@ -350,7 +349,7 @@ If you had existing user levels in your system, these will be automatically conv
 
         $ RAILS_ENV=production rake db:migrate
 
-7. Run the server. Make sure you stop your previous leihs server! If you use mod_passenger, do +touch tmp/restart.txt+ instead.
+7. Run the server. Make sure you stop your previous leihs server! If you use mod_passenger, do `touch tmp/restart.txt` instead.
 
         $ RAILS_ENV=production bundle exec ./script/server
 
