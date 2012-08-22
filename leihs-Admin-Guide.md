@@ -1,3 +1,4 @@
+
 # leihs administration and installation guide
 Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
@@ -126,22 +127,22 @@ You can install memcached in order to make leihs perform faster, especially for 
 Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
 
 
-== Users, logins and levels ==
+## Users, logins and levels 
 
-=== Default admin username/password ===
+### Default admin username/password 
 
 After installation, a default user is created for the Database Authentication module. Username: super_user_1. Password: pass.
 
 Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
 
-=== Hooking up to LDAP for logins ===
+### Hooking up to LDAP for logins 
 
 Currently, leihs contains only a very rudimentary LDAP login adapter. It was developed by the Zurich University of the Arts specifically for the Hochschule der Künste Bern, Switzerland, and some parts of it are hardcoded to fit the environment there.
 
 However, it's not impossible to get leihs to authenticate against your own LDAP server if you are willing to modify two files in leihs.
 
-==== Modifying config/LDAP.yml ====
+#### Modifying config/LDAP.yml 
 
 Open config/LDAP.yml and adapt the configuration to your own LDAP server:
 
@@ -158,7 +159,7 @@ Open config/LDAP.yml and adapt the configuration to your own LDAP server:
 
 You may have to adapt the +search_field+ option to point at the LDAP attribute that contains your usernames. The +search_field+ dictates what users will have to write in the "Login" field on login.
 
-==== Modifying app/controllers/authenticator/ldap_authentication_controller.rb ====
+#### Modifying app/controllers/authenticator/ldap_authentication_controller.rb
 
 This controller handles the login itself. You will have to modify a few strings to point at the right attributes for your own LDAP server.
 
@@ -177,7 +178,7 @@ On line 52:
 
 You can add any Ruby code here that extracts this user information from your LDAP. Currently things are set up to point at the default fields from the InetOrgPerson class (givenname, sn, telephonenumber, etc.). This should be okay for most LDAP servers, but feel free to change the strings in e.g. +users.first["givenname"].to_s+ to your own field names. For a field called "firstname", that would change to: +users.first["firstname"].to_s+.
 
-==== Enabling LDAP authentication in the system ====
+#### Enabling LDAP authentication in the system
 
 Finally, you need to tell leihs that you want to use LDAP, not local database authentication. Start a Rails console inside your leihs directory:
 
@@ -202,17 +203,17 @@ Do you want to be able to configure all these settings directly in LDAP.yml so i
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
 
 
-=== User levels and roles ===
+### User levels and roles 
 
 leihs decides what it lets users do based on their role and level. Each role or level is specific to an inventory pool, the only exception is the admin role, which covers the whole system.
 
 Therer are three available roles: customer, manager and admin. 
 
-==== Customer ====
+#### Customer
 
 Customers may only use the frontend and submit orders.
 
-==== Manager level 1 ====
+#### Manager level 1
 
 Think of this manager as the "lending and borrowing manager".
 
@@ -221,7 +222,7 @@ Think of this manager as the "lending and borrowing manager".
 * May hand over orders and create contracts
 * May take back orders
 
-==== Manager level 2 ====
+#### Manager level 2
 
 Think of this manager as a "junior manager".
 
@@ -231,7 +232,7 @@ Think of this manager as a "junior manager".
 * May create new items that are not inventory relevant, and the manager may not change this setting
 ** These items have "Responsible department" set to their own inventory pool and the manager may not change this setting
 
-==== Manager level 3 ====
+#### Manager level 3
 
 Think of this manager as a "senior manager".
 
@@ -243,15 +244,15 @@ Think of this manager as a "senior manager".
 ** Using these functions, managers of level 3 can purchase items using their own inventory pool, but assign responsibility for the items to other inventory pools, so those other pools can manage their borrowing and lending independently
 * May manage categories
 
-==== Admin ====
+#### Admin
 
 * May manage users and assign permissions
 * May manage inventory pools
 * May manage groups
 
-== Performing upgrades ==
+## Performing upgrades 
 
-=== Upgrading from leihs 2.0 to leihs 2.1 ===
+### Upgrading from leihs 2.0 to leihs 2.1 
 
 The upgrade should be painless.
 
@@ -285,7 +286,7 @@ If everything went correctly, you should see leihs coming up at http://localhost
 
 
 
-=== Upgrading from leihs 2.1 to leihs 2.2 ===
+### Upgrading from leihs 2.1 to leihs 2.2 
 
 The upgrade should be painless.
 
@@ -316,7 +317,7 @@ The upgrade should be painless.
 If everything went correctly, you should see leihs coming up at http://localhost:3000. 
 
 
-=== Upgrading from leihs 2.2 to leihs 2.9 ===
+### Upgrading from leihs 2.2 to leihs 2.9 
 
 WARNING: You must upgrade from 2.2.x to 2.9.1 before continuing on with the 2.9 series. The reason is that with 2.9, we rolled up all previous migrations into one single file to make future migrations faster and easier. The system will warn you if you try to upgrade beyond 2.9.1 without installing 2.9.1 first. The sequence of actions is the same for all 2.9 releases, so once you have 2.9.1, you can just grab e.g. 2.9.4 and follow these instructions again.
 
@@ -368,7 +369,7 @@ If you had existing user levels in your system, these will be automatically conv
 If everything went correctly, you should see leihs coming up at http://localhost:3000 or, if using mod_passenger, at the location you configured. 
 
 
-==== Installation on Mac OS X (not officially supported) ====
+#### Installation on Mac OS X (not officially supported)
 
 The following steps were tested on Mac OS X 10.5 and 10.6 on an x86. They may also work for later versions.
 
@@ -489,14 +490,14 @@ You can install memcached in order to make leihs perform faster, especially for 
 
 
 
-== Installing a production environment ==
+## Installing a production environment 
 
 Please note that this quick-start guide does not cover running a Ruby on Rails application for production. Please look into http://www.modrails.com/[Phusion Passenger] or the Apache Mongrel cluster in the reference section for how to set up a production environment.
 
 Without a real production environment, leihs can handle upwards of 1000 users (not concurrently, of course!). If you need better performance or want an easier to handle setup, you must set up a proper production environment.
 
 
-== Free Software Statement ==
+## Free Software Statement 
 
 The Zurich University of the Arts supports Free Software http://www.gnu.org/philosophy/free-sw.html[as defined by the Free Software Foundation]. That's why leihs is Free Software licensed under the GNU GPL version 3.0. 
 
@@ -504,16 +505,16 @@ One of the advantages this freedom brings with it is that it enables anyone in t
 
 If you would like to take part in the development of leihs, please see our http://code.zhdk.ch/projects/leihs[project page].
 
-== References ==
+## References 
 
 Setting up production environments with Rails:
 
 * http://www.modrails.com/
 * http://blog.codahale.com/2006/06/19/time-for-a-grown-up-server-rails-mongrel-apache-capistrano-and-you/
 
-== Appendices ==
+## Appendices 
 
-=== Appendix A: ZHdK configuration file for mongrel cluster ===
+### Appendix A: ZHdK configuration file for mongrel cluster 
 
 As an example to help you set up a production environment, here is the Apache configuration we use. You will need mod_proxy:
 
@@ -572,7 +573,7 @@ As an example to help you set up a production environment, here is the Apache co
 
 
 
-=== Appendix B: ZHdK configuration file for mod_passenger ===
+### Appendix B: ZHdK configuration file for mod_passenger 
 
 This configuration is recommended for anyone who is already running an Apache or nginx web server.
 
