@@ -7,7 +7,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails.
 
-The installation itself is covered in the [[Adminguide]].
+The installation itself is covered in the [[leihs-Admin-Guide]].
 
 ### Live demo
 
