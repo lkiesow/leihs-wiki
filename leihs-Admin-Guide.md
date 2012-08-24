@@ -206,7 +206,7 @@ Warning: Please make sure that your Rails application server has SSL enabled bef
 
 leihs decides what it lets users do based on their role and level. Each role or level is specific to an inventory pool, the only exception is the admin role, which covers the whole system.
 
-Therer are three available roles: customer, manager and admin. 
+There are three available roles: customer, manager and admin. 
 
 #### Customer
 
