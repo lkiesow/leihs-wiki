@@ -27,14 +27,14 @@ These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Len
 
 2. Install RubyGems from http://rubygems.org/[the RubyGems website]. Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
 
-	```bash
-        # cd /tmp
-        # wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
-        # tar xvfz rubygems-1.5.2.tgz
-        # cd rubygems-1.5.2
-        # ruby setup.rb
-        # ln -s /usr/bin/gem1.8 /usr/bin/gem
-	```
+```bash
+# cd /tmp
+# wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
+# tar xvfz rubygems-1.5.2.tgz
+# cd rubygems-1.5.2
+# ruby setup.rb
+# ln -s /usr/bin/gem1.8 /usr/bin/gem
+```
 
 Note that the URL above might change! Please visit the RubyGems site to find the exact URL under "Downloads". It is important that you use version 1.5.2 or 1.5.3 or RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses.
 
