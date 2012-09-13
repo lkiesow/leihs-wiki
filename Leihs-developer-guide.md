@@ -49,3 +49,41 @@ Next, copy the translation template file locale/leihs.pot into the new directory
     $ cp locale/leihs.pot locale/ro/leihs.po
 
 Now continue as described under _Adding missing translations in existing .po files_.
+
+### Translating JavaScript
+
+JavaScript is a special case. Since no 100% reliable gettext string extractors exist for JavaScript, we decided to write our own method for retrieving new JavaScript strings and writing them into an ERB (Embedded Ruby) view so that the plain old Ruby-Gettext task gettext:find can discover them. It's not a fantastic solution, but it works for the moment.
+
+If you've added a new string to a JavaScript part of the system, you must extract that string:
+
+    $ bundle exec rake app:i18n:extract_jed_strings
+    
+This will attempt to do a few crazy things:
+
+1. It will scan `app/` for calls to `_jed()`
+1. The extracted strings are somewhat normalized
+1. It will try to find out whether the same string is already marked for translation in the .pot template (that means it was found during a previous gettext:find run, possibly in a Ruby file)
+1. If the string was not already found that way, it will look in the JavaScript-specific Ruby view file `app/views/javascript_strings.html.erb`
+1. If the string is not found there either, it will suggest that you add it to the file
+
+For most strings, this works just fine and results in output like this:
+
+```ruby
+<% _("Back to this take back") %>
+```
+
+Plain strings like that are safe, you can just add them to `app/views/javascript_strings.html.erb`.  Some strings, however, won't work just like that. Since JavaScript and Ruby use different variables and Jed uses slightly different string interpolation, you'll have to be careful with strings like this:
+
+```ruby
+<% _("Group %s", partition.group.name) %>
+```
+
+When this string was extracted, partition.group.name was a JavaScript object. Since no such thing is defined in `app/views/javascript_strings.html.erb`, you can't use this string unmodified. You can define a class, declare an instance called `partition` and put those methods/properties on there if you want this to be a valid gettext call. Or you can replace partition.group.name with a valid string:
+
+```ruby
+<% _("Group %s", "Foo") %>
+```
+
+But be aware that this will make the original string show up again when you run `bundle exec rake app:i18n:extract_jed_strings` the next time, and you'll have to figure out on your own that you already have a translation for that.
+
+After extracting strings like this and adding them to `app/views/javascript_strings.html.erb`, you can continue with the normal gettext translation workflow described under _Adding missing translations in existing .po files_.
