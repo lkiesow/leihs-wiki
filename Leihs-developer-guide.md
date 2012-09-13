@@ -37,6 +37,8 @@ Then go on to open the .po file for your language in a text editor or your favor
 If you have your own fork of leihs, push your contribution to your fork and send us a pull request. You don't need to worry about any further steps, we'll take care of the rest. If you want to be extra-nice, you can pack your new translations into a .mo file using the gettext:pack task:
 
     $ bundle exec rake gettext:pack
+    
+This goes through each .po file and creates a matching machine-readable and compressed .mo file in the `locale/nn_NN/LC_MESSAGES` directory.
 
 ### Translating to a new language
 
