@@ -1,6 +1,8 @@
 # leihs administration and installation guide
 Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
+'[[_TOC_]]
+
 ## Introduction
 
 leihs is web-based inventory handling and resource booking system. It allows users to view available equipment and place reservations through the frontend. Inventory managers and sysadmins use the backend to handle incoming reservations and manage items in the inventory.
