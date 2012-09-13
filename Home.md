@@ -3,11 +3,12 @@
 leihs is a system with which universities or other organizations can **manage and book their equipment**. People can place reservations/bookings on items and then pick them up at e.g. a reservation desk. The system keeps track of who has which items and gives equipment managers time to worry about other things.
 
 
-### Installation
+### Documentation
 
-To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails.
+* Installation and administration: To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
 
-The installation itself is covered in the [[leihs-Admin-Guide]].
+* Development: You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]].
+
 
 ### Live demo
 
