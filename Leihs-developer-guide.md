@@ -9,7 +9,7 @@ Our translation system is [gettext](http://www.gnu.org/software/gettext/). We ch
 
 In our HTML, ERB and HAML files, just use the usual gettext methods (e.g. `_("foo")`) to mark strings for translation. See Michael Grosser's [fast_gettext](https://github.com/grosser/fast_gettext) for more documentation on gettext, e.g. how to automatically adapt plurals in strings.
 
-In JavaScript and CoffeeScript files, we use [Jed](http://slexaxton.github.com/Jed/) for gettext-like translation. If you add a new string to a JavaScript or CoffeeScript file, you must also add it to app/views/javascript_strings.html.erb as a Ruby string. Sorry about that! The reason for this is that there are currently no string extraction tools that can reliably extract translation strings from JavaScript files. Putting them in a Ruby file makes sure that the gettext:find rake task finds them and that they are added to the .po files for all languages.
+In JavaScript and CoffeeScript files, we use [Jed](http://slexaxton.github.com/Jed/) for gettext-like translation. If you add a new string to a JavaScript or CoffeeScript file, you must also add it to `app/views/javascript_strings.html.erb` as a Ruby string, using the fast_gettext methods described above. Sorry about that! The reason for this is that there are currently no string extraction tools that can reliably extract translation strings from JavaScript files. Putting them in a Ruby file makes sure that the gettext:find rake task finds them and that they are added to the .po files for all languages.
 
 ## Locale files
 
