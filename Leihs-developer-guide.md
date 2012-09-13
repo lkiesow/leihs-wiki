@@ -87,3 +87,7 @@ When this string was extracted, partition.group.name was a JavaScript object. Si
 But be aware that this will make the original string show up again when you run `bundle exec rake app:i18n:extract_jed_strings` the next time, and you'll have to figure out on your own that you already have a translation for that.
 
 After extracting strings like this and adding them to `app/views/javascript_strings.html.erb`, you can continue with the normal gettext translation workflow described under _Adding missing translations in existing .po files_.
+
+If you want to be extra nice and have Node.js installed on your system, you can now immediately convert the .po files to .json files for Jed to use:
+
+    $ bundle exec rake app:i18n:po2json
