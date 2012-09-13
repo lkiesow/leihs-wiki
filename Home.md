@@ -5,9 +5,9 @@ leihs is a system with which universities or other organizations can **manage an
 
 ### Documentation
 
-* Installation and administration: To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
+* **Installation and administration:** To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
 
-* Development: You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]].
+* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]].
 
 
 ### Live demo
