@@ -40,4 +40,4 @@ Next, copy the translation template file locale/leihs.pot into the new directory
 
     $ cp locale/leihs.pot locale/ro/leihs.po
 
-Now continue as described under Adding missing translations in existing .po files
+Now continue as described under _Adding missing translations in existing .po files_.
