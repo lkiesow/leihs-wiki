@@ -1,4 +1,4 @@
-NOTE: This guide is incomplete. We document topics that are interesting for developers here. If you happen to run into a problem or discover an undocumented workflow during development, please document it here.
+**NOTE:** This guide is not yet complete, but we're working on it and adding sections whenever we encounter something that might interest other developers. If you happen to run into a problem or discover an undocumented workflow during development, please document it here.
 
 
 # Translation
