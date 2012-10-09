@@ -22,8 +22,8 @@ Normal pass: pass
 
 ### Most important links
 
- * [Installing leihs on your server](wiki/Help)
- * [Downloadable packages](http://www.sf.net/projects/leihs) of major releases (2.0, 2.1 etc.) at SourceForge
+ * [Installing leihs on your server](wiki/leihs-Admin-Guide)
+ * [Downloadable packages](http://www.sf.net/projects/leihs) of major releases (2.0, 2.1 etc.) at SourceForge. It's often better to get the latest versions of leihs through GitHub, though.
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
  * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
