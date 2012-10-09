@@ -40,17 +40,7 @@ If you have your own fork of leihs, push your contribution to your fork and send
     
 This goes through each .po file and creates a matching machine-readable and compressed .mo file in the `locale/nn_NN/LC_MESSAGES` directory.
 
-### Translating to a new language
-
-If your language does not exist yet, create a new directory according to the [ISO-639 standard language code](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for your language, optionally followed by an underscore and a region code for your region. For example, to translate to Romanian, create the directory `locale/ro`.
-
-Next, copy the translation template file locale/leihs.pot into the new directory using a .po extension, not .pot! For example:
-
-    $ cp locale/leihs.pot locale/ro/leihs.po
-
-Now continue as described under _Adding missing translations in existing .po files_.
-
-### Translating JavaScript
+#### Translating JavaScript
 
 JavaScript is a special case. Since no 100% reliable gettext string extractors exist for JavaScript, we decided to write our own method for retrieving new JavaScript strings and writing them into an ERB (Embedded Ruby) view so that the plain old Ruby-Gettext task gettext:find can discover them. It's not a fantastic solution, but it works for the moment.
 
@@ -91,3 +81,15 @@ After extracting strings like this and adding them to `app/views/javascript_stri
 If you want to be extra nice and have Node.js installed on your system, you can now immediately convert the .po files to .json files for Jed to use:
 
     $ bundle exec rake app:i18n:po2json
+
+### Translating to a new language
+
+If your language does not exist yet, create a new directory according to the [ISO-639 standard language code](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for your language, optionally followed by an underscore and a region code for your region. For example, to translate to Romanian, create the directory `locale/ro`.
+
+Next, copy the translation template file locale/leihs.pot into the new directory using a .po extension, not .pot! For example:
+
+    $ cp locale/leihs.pot locale/ro/leihs.po
+
+Now continue as described under _Adding missing translations in existing .po files_.
+
+
