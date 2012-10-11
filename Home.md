@@ -9,10 +9,11 @@ leihs is a system with which universities or other organizations can **manage an
 
 * **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]].
 
+* **User guide:** There is no user guide for leihs yet. Do you want to write one? Feel free to start a new page on this wiki.
 
 ### Live demo
 
-You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon (see [[DevPeople]] page).
+You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 Admin user: super_user_1  
 Admin pass: pass
