@@ -16,9 +16,11 @@ leihs is a system with which universities or other organizations can **manage an
 You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 Admin user: manager_user
+
 Admin pass: pass
 
 Normal user: normal_user
+
 Normal pass: pass
 
 ### Most important links
