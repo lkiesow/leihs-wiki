@@ -3,7 +3,7 @@
 leihs is a system with which universities or other organizations can **manage and book their equipment**. People can place reservations/bookings on items and then pick them up at e.g. a reservation desk. The system keeps track of who has which items and gives equipment managers time to worry about other things.
 
 
-## Documentation
+# Documentation
 
 * **Installation and administration:** To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
 
@@ -11,27 +11,27 @@ leihs is a system with which universities or other organizations can **manage an
 
 * **User guide:** There is no user guide for leihs yet. Do you want to write one? Feel free to start a new page on this wiki.
 
-## Live demo
+# Live demo
 
 You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 Demo data is deleted and reset every 24 hours.
 
-### Manager
+## Manager
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
 Username: manager_user
 
 Password: pass
 
-### Normal user
+## Normal user
 Can book equipment through the frontend and has no backend access.
 
 Username: normal_user
 
 Username: pass
 
-### Admin user
+## Admin user
 Can manage the system, create system-wide categories, create and remove new inventory pools.
 
 Username: super_user_1
