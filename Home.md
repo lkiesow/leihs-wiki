@@ -16,14 +16,27 @@ leihs is a system with which universities or other organizations can **manage an
 You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 #### Manager
+Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
+
 Username: manager_user
 
 Password: pass
 
 #### Normal user
+Can book equipment through the frontend and has no backend access.
+
 Username: normal_user
 
 Username: pass
+
+#### Admin user
+Can manage the system, create system-wide categories, create and remove new inventory pools.
+
+Username: super_user_1
+
+Username: pass
+
+
 
 ### Most important links
 
