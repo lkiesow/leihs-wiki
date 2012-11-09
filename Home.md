@@ -15,6 +15,8 @@ leihs is a system with which universities or other organizations can **manage an
 
 You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
+Demo data is deleted and reset every 24 hours.
+
 #### Manager
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
