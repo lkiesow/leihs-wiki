@@ -19,13 +19,13 @@ This section is meant for admins experienced with installing Ruby on Rails appli
 
 ## Installation on Debian GNU/Linux
 
-These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute +sudo su+ for +su+ because Ubuntu does not configure a root password, thus +su+ would not work.
+These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
 1. Install Ruby, irb, libxslt, Cairo, MySQL client libraries, libxml2:
 
         # apt-get install ruby irb rdoc libopenssl-ruby ruby-dev libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
 
-2. Install RubyGems from http://rubygems.org/[the RubyGems website]. Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
+2. Install RubyGems from [the RubyGems website](http://rubygems.org/). Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
 
         # cd /tmp
         # wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
@@ -41,7 +41,7 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         # apt-get install libmysqlclient15-dev make build-essential
         # gem install mysql
 
-4. Download the latest version of leihs from our http://sourceforge.net/projects/leihs[SourceForge project page]. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
+4. Download the latest version of leihs from our [SourceForge project page](http://sourceforge.net/projects)/leihs. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
 
 5. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
 
