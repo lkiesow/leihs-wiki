@@ -21,15 +21,13 @@ The locale files are located in the locale directory. To translate leihs to your
 
 Do **not** use the `rake gettext:find` task, as it seems to have a bug at this time that destroys strings found in HAML views.
 
-Instead, install gettext on your system to get the msgfmt and msgmerge utilities. Add any new strings that you've added to leihs to the locale/leihs.pot file. Then Merge with the existing target language that you want to translate to, so that existing, already translated strings are not overwritten with the empty ones from the .pot file.
+Instead, install gettext on your system to get the msgfmt and msgmerge utilities. Add any new strings that you've added to leihs to the locale/leihs.pot file. Then Merge with the existing target language that you want to translate to. For example:
 
-Then go on to open the .po file for your language in a text editor or your favorite .po file editor. Newly found strings might be marked as fuzzy. Translate the strings, unfuzzy them and save the file.
+    msgmerge de_CH/leihs.po leihs.pot > de_CH/leihs.po.new
 
-If you have your own fork of leihs, push your contribution to your fork and send us a pull request. You don't need to worry about any further steps, we'll take care of the rest. If you want to be extra-nice, you can pack your new translations into a .mo file using the gettext:pack task:
+Now examine leihs.po.new and rename it to leihs.po if you're happy with the merged result. Then go on to open the .po file for your language in a text editor or your favorite .po file editor. Newly found strings might be marked as fuzzy. Translate the strings, unfuzzy them and save the file.
 
-    $ bundle exec rake gettext:pack
-    
-This goes through each .po file and creates a matching machine-readable and compressed .mo file in the `locale/nn_NN/LC_MESSAGES` directory.
+If you have your own fork of leihs, push your contribution to your fork and send us a pull request. You don't need to worry about any further steps, we'll take care of the rest. 
 
 #### Translating JavaScript
 
