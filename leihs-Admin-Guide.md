@@ -55,7 +55,7 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         $ su
         # make install
 
-6. Optional: If you want to use images of inventory items, install ImageMagick:
+6. Install ImageMagick:
 
         # apt-get install imagemagick libmagickwand-dev
 
@@ -64,7 +64,7 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         # cd /home/leihs
         # gem install bundler
         # su - leihs
-        $ bundle install --deployment --without cucumber
+        $ bundle install --deployment --without cucumber development
 
 8. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
@@ -162,16 +162,16 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         $ su
         # make install
 
-6. Optional: If you want to use images of inventory items, install ImageMagick:
+6. Install ImageMagick:
 
-        # apt-get install imagemagick libmagickwand-dev
+        # yum install ImageMagick ImageMagick-devel 
 
 7. Install the required version of Rails as well as a few gems that cannot be installed automatically:
 
         # cd /home/leihs
         # gem install bundler
         # su - leihs
-        $ bundle install --deployment --without cucumber
+        $ bundle install --deployment --without cucumber development
 
 8. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
@@ -227,8 +227,6 @@ Note that the URL above might change! Please visit the RubyGems site to find the
     You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
 
         # yum install memcached
-
-    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
 
 
 ## Users, logins and levels 
