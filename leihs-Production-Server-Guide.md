@@ -26,11 +26,11 @@ Follow the instructions from the leihs Admin Guide for your platform (Debian or 
 
 For Debian-based distros:
 
-        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
+        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server
 
 For RPM-based distros:
 
-        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
+        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server
 
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
@@ -38,15 +38,24 @@ Continue following the rest of the distribution-specific instructions from step 
 
 Download and install Sphinx (a fulltext search system). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9: 
 
-        $ mkdir -p /root/software
-        $ cd /root/software
-        $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
-        $ tar xvfz sphinx-0.9.9.tar.gz
-        $ cd sphinx-0.9.9
-        $ wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
-        $ tar xvfz libstemmer_c.tgz
-        $ ./configure --with-libstemmer && make
-        $ su
+        # mkdir -p /root/software
+        # cd /root/software
+        # wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
+        # tar xvfz sphinx-0.9.9.tar.gz
+        # cd sphinx-0.9.9
+        # wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
+        # tar xvfz libstemmer_c.tgz
+        # ./configure --with-libstemmer && make
+        # make install
+
+Download and install Node.js, a JavaScript runtime. You can find the latest version at http://nodejs.org.
+
+        # cd /root/software
+        # wget http://nodejs.org/dist/v0.8.20/node-v0.8.20.tar.gz
+        # tar xvfz node-v0.8.20.tar.gz
+        # cd node-v0.8.20
+        # ./configure
+        # make
         # make install
 
 
@@ -90,16 +99,22 @@ The idea is this: You install Capistrano on an SSH-capable machine, check out th
 
 In the following example, we will install Capistrano on the production server itself and then deploy from the server to itself.
 
-        # gem install capistrano capistrano-ext
+        # gem install capistrano capistrano-ext rvm-capistrano
 
-### Get the leihs source code
+### Getting the leihs source code
 
 Prepare a directory for the leihs source code to live in and clone the leihs git repository to it:
 
         # cd /root/software
         # git clone git://github.com/zhdk/leihs.git
+        # cd leihs
+        # git checkout next
 
-You will be writing a new deployment recipe in `config/deploy`. You can copy an existing recipe to your new file:
+You will be working on the "next" branch for now, the latest development code.
+
+### Creating a new deployment recipe for your own servers
+
+You will be writing a new deployment recipe in `config/deploy`. You can copy an existing recipe to your new file, and we will start with a staging recipe (meant to deploy onto a test instance) instead of a production recipe (meant for your production server):
 
         # cd leihs
         # cp config/deploy/staging.rb config/deploy/staging-myserver.rb
@@ -108,25 +123,75 @@ At this point, it would be good to learn about git so you can check your recipes
 
 Describing how to set up a git environment for your use goes far beyond this server guide, please refer to the [http://git-scm.com/book](Git book) for more information.
 
-TODO
+Open `config/deploy/staging-myserver.rb` in your favorite text editor. The file is written in the Capistrano domain-specific language (DSL). You can also use Ruby in most of the tasks.
 
+At the very least, you will have to adapt the following configuration settings:
 
-3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
+ * `rvm_ruby_string`: The version of Ruby to use on the target server for running this copy of leihs.
+ * `application`: The application name. Mostly for your reference, unless you want to use this variable later on in the configuration.
+ * `db_config`: The location on the target server of the `database.yml` file, containing database credentials for this instance of leihs. We recommend putting this in the base directory of the user you want to run this instance of leihs as, e.g. in /home/leihs-test/database.yml.
+ * `app_config`: The location of the `application.rb` file on the target server. This file is needed to define a few constants and global settings that cannot be set from inside the database.
+ * `ldap_config`: The location of the `LDAP.yml` file containing LDAP binding credentials, if you want to use LDAP authentication.
+ * `deploy_to`: The directory on the target server where this instance will be deployed to. For example: `/home/leihs-test`. Capistrano will create several directories under this location.
+ * `app`, `web`, and `db`: For each server role, you could provide separate physical servers. In our example, we will deploy all three roles on the same server. Use an "SSH syntax" for this, e.g. leihs-test@localhost means the instance will be deployed as user leihs-test on localhost.
+
+Before you make your first use of this configuration, you need to have a user to run the instance as. Going with the examples above, you could use `leihs-test` in this case. Add the user on your server:
+
+        # adduser leihs-test
+        # passwd leihs-test
+
+We recommend using SSH public key authentication, but for this guide we will assume a password of "test".
+
+Now you are ready to run Capistrano for the first time to set up its directories. From the leihs source code directory, do this:
+
+        # cap staging-myserver deploy
+
+You will notice that new directories appeared under /home/leihs-test: `releases` and `shared`. `releases` is where the cloned source code of leihs will appear once you deploy. `shared` is where Capistrano places files that are shared between all deployments of this particular instance, for example images, attachments, user uploads, etc.
+
+Next you need to create a database configuration file in the location specified under the `db_config` variable in your deployment recipe. Here is an example:
 
         production:
-           adapter: mysql
-           database: leihs_production
+           adapter: mysql2
+           database: leihs_staging
            encoding: utf8
            username: root
-           password:
+           password: root
            host: localhost
            port: 3306
 
-4. Create and migrate the database:
+Next, create an LDAP configuration file in the location specified in `ldap_config`, if you wish to use LDAP authentication. Here is an example:
 
-        # su - leihs
-        $ RAILS_ENV=production bundle exec rake db:migrate
-        $ RAILS_ENV=production bundle exec rake db:seed
+        production:
+          host: your.ldap.server
+          port: 636
+          encryption: simple_tls
+          base: dc=yourcompany,dc=com
+          log_file: log/ldap_server.log
+          log_level: warn
+          search_field: uid
+          bind_dn: *****
+          bind_pwd: ******
+
+Finally, copy config/application.rb from the leihs source code to your instance:
+
+        # cp /root/leihs/config/application.rb /home/leihs-test/application.rb
+
+Open the file in your favorite text editor. You can change some constants in this file if necessary: LOCAL_CURRENCY_STRING, CONTRACT_TERMS, CONTRACT_LENDING_STRING, EMAIL_SIGNATURE, DEFAULT_EMAIL, DELIVER_ORDER_NOTIFICATIONS, USER_IMAGE_URL and PER_PAGE.
+
+Please note that some of these variables can be customized via the deployment recipe on every deploy as well, so you might not need to change them here.
+
+Now it's time to try our recipe in earnest (well, almost). A cold deploy, meaning that all the steps that are normally taken during deploy will be taken, except for actually starting the application.
+
+        # cd /root/software/leihs
+        # cap staging-myserver deploy:cold
+
+If all of this worked, it means you have tackled all the largest hurdles already. The rest is just a matter of configuration and installing some more gems and extensions.
+
+TODO
+
+### Installing Phusion Passenger and creating a Rails virtual host
+
+TODO
 
 5. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
