@@ -62,8 +62,6 @@ This will install RVM as well as the latest stable Ruby version and RubyGems, a 
 
 Now install the Bundler gem, a Ruby dependency manager:
 
-        # rvm install 1.9.3
-        # rvm use 1.9.3
         # gem install bundler
 
 Install Ruby 1.8.7 if you want to use leihs 2.9 in parallel with leihs 3.0. If you only want to use 3.0 or higher, this is not necessary:
@@ -75,6 +73,8 @@ Install Ruby 1.8.7 if you want to use leihs 2.9 in parallel with leihs 3.0. If y
 Revert to using Ruby 1.9.3 once you're done (we'll be using Ruby 1.9 for Capistrano later on):
 
         # rvm use 1.9.3
+
+TODO (here).
 
 ### Setting up Capistrano
 
