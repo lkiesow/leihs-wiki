@@ -3,7 +3,7 @@ Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
 ## Introduction
 
-We don't want to presrcibe any specific way for installing leihs in a production environment. Your server landscape is certainly not the same as ours, and we don't want to force any specific architecture on you just for running leihs.
+We don't want to prescribe any specific way for installing leihs in a production environment. Your server landscape is certainly not the same as ours, and we don't want to force any specific architecture on you just for running leihs.
 
 What we can provide here, however, is an example of a completely suitable production server for leihs, including automated deployments and upgrades. You can take this example and customize it in any way that fits your server landscape.
 
@@ -20,60 +20,26 @@ In the end, you will have a complete leihs production environment that can run l
 
 
 ## Base system
-### Installing the base components using Debian GNU/Linux
+### Installing the base components
 
-These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
+Follow the instructions from the leihs Admin Guide for your platform (Debian or RPM-based distribution). *But instead of installing Ruby from your package manager in step 1, substitute this new step 1*.
 
-1. Install libxslt, Cairo, MySQL client libraries, libxml2:
+For Debian-based distros:
 
-        # apt-get install libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
+        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
 
-2. Install the MySQL header files and the MySQL gem:
+For RPM-based distros:
 
-        # apt-get install libmysqlclient15-dev make build-essential
-        # gem install mysql
+        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
 
-3. Install ImageMagick:
+Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
-        # apt-get install imagemagick libmagickwand-dev
-
-4. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # apt-get install memcached
-
-    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
-
-### Installing the base components on RedHat Enterprise Linux, Fedora or CentOS
-
-The following instructions apply to most RPM-based distributions and were tested on CentOS 6.4.
-
-1. Install libxslt, Cairo, MySQL client libraries, libxml2, gcc and some required dependencies:
-
-        # yum install wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
-
-2. Install the MySQL header files and the MySQL gem:
-
-        # yum install mysql-server mysql gcc make ruby-devel
-        # gem install mysql
-
-3. Install ImageMagick:
-
-        # yum install ImageMagick ImageMagick-devel 
-
-4. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # yum install memcached
-
-
-## Installing Sphinx
+## Installing the platform-independent components in a production situation
 
 Download and install Sphinx (a fulltext search system). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9: 
 
-        $ cd /tmp
+        $ mkdir -p /root/software
+        $ cd /root/software
         $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
         $ tar xvfz sphinx-0.9.9.tar.gz
         $ cd sphinx-0.9.9
@@ -84,20 +50,46 @@ Download and install Sphinx (a fulltext search system). In this example we also 
         # make install
 
 
-## Installing Ruby and related software
+### Installing Ruby and related software
 
 1. Install RVM from [the RVM website](http://rvm.io). We can use RVM to install different Ruby versions on demand, to upgrade or downgrade between Ruby versions and to run Ruby 1.8 and Ruby 1.9 applications on the same server.
 
-2. Install RubyGems from [the RubyGems website](http://rubygems.org/). Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
+The RVM install process is usually aided by a simple Bash script you can execute directly. We recommend installing as root, which will create a system-wide RVM installation instead of a per-user RVM installation:
 
-        # cd /tmp
-        # wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
-        # tar xvfz rubygems-1.5.2.tgz
-        # cd rubygems-1.5.2
-        # ruby setup.rb
-        # ln -s /usr/bin/gem1.8 /usr/bin/gem
+        # curl -L https://get.rvm.io | bash -s stable --ruby 
 
-Note that the URL above might change! Please visit the RubyGems site to find the exact URL under "Downloads". It is important that you use version 1.5.2 or 1.5.3 or RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses.
+This will install RVM as well as the latest stable Ruby version and RubyGems, a management system for Ruby libraries.
+
+Now install the Bundler gem, a Ruby dependency manager:
+
+        # rvm install 1.9.3
+        # rvm use 1.9.3
+        # gem install bundler
+
+Install Ruby 1.8.7 if you want to use leihs 2.9 in parallel with leihs 3.0. If you only want to use 3.0 or higher, this is not necessary:
+
+        # rvm install 1.8.7
+        # rvm use 1.8.7
+        # gem install bundler
+
+Revert to using Ruby 1.9.3 once you're done (we'll be using Ruby 1.9 for Capistrano later on):
+
+        # rvm use 1.9.3
+
+### Setting up Capistrano
+
+Capistrano is a deployment system that automates deployments for you. You write Capistrano recipes, and Capistrano then executes those recipes against your production server via SSH.
+
+If you already have Capistrano, this chapter won't be news to you. If not, you need to set up Capistrano on some machine that can reach the deployment servers.
+
+If you have your own local machine that can run Ruby and SSH, you can install Capistrano on that machine. You can also install Capistrano on the target server itself and then deploy from the target server to the target server, in case you do not wish to install Ruby on any local workstations.
+
+The idea is this: You install Capistrano on an SSH-capable machine, check out the leihs source code to that machine and run the Capistrano deployment recipes included with leihs. You will write your own copies of those recipes, adapted for your production servers, so that the recipes deploy leihs on the actual production servers.
+
+In the following example, we will install Capistrano on the production server itself and then deploy from the server to itself. Prepare a directory for the leihs source code to live in and clone the leihs git repository to it:
+
+        # cd /root/software
+        # git clone git@github.com:zhdk/leihs.git
 
 
 3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:

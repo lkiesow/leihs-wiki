@@ -17,13 +17,61 @@ If you are such a person yourself and would like to have your services listed on
 This section is meant for admins experienced with installing Ruby on Rails applications. It lists the necessary installation steps in the briefest possible way, so you can get up and running quickly.
 
 
-## Installation on Debian GNU/Linux
+## Installation of the base system Debian GNU/Linux
 
 These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
 1. Install Ruby, irb, libxslt, Cairo, MySQL client libraries, libxml2:
 
-        # apt-get install ruby irb rdoc libopenssl-ruby ruby-dev libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
+        # apt-get install ruby irb rdoc build-essential make libopenssl-ruby ruby-dev libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
+
+2. Install the MySQL header files and the MySQL gem:
+
+        # apt-get install libmysqlclient15-dev
+        # gem install mysql
+
+3. Install ImageMagick:
+
+        # apt-get install imagemagick libmagickwand-dev
+
+4. Optional: Speed boost thanks to memcached
+
+    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
+
+        # apt-get install memcached
+
+    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
+
+
+## Installation of the base system on RedHat Enterprise Linux, Fedora or CentOS
+
+Please note that **this distribution is not officially supported**, but you are welcome to try these instructions. They were verified on CentOS 6.3.
+
+1. Install Ruby, libxslt, Cairo, MySQL client libraries, libxml2, gcc and some required dependencies:
+
+        # yum install wget ruby irb gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
+
+2. Install the MySQL header files and the MySQL gem:
+
+        # yum install mysql-server mysql gcc make ruby-devel
+        # gem install mysql
+
+3. Install ImageMagick:
+
+        # yum install ImageMagick ImageMagick-devel 
+
+4. Optional: Speed boost thanks to memcached
+
+    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
+
+        # yum install memcached
+
+## Installing the platform-independent components
+
+These steps apply for both Debian-based and RPM-based distributions.
+
+1. Download the latest version of leihs from our [SourceForge project page](http://sourceforge.net/projects)/leihs. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
+
 
 2. Install RubyGems from [the RubyGems website](http://rubygems.org/). Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
 
@@ -36,14 +84,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Len
 
 Note that the URL above might change! Please visit the RubyGems site to find the exact URL under "Downloads". It is important that you use version 1.5.2 or 1.5.3 or RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses.
 
-3. Install the MySQL header files and the MySQL gem:
-
-        # apt-get install libmysqlclient15-dev make build-essential
-        # gem install mysql
-
-4. Download the latest version of leihs from our [SourceForge project page](http://sourceforge.net/projects)/leihs. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
-
-5. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
+3. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
 
         $ cd /tmp
         $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
@@ -55,18 +96,15 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         $ su
         # make install
 
-6. Install ImageMagick:
 
-        # apt-get install imagemagick libmagickwand-dev
-
-7. Install the required version of Rails as well as a few gems that cannot be installed automatically:
+4. Install the required version of Rails as well as a few gems that cannot be installed automatically:
 
         # cd /home/leihs
         # gem install bundler
         # su - leihs
         $ bundle install --deployment --without cucumber development
 
-8. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
+5. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
         production:
            adapter: mysql
@@ -77,13 +115,13 @@ Note that the URL above might change! Please visit the RubyGems site to find the
            host: localhost
            port: 3306
 
-9. Create and migrate the database:
+6. Create and migrate the database:
 
         # su - leihs
         $ RAILS_ENV=production bundle exec rake db:migrate
         $ RAILS_ENV=production bundle exec rake db:seed
 
-10. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
+7. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
         $ cd /home/leihs
         $ mkdir -p public/images/attachments
@@ -91,14 +129,14 @@ Note that the URL above might change! Please visit the RubyGems site to find the
         $ mkdir tmp/cache
         $ mkdir -p log
  
-11. Configure and start the Sphinx server:
+8. Configure and start the Sphinx server:
 
         $ cd /home/leihs
         $ RAILS_ENV=production bundle exec rake ts:config
         $ RAILS_ENV=production bundle exec rake ts:reindex
         $ RAILS_ENV=production bundle exec rake ts:start
 
-12. Start the leihs server:
+9. Start the leihs server:
 
         $ cd /home/leihs
         $ RAILS_ENV=production ./script/server
@@ -109,124 +147,11 @@ Note that the URL above might change! Please visit the RubyGems site to find the
 
     Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-13. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
+10. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
 
     The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
-
-14. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # apt-get install memcached
-
-    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
-
-
-## Installation on RedHat Enterprise Linux, Fedora or CentOS
-
-Please note that **this distribution is not officially supported**, but you are welcome to try these instructions. They were verified on CentOS 6.3.
-
-1. Install Ruby, libxslt, Cairo, MySQL client libraries, libxml2, gcc and some required dependencies:
-
-        # yum install wget ruby irb gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
-
-2. Install RubyGems from [the RubyGems website](http://rubygems.org/). Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
-
-        # cd /tmp
-        # wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
-        # tar xvfz rubygems-1.5.2.tgz
-        # cd rubygems-1.5.2
-        # ruby setup.rb
-        # gem install rdoc
-
-Note that the URL above might change! Please visit the RubyGems site to find the exact URL under "Downloads". It is important that you use version 1.5.2 or 1.5.3 of RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses.
-
-3. Install the MySQL header files and the MySQL gem:
-
-        # yum install mysql-server mysql gcc make ruby-devel
-        # gem install mysql
-
-4. Download the latest version of leihs from our [SourceForge project page](http://sourceforge.net/projects)/leihs. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
-
-5. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
-
-        $ cd /tmp
-        $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
-        $ tar xvfz sphinx-0.9.9.tar.gz
-        $ cd sphinx-0.9.9
-        $ wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
-        $ tar xvfz libstemmer_c.tgz
-        $ ./configure --with-libstemmer && make
-        $ su
-        # make install
-
-6. Install ImageMagick:
-
-        # yum install ImageMagick ImageMagick-devel 
-
-7. Install the required version of Rails as well as a few gems that cannot be installed automatically:
-
-        # cd /home/leihs
-        # gem install bundler
-        # su - leihs
-        $ bundle install --deployment --without cucumber development
-
-8. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
-
-        production:
-           adapter: mysql
-           database: leihs_production
-           encoding: utf8
-           username: root
-           password:
-           host: localhost
-           port: 3306
-
-9. Create and migrate the database:
-
-        # su - leihs
-        $ RAILS_ENV=production bundle exec rake db:migrate
-        $ RAILS_ENV=production bundle exec rake db:seed
-
-10. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
-
-        $ cd /home/leihs
-        $ mkdir -p public/images/attachments
-        $ mkdir -p tmp/sessions
-        $ mkdir tmp/cache
-        $ mkdir -p log
- 
-11. Configure and start the Sphinx server:
-
-        $ cd /home/leihs
-        $ RAILS_ENV=production bundle exec rake ts:config
-        $ RAILS_ENV=production bundle exec rake ts:reindex
-        $ RAILS_ENV=production bundle exec rake ts:start
-
-12. Start the leihs server:
-
-        $ cd /home/leihs
-        $ RAILS_ENV=production ./script/server
-
-    Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
-
-    This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
-
-    Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
-
-13. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
-
-        1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
-
-    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
-
-14. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # yum install memcached
 
 
 ## Users, logins and levels 
