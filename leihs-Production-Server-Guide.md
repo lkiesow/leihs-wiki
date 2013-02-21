@@ -97,12 +97,19 @@ In the following example, we will install Capistrano on the production server it
 Prepare a directory for the leihs source code to live in and clone the leihs git repository to it:
 
         # cd /root/software
-        # git clone git@github.com:zhdk/leihs.git
+        # git clone git://github.com/zhdk/leihs.git
 
 You will be writing a new deployment recipe in `config/deploy`. You can copy an existing recipe to your new file:
 
         # cd leihs
         # cp config/deploy/staging.rb config/deploy/staging-myserver.rb
+
+At this point, it would be good to learn about git so you can check your recipes into version control. The git link above points to a read-only copy of our git repository for leihs. You can either fork your own on GitHub and add a remote that points there, or you can create a git repository for leihs somewhere else in your organization.
+
+Describing how to set up a git environment for your use goes far beyond this server guide, please refer to the [http://git-scm.com/book](Git book) for more information.
+
+TODO
+
 
 3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
