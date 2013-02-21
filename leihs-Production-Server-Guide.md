@@ -58,6 +58,10 @@ The RVM install process is usually aided by a simple Bash script you can execute
 
         # curl -L https://get.rvm.io | bash -s stable --ruby 
 
+Reload your shell to make sure RVM is loaded:
+
+        # bash --login
+
 This will install RVM as well as the latest stable Ruby version and RubyGems, a management system for Ruby libraries.
 
 Now install the Bundler gem, a Ruby dependency manager:
@@ -74,8 +78,6 @@ Revert to using Ruby 1.9.3 once you're done (we'll be using Ruby 1.9 for Capistr
 
         # rvm use 1.9.3
 
-TODO (here).
-
 ### Setting up Capistrano
 
 Capistrano is a deployment system that automates deployments for you. You write Capistrano recipes, and Capistrano then executes those recipes against your production server via SSH.
@@ -86,11 +88,21 @@ If you have your own local machine that can run Ruby and SSH, you can install Ca
 
 The idea is this: You install Capistrano on an SSH-capable machine, check out the leihs source code to that machine and run the Capistrano deployment recipes included with leihs. You will write your own copies of those recipes, adapted for your production servers, so that the recipes deploy leihs on the actual production servers.
 
-In the following example, we will install Capistrano on the production server itself and then deploy from the server to itself. Prepare a directory for the leihs source code to live in and clone the leihs git repository to it:
+In the following example, we will install Capistrano on the production server itself and then deploy from the server to itself.
+
+        # gem install capistrano capistrano-ext
+
+### Get the leihs source code
+
+Prepare a directory for the leihs source code to live in and clone the leihs git repository to it:
 
         # cd /root/software
         # git clone git@github.com:zhdk/leihs.git
 
+You will be writing a new deployment recipe in `config/deploy`. You can copy an existing recipe to your new file:
+
+        # cd leihs
+        # cp config/deploy/staging.rb config/deploy/staging-myserver.rb
 
 3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
