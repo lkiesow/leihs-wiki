@@ -233,6 +233,9 @@ It should start fine now. Create a virtual host for your new test instance. The 
 
 The important part is that this points at a directory called `public`, that enables Passenger to recognize that this is a Rails application it's supposed to serve.
 
+
+### Deploying in hot mode and creating the default data
+
 Now it's time to deploy the test instance in normal mode, not cold mode:
 
         # cd /root/software/leihs
@@ -245,15 +248,20 @@ Since this is a first-time installation, you will have to seed the default data 
         $ RAILS_ENV=production bundle exec rake db:seed
         $ exit
 
+Navigate to the location of your virtual host (e.g. http://leihs-test.example.com) and see if you can log in as user "super_user_1" with password "password". If so, this concludes our installation of leihs 3.x.
+
+You should repeat the same procedure for a production instance, so that you have one test and one production server. The instructions for a production server are the same except for the directories and host names.
+
+
+### Installing leihs 2.9.x in tandem with leihs 3.0
+
+leihs 2.9.x has the ability to run against the same database as leihs 3.0, at the same time. This is useful if you are migrating your organization from leihs 2.9 to leihs 3.0 and want to try out leihs 3.0's new interface in production before making the upgrade.
+
+However, since leihs 2.9 needs Ruby 1.8.7 due to its dependencies, you cannot easily run leihs 2.9 in the same Apache instance. Future versions of Phusion Passenger will make this possible, but until then, the best way is to start a separate Passenger Standalone instance using Ruby 1.8.7 and then proxy any requests to the leihs 2.9 instance through a reverse proxy created using Apache's mod_proxy.
+
 TODO
 
-5. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
-        $ cd /home/leihs
-        $ mkdir -p public/images/attachments
-        $ mkdir -p tmp/sessions
-        $ mkdir tmp/cache
-        $ mkdir -p log
  
 6. Configure and start the Sphinx server:
 
