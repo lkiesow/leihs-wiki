@@ -14,9 +14,10 @@ We will use these components:
   * Phusion Passenger to manage the Rails application server pool
   * Apache to provide a web server
   * Apache's mod_proxy if you want to run leihs 2.9 and 3.0 in parallel
+  * Passenger Standalone if you want to run leihs 2.9 and 3.0 in parallel
   * MySQL as database server
 
-In the end, you will have a complete leihs production environment that can run leihs 2.x and 3.x.
+In the end, you will have a complete leihs production environment.
 
 
 ## Base system
@@ -132,15 +133,15 @@ At the very least, you will have to adapt the following configuration settings:
  * `db_config`: The location on the target server of the `database.yml` file, containing database credentials for this instance of leihs. We recommend putting this in the base directory of the user you want to run this instance of leihs as, e.g. in /home/leihs-test/database.yml.
  * `app_config`: The location of the `application.rb` file on the target server. This file is needed to define a few constants and global settings that cannot be set from inside the database.
  * `ldap_config`: The location of the `LDAP.yml` file containing LDAP binding credentials, if you want to use LDAP authentication.
- * `deploy_to`: The directory on the target server where this instance will be deployed to. For example: `/home/leihs-test`. Capistrano will create several directories under this location.
+ * `deploy_to`: The directory on the target server where this instance will be deployed to. For example: `/home/leihs-test` as a home for your staging instance. Capistrano will create several directories under this location.
  * `app`, `web`, and `db`: For each server role, you could provide separate physical servers. In our example, we will deploy all three roles on the same server. Use an "SSH syntax" for this, e.g. leihs-test@localhost means the instance will be deployed as user leihs-test on localhost.
 
-Before you make your first use of this configuration, you need to have a user to run the instance as. Going with the examples above, you could use `leihs-test` in this case. Add the user on your server:
+Before you make your first use of this configuration, you need to have a user to run the instance as. Going with the examples above, you could use `leihs-test`. Add the user on your server:
 
         # adduser leihs-test
         # passwd leihs-test
 
-We recommend using SSH public key authentication, but for this guide we will assume a password of "test".
+We recommend using SSH public key authentication, but this guide will not explain how to set this up.
 
 Now you are ready to run Capistrano for the first time to set up its directories. From the leihs source code directory, do this:
 
@@ -178,7 +179,7 @@ Finally, copy config/application.rb from the leihs source code to your instance:
 
 Open the file in your favorite text editor. You can change some constants in this file if necessary: LOCAL_CURRENCY_STRING, CONTRACT_TERMS, CONTRACT_LENDING_STRING, EMAIL_SIGNATURE, DEFAULT_EMAIL, DELIVER_ORDER_NOTIFICATIONS, USER_IMAGE_URL and PER_PAGE.
 
-Please note that some of these variables can be customized via the deployment recipe on every deploy as well, so you might not need to change them here.
+Please note that some of these variables can be customized via the deployment recipe on every deploy as well, so you might not need to change them here. Instead, they could be changed using sed in `config/deploy/staging-myserver.rb`.
 
 Now it's time to try our recipe in earnest (well, almost). A cold deploy, meaning that all the steps that are normally taken during deploy will be taken, except for actually starting the application.
 
@@ -187,9 +188,10 @@ Now it's time to try our recipe in earnest (well, almost). A cold deploy, meanin
 
 If all of this worked, it means you have tackled all the largest hurdles already. The rest is just a matter of configuration and installing some more gems and extensions.
 
-TODO
 
 ### Installing Phusion Passenger and creating a Rails virtual host
+
+The following host will host leihs 3.x using Ruby 1.9.x. This is in contrast to leihs 2.9.x, which needs to be run on Ruby 1.8.7 and will be handled differently later on.
 
 TODO
 
