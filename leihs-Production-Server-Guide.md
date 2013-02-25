@@ -189,9 +189,61 @@ Now it's time to try our recipe in earnest (well, almost). A cold deploy, meanin
 If all of this worked, it means you have tackled all the largest hurdles already. The rest is just a matter of configuration and installing some more gems and extensions.
 
 
+### Create the shared directories
+
+These directories are shared between all releases deployed from one recipe.
+
+        # mkdir /home/leihs-test/shared/attachments && chown leihs-test $_
+
+`$_` in this case is a variable pointing at the previously executed argument (in this case, the attachments dir inside `shared`). If your shell does not support this, insert the full path again in that place.
+
+
 ### Installing Phusion Passenger and creating a Rails virtual host
 
-The following host will host leihs 3.x using Ruby 1.9.x. This is in contrast to leihs 2.9.x, which needs to be run on Ruby 1.8.7 and will be handled differently later on.
+Your server will run leihs 3.x using Ruby 1.9.x inside Apache. This is in contrast to leihs 2.9.x, which needs to be run on Ruby 1.8.7 and will be handled differently and in a separate process later on.
+
+        # yum install httpd curl-devel httpd-devel apr-devel apr-util-devel
+        # rvm use 1.9.3
+        # gem install passenger
+        # passenger-install-apache2-module
+
+Now create `/etc/httpd/conf.d/passenger.conf` and enter the module loading parameters that were given to you by the Passenger installer.
+
+If you use SELinux, which is enabled by default in CentOS, you will have to [http://www.modrails.com/documentation/Users%20guide%20Apache.html#_the_apache_error_log_says_that_the_spawn_manager_script_does_not_exist_or_that_it_does_not_have_permission_to_execute_it](perform some additional configuration) to receive permission to use Passenger:
+
+        # chcon -R -h -t httpd_sys_content_t `passenger-config --root`
+
+Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied".
+
+Restart Apache.
+
+        # /etc/init.d/httpd restart
+
+It should start fine now. Create a virtual host for your new test instance. The virtual host configuration could go into e.g. `/etc/httpd/conf.d/leihs-test.conf` and can look like this:
+
+        <VirtualHost *:80>
+            ServerName leihs-test.example.com
+            DocumentRoot /home/leihs-test/current/public
+            <Directory /home/leihs-test/current/public>
+             AllowOverride all
+             Options -MultiViews
+            </Directory>
+          </VirtualHost>
+
+
+The important part is that this points at a directory called `public`, that enables Passenger to recognize that this is a Rails application it's supposed to serve.
+
+Now it's time to deploy the test instance in normal mode, not cold mode:
+
+        # cd /root/software/leihs
+        # cap staging-myserver deploy
+
+Since this is a first-time installation, you will have to seed the default data (default users, default passwords, etc.) in this instance:
+
+        # su - leihs-test
+        $ cd current
+        $ RAILS_ENV=production bundle exec rake db:seed
+        $ exit
 
 TODO
 
