@@ -225,7 +225,7 @@ It should start fine now. Create a virtual host for your new test instance. The 
             ServerName leihs-test.example.com
             DocumentRoot /home/leihs-test/current/public
             <Directory /home/leihs-test/current/public>
-             AllowOverride all
+             AllowOverride none
              Options -MultiViews
             </Directory>
           </VirtualHost>
@@ -247,6 +247,13 @@ Since this is a first-time installation, you will have to seed the default data 
         $ cd current
         $ RAILS_ENV=production bundle exec rake db:seed
         $ exit
+
+
+Configure SELinux to allow access to the web-accessible directory:
+
+        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-test
+
+And restart Apache.
 
 Navigate to the location of your virtual host (e.g. http://leihs-test.example.com) and see if you can log in as user "super_user_1" with password "password". If so, this concludes our installation of leihs 3.x.
 
@@ -304,8 +311,10 @@ Go to the leihs source directory and change to the `master` branch so you can re
         # cp config/environment.rb /home/leihs-legacy/environment.rb
         # git checkout next
 
-Install passenger-standalone:
+Install passenger-standalone on Ruby 1.8.7
 
+        # rvm use 1.8.7
+        # gem install passenger
         # passenger start
 
 Starting the server will *fail* with permission denied errors, but that doesn't matter, since the goal was to install a copy of passenger-standalone, the server we will be using to run Ruby 1.8.7 instances. Stop the server with Ctrl-C.
@@ -313,6 +322,8 @@ Starting the server will *fail* with permission denied errors, but that doesn't 
 Finally, create a shared directory that deploy:setup cannot take care of:
 
         # mkdir /home/leihs-legacy/shared/db_backups && chown leihs-legacy $_
+        # mkdir /home/leihs-legacy/shared/sphinx && chown leihs-legacy $_
+        # mkdir /home/leihs-legacy/shared/attachments && chown leihs-legacy $_
 
 
 ### Deploying via Capistrano
@@ -342,15 +353,25 @@ Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
 
             DocumentRoot /home/leihs-legacy/current/public
             <Directory /home/leihs-legacy/current/public>
-             AllowOverride all
+             AllowOverride none
              Options -MultiViews
             </Directory>
           </VirtualHost>
 
 Observe that / is redirected to / on port 3003 of the same server. If your ports are different, adjust accordingly.
 
+If you now visit this virtual host in your browser, you should see the leihs 2.9 GUI, pointing at the same database and showing the same data as your leihs 3.0 instance.
+
+### Changing SELinux settings for the web directories
+
+Since you created new users in `/home/leihs-*`, you will have to let SELinux know that the web user can read and write there:
+
+        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-legacy
+
+### Setting up cronjobs for e-mail reminders
 
 TODO
+
 
 ## Users, logins and levels 
 
