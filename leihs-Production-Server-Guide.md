@@ -31,7 +31,7 @@ For Debian-based distros:
 
 For RPM-based distros:
 
-        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server
+        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server ImageMagick ImageMagick-devel
 
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
@@ -128,7 +128,7 @@ Open `config/deploy/staging-myserver.rb` in your favorite text editor. The file 
 
 At the very least, you will have to adapt the following configuration settings:
 
- * `rvm_ruby_string`: The version of Ruby to use on the target server for running this copy of leihs.
+ * `rvm_ruby_string`: The version of Ruby to use on the target server for running this copy of leihs. 1.9.3 is fine for leihs 3.0.
  * `application`: The application name. Mostly for your reference, unless you want to use this variable later on in the configuration.
  * `db_config`: The location on the target server of the `database.yml` file, containing database credentials for this instance of leihs. We recommend putting this in the base directory of the user you want to run this instance of leihs as, e.g. in /home/leihs-test/database.yml.
  * `app_config`: The location of the `application.rb` file on the target server. This file is needed to define a few constants and global settings that cannot be set from inside the database.
@@ -213,7 +213,7 @@ If you use SELinux, which is enabled by default in CentOS, you will have to [htt
 
         # chcon -R -h -t httpd_sys_content_t `passenger-config --root`
 
-Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied".
+Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied". If you don't use SELinux, ignore that.
 
 Restart Apache.
 
@@ -259,25 +259,98 @@ leihs 2.9.x has the ability to run against the same database as leihs 3.0, at th
 
 However, since leihs 2.9 needs Ruby 1.8.7 due to its dependencies, you cannot easily run leihs 2.9 in the same Apache instance. Future versions of Phusion Passenger will make this possible, but until then, the best way is to start a separate Passenger Standalone instance using Ruby 1.8.7 and then proxy any requests to the leihs 2.9 instance through a reverse proxy created using Apache's mod_proxy.
 
+First, install the matching Ruby version for leihs 2.9:
+
+        # rvm install 1.8.7
+
+
+### Creating a deployment recipe for leihs 2.9
+
+Go the leihs source code directory and create a new deployment recipe for this legacy instance:
+
+        # cd /root/software/leihs
+        # cp config/deploy/production.rb config/deploy/legacy-myserver.rb
+
+Open `config/deploy/legacy-myserver.rb` in your favorite text editor. You should be familiar with the format of the file now (see above for an explanation). You need to set some special variables for Rails 2.9.x:
+
+ * `rvm_ruby_string`: The version of Ruby to use on the target server for running this copy of leihs. 1.8.7 works for leihs 2.9.
+ * `app_config`: The location of the `environment.rb` file on the target server. This file is needed to define a few constants and global settings that cannot be set from inside the database.
+
+Around line 143, make sure that the port that is in use there (3003 by default) is still free on this machine. We will be running this instance on port 3003 and then proxy from Apache's port 80 to there. If you need to run on a different port, adapt the following steps accordingly.
+
+The rest is the same as for leihs 3.0.
+
+### Preparing the system for the legacy leihs instance
+
+Create the system user and home directory specified as deploy directory in your deployment recipe. We will use `/home/leihs-legacy` in this example.
+
+Create the database configuration file at the location specified as db_config in your deployment recipe:
+
+        production:
+           adapter: mysql
+           database: leihs_staging
+           encoding: utf8
+           username: root
+           password: root
+           host: localhost
+           port: 3306
+
+Note that leihs 2.9 uses the `mysql` database adapter, not `mysql2`!
+
+Go to the leihs source directory and change to the `master` branch so you can retrieve the `config/environemnt.rb` file from there:
+
+        # cd /root/software/leihs
+        # git checkout master
+        # cp config/environment.rb /home/leihs-legacy/environment.rb
+        # git checkout next
+
+Install passenger-standalone:
+
+        # passenger start
+
+Starting the server will *fail* with permission denied errors, but that doesn't matter, since the goal was to install a copy of passenger-standalone, the server we will be using to run Ruby 1.8.7 instances. Stop the server with Ctrl-C.
+
+Finally, create a shared directory that deploy:setup cannot take care of:
+
+        # mkdir /home/leihs-legacy/shared/db_backups && chown leihs-legacy $_
+
+
+### Deploying via Capistrano
+
+Time to try out that deployment recipe. Change to the leihs source directory and try to run deploy:setup:
+
+        # cd /root/software/leihs
+        # cap legacy-myserver deploy:setup
+
+If this worked, you can run a cold deploy:
+
+        # cd /root/software/leihs
+        # cap legacy-myserver deploy:cold
+
+If all of that worked, we continue with setting up the reverse proxy in Apache.
+
+### Creating a reverse proxy configuration for the legacy application
+
+Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
+
+        <VirtualHost *:80>
+            ServerName leihs-legacy.example.com
+
+            PassengerEnabled off
+            ProxyPass / http://127.0.0.1:3003/
+            ProxyPassReverse / http://127.0.0.1:3003/
+
+            DocumentRoot /home/leihs-legacy/current/public
+            <Directory /home/leihs-legacy/current/public>
+             AllowOverride all
+             Options -MultiViews
+            </Directory>
+          </VirtualHost>
+
+Observe that / is redirected to / on port 3003 of the same server. If your ports are different, adjust accordingly.
+
+
 TODO
-
-
- 
-6. Configure and start the Sphinx server:
-
-        $ cd /home/leihs
-        $ RAILS_ENV=production bundle exec rake ts:config
-        $ RAILS_ENV=production bundle exec rake ts:reindex
-        $ RAILS_ENV=production bundle exec rake ts:start
-
-
-7. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
-
-        1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
-
-    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
-
-
 
 ## Users, logins and levels 
 
