@@ -33,7 +33,12 @@ For RPM-based distros:
 
         # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server ImageMagick ImageMagick-devel
 
+
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
+
+## A not on SELinux
+
+You will need to *disable SELinux* for these instructions to work. Phusion Passenger does not work well with SELinux. To disable SELinux on CentOS, for example, change SELINUX to "disabled" in /etc/selinux/config and restart.
 
 ## Installing the platform-independent components in a production situation
 
@@ -209,12 +214,6 @@ Your server will run leihs 3.x using Ruby 1.9.x inside Apache. This is in contra
 
 Now create `/etc/httpd/conf.d/passenger.conf` and enter the module loading parameters that were given to you by the Passenger installer.
 
-If you use SELinux, which is enabled by default in CentOS, you will have to [http://www.modrails.com/documentation/Users%20guide%20Apache.html#_the_apache_error_log_says_that_the_spawn_manager_script_does_not_exist_or_that_it_does_not_have_permission_to_execute_it](perform some additional configuration) to receive permission to use Passenger:
-
-        # chcon -R -h -t httpd_sys_content_t `passenger-config --root`
-
-Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied". If you don't use SELinux, ignore that.
-
 Restart Apache.
 
         # /etc/init.d/httpd restart
@@ -247,11 +246,6 @@ Since this is a first-time installation, you will have to seed the default data 
         $ cd current
         $ RAILS_ENV=production bundle exec rake db:seed
         $ exit
-
-
-Configure SELinux to allow access to the web-accessible directory:
-
-        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-test
 
 And restart Apache.
 
@@ -340,6 +334,7 @@ If this worked, you can run a cold deploy:
 
 If all of that worked, we continue with setting up the reverse proxy in Apache.
 
+
 ### Creating a reverse proxy configuration for the legacy application
 
 Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
@@ -361,18 +356,6 @@ Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
 Observe that / is redirected to / on port 3003 of the same server. If your ports are different, adjust accordingly.
 
 If you now visit this virtual host in your browser, you should see the leihs 2.9 GUI, pointing at the same database and showing the same data as your leihs 3.0 instance.
-
-### Changing SELinux settings
-
-Since you created new users in `/home/leihs-*`, you will have to let SELinux know that the web user can read and write there:
-
-        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-legacy
-
-And also allow the HTTP server to make network connections:
-
-        # /usr/sbin/setsebool httpd_can_network_connect true
-
-Note that if you disable SELinux, of course all these policy settings are no longer necessary. If you have no need for SELinux, this may simplify your setup.
 
 ### Setting up cronjobs for e-mail reminders
 
@@ -454,3 +437,24 @@ Do you want to be able to configure all these settings directly in LDAP.yml so i
 
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
 
+
+# Appendix: Working with SELinux
+
+You should disable SELinux to host a Rails server as described here. We have tried getting Phusion Passenger to work on a system that has SELinux, but unfortunately, we were not successful. Passenger seems to do many things that a default RedHat or CentOS SELinux policy configuration will never allow.
+
+Here's how far we got:
+
+Phusion Passenger will probably not even start up with SELinux, and it's notoriously hard to get to work. 
+
+        # chcon -R -h -t httpd_sys_content_t `passenger-config --root`
+
+Since you created new users in `/home/leihs-*`, you will have to let SELinux know that the web user can read and write there:
+
+        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-test
+        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-legacy
+
+And also allow the HTTP server to make network connections:
+
+        # /usr/sbin/setsebool httpd_can_network_connect true
+
+Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied". If you don't use SELinux, ignore that.
