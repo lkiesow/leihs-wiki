@@ -15,6 +15,7 @@ We will use these components:
   * Apache to provide a web server
   * Apache's mod_proxy if you want to run leihs 2.9 and 3.0 in parallel
   * Passenger Standalone if you want to run leihs 2.9 and 3.0 in parallel
+  * Node.js to compile assets and run standalone JavaScript
   * MySQL as database server
 
 In the end, you will have a complete leihs production environment.
@@ -63,6 +64,7 @@ Download and install Node.js, a JavaScript runtime. You can find the latest vers
         # ./configure
         # make
         # make install
+        # ln -s /usr/local/bin/node /usr/bin/node
 
 
 ### Installing Ruby and related software
@@ -319,7 +321,6 @@ Finally, create a shared directory that deploy:setup cannot take care of:
         # mkdir /home/leihs-legacy/shared/sphinx && chown leihs-legacy $_
         # mkdir /home/leihs-legacy/shared/attachments && chown leihs-legacy $_
 
-
 ### Deploying via Capistrano
 
 Time to try out that deployment recipe. Change to the leihs source directory and try to run deploy:setup:
@@ -359,7 +360,30 @@ If you now visit this virtual host in your browser, you should see the leihs 2.9
 
 ### Setting up cronjobs for e-mail reminders
 
-TODO
+Edit the crontab for each leihs instance that you want to have sending automated e-mail reminders:
+
+        # yum install cronie
+        # su - leihs-legacy
+        $ crontab -e
+
+Here is an example crontab entry:
+
+        SHELL=/bin/bash --login
+        1 4     * * *   cd /home/leihs-legacy/current && RAILS_ENV='production' bundle exec rake leihs:cron
+
+This sends e-mail from the leihs 2.9 instance. Since leihs 3.0 does not send e-mail reminders yet, this is the only way to send reminders for the moment.
+
+Note that we are using a bash shell in login mode. This is due to RVM: RVM does some evil things to your shell in order to let you manage multiple Ruby versions. In future, it may be enough to only install Ruby 1.9.3 and not rely on RVM anymore for a production server. Since we need 1.8.7 and 1.9.3 side by side, this is not possible at the moment and we have to use RVM.
+
+
+## Upgrading
+
+Since we put all our effort into doing a lot of automation in the Capistrano recipes, this pays off now: We can easily upgrade to a new leihs version using Capistrano:
+
+        # cd /root/software/leihs
+        # cap staging-myserver deploy
+
+This is all it takes. All our data should be safely migrated to the new version. In case anything goes wrong, the example Capistrano recipes we provide in our git repository include a backup step that backs up the entire database before starting with any data migration.
 
 
 ## Users, logins and levels 
