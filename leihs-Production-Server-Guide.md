@@ -362,11 +362,17 @@ Observe that / is redirected to / on port 3003 of the same server. If your ports
 
 If you now visit this virtual host in your browser, you should see the leihs 2.9 GUI, pointing at the same database and showing the same data as your leihs 3.0 instance.
 
-### Changing SELinux settings for the web directories
+### Changing SELinux settings
 
 Since you created new users in `/home/leihs-*`, you will have to let SELinux know that the web user can read and write there:
 
         # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-legacy
+
+And also allow the HTTP server to make network connections:
+
+        # /usr/sbin/setsebool httpd_can_network_connect true
+
+Note that if you disable SELinux, of course all these policy settings are no longer necessary. If you have no need for SELinux, this may simplify your setup.
 
 ### Setting up cronjobs for e-mail reminders
 
