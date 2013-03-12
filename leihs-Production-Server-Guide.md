@@ -345,18 +345,18 @@ If all of that worked, we continue with setting up the reverse proxy in Apache.
 Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
 
         <VirtualHost *:80>
-            ServerName leihs-legacy.example.com
+          ServerName leihs-legacy.example.com
 
-            PassengerEnabled off
-            ProxyPass / http://127.0.0.1:3003/
-            ProxyPassReverse / http://127.0.0.1:3003/
+          PassengerEnabled off
+          ProxyPass / http://127.0.0.1:3003/
+          ProxyPassReverse / http://127.0.0.1:3003/
 
-            DocumentRoot /home/leihs-legacy/current/public
-            <Directory /home/leihs-legacy/current/public>
-             AllowOverride none
-             Options -MultiViews
-            </Directory>
-          </VirtualHost>
+          DocumentRoot /home/leihs-legacy/current/public
+          <Directory /home/leihs-legacy/current/public>
+           AllowOverride none
+           Options -MultiViews
+          </Directory>
+        </VirtualHost>
 
 Observe that / is redirected to / on port 3003 of the same server. If your ports are different, adjust accordingly.
 
