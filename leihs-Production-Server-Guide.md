@@ -79,6 +79,10 @@ Reload your shell to make sure RVM is loaded:
 
         # bash --login
 
+Install Ruby 1.9.3 (you may have received Ruby 2.0.0 by default from RVM, which is too new for leihs right now):
+
+        # rvm install 1.9.3 
+
 This will install RVM as well as the latest stable Ruby version and RubyGems, a management system for Ruby libraries.
 
 Now install the Bundler gem, a Ruby dependency manager:
