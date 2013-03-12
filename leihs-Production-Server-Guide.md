@@ -156,7 +156,7 @@ We recommend using SSH public key authentication, but this guide will not explai
 
 Now you are ready to run Capistrano for the first time to set up its directories. From the leihs source code directory, do this:
 
-        # cap staging-myserver deploy
+        # cap staging-myserver setup
 
 You will notice that new directories appeared under /home/leihs-test: `releases` and `shared`. `releases` is where the cloned source code of leihs will appear once you deploy. `shared` is where Capistrano places files that are shared between all deployments of this particular instance, for example images, attachments, user uploads, etc.
 
