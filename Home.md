@@ -74,11 +74,8 @@ So for example:
 `1.0.5-alpha1`
 
 * Major: Backwards-incompatible changes were added. See the [SemVer](http://semver.org/) document for more details.
-
 * Minor: Backwards-compatible changes to the API were made, functionality is marked as deprecated or some new functionality was added.
-
 * Patch: Bugfixes were made, but they are backwards-compatible.
-
 * Pre-release: We only use these when we target a new major version, e.g. 4.0.0-alpha2 is definitely unstable and incomplete code, aiming for a release of version 4.0.0, which is incompatible with version 3.0.0.
 
 
