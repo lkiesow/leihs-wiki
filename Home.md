@@ -63,7 +63,7 @@ leihs is in use at several universities and organizations:
  * Digital Arts Centre, University of Worcester, United Kingdom
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
 
-### Versioning
+## Versioning
 
 We subscribe to the [Semantic Versioning](http://semver.org/) approach, and our versions are handled as follows:
 
@@ -77,7 +77,6 @@ So for example:
 * Minor: Backwards-compatible changes to the API were made, functionality is marked as deprecated or some new functionality was added.
 * Patch: Bugfixes were made, but they are backwards-compatible.
 * Pre-release: We only use these when we target a new major version, e.g. 4.0.0-alpha2 is definitely unstable and incomplete code, aiming for a release of version 4.0.0, which is incompatible with version 3.0.0.
-
 
 ## License
 
