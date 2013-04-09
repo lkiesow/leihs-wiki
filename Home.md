@@ -63,6 +63,25 @@ leihs is in use at several universities and organizations:
  * Digital Arts Centre, University of Worcester, United Kingdom
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
 
+### Versioning
+
+We subscribe to the [Semantic Versioning](http://semver.org/) approach, and our versions are handled as follows:
+
+`Major.Minor.Patch.pre-release`
+
+So for example:
+
+`1.0.5-alpha1`
+
+* Major: Backwards-incompatible changes were added. See the [SemVer](http://semver.org/) document for more details.
+
+* Minor: Backwards-compatible changes to the API were made, functionality is marked as deprecated or some new functionality was added.
+
+* Patch: Bugfixes were made, but they are backwards-compatible.
+
+* Pre-release: We only use these when we target a new major version, e.g. 4.0.0-alpha2 is definitely unstable and incomplete code, aiming for a release of version 4.0.0, which is incompatible with version 3.0.0.
+
+
 ## License
 
 leihs is [Free Software](http://www.gnu.org/philosophy/free-sw.html), licensed under the [GNU General Public License (GPL) version 3.0](http://www.gnu.org/licenses/gpl-3.0.txt).
