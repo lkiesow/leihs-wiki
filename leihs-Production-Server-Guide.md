@@ -28,7 +28,7 @@ Follow the instructions from the leihs Admin Guide for your platform (Debian or 
 
 For Debian-based distros:
 
-        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server
+        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
 
 For RPM-based distros:
 
