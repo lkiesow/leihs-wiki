@@ -47,7 +47,9 @@ Download and install Sphinx (a fulltext search system). In this example we also 
 
         # mkdir -p /root/software
         # cd /root/software
-        # wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
+
+Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphinxsearch.com/downloads/outdated.php?file=sphinx-0.9.9.tar.gz
+
         # tar xvfz sphinx-0.9.9.tar.gz
         # cd sphinx-0.9.9
         # wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
