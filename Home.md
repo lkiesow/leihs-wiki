@@ -59,6 +59,7 @@ leihs is in use at several universities and organizations:
  * [Bern University of the Arts (BUA/HKB)](http://hkb.bfh.ch), Bern, Switzerland
  * [Berliner Technische Kunsthochschule (btk)](http://www.btk-fh.de/), Berlin, Germany
  * [University of Applied Sciences HTW Chur](http://www.fh-htwchur.ch), Switzerland
+ * [Lucerne University of Applied Sciences and Arts](http://www.hslu.ch), Switzerland
  * University of Brighton, United Kingdom
  * Digital Arts Centre, University of Worcester, United Kingdom
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
