@@ -87,7 +87,9 @@ Note that the URL above might change! Please visit the RubyGems site to find the
 3. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
 
         $ cd /tmp
-        $ wget http://sphinxsearch.com/downloads/sphinx-0.9.9.tar.gz
+
+Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphinxsearch.com/downloads/outdated.php?file=sphinx-0.9.9.tar.gz
+
         $ tar xvfz sphinx-0.9.9.tar.gz
         $ cd sphinx-0.9.9
         $ wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
