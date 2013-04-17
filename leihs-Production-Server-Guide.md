@@ -37,7 +37,7 @@ For RPM-based distros:
 
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
-## A not on SELinux
+## A note on SELinux
 
 You will need to *disable SELinux* for these instructions to work. Phusion Passenger does not work well with SELinux. To disable SELinux on CentOS, for example, change SELINUX to "disabled" in /etc/selinux/config and restart.
 
