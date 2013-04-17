@@ -1,6 +1,30 @@
 **NOTE:** This guide is not yet complete, but we're working on it and adding sections whenever we encounter something that might interest other developers. If you happen to run into a problem or discover an undocumented workflow during development, please document it here.
 
 
+# Tests
+
+To run our test suite, you need to make sure the directories for the test result reports exist:
+
+    $ mkdir tmp/html tmp/junit tmp/capybara
+
+Afterwards, it's easy to run the entire test suite:
+
+    $ RAILS_ENV=test bundle exec rake leihs:test
+
+This will first run the Rspec tests (they are more low-level), and if those are successful, the Cucumber tests, examples and scenarios (those are higher-level).
+
+You can also run a single rspec test:
+
+
+    $ RAILS_ENV=test bundle exec rspec spec/something_spec.rb
+
+
+Or a single Cucumber scenario or feature file:
+    
+    $ RAILS_ENV=test bundle exec cucumber -p all features/examples/something.feature
+
+Please run the entire test suite before and after making any changes to the code, so you can detect whether your change introduced any defects into the code, and also so you know whether those defects weren't there already when you got it :)
+
 # Translation
 
 Our translation system is [gettext](http://www.gnu.org/software/gettext/). We chose gettext because simpler, more primitive translation systems usually find out that they are not good enough for the tough world of internationalization, and then go on to reinvent gettext. Since gettext has already done that more than a decade ago, we stick with it. Also, it's easier to get translation files in .po format from professional software translation services.
