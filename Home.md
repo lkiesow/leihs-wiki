@@ -22,24 +22,17 @@ Demo data is deleted and reset every 24 hours.
 ### Manager
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
-Username: manager_user
-
-Password: pass
+Username: manager_user, password: pass
 
 ### Normal user
 Can book equipment through the frontend and has no backend access.
 
-Username: normal_user
-
-Username: pass
+Username: normal_user, password: pass
 
 ### Admin user
 Can manage the system, create system-wide categories, create and remove new inventory pools.
 
-Username: super_user_1
-
-Username: pass
-
+Username: super_user_1, password: pass
 
 
 ## Most important links
@@ -49,7 +42,7 @@ Username: pass
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
  * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
- * Chat with us on IRC, channel #leihs on [Freenode](http://freenode.net/).
+ * Chat with us on IRC, channel #leihs on [Freenode](http://freenode.net/). If you don't have an IRC client, you can use [webchat](https://webchat.freenode.net/?channels=#leihs).
  * Commercial support for leihs from the ZHdK: Talk to Ramón about this at ramon.cahenzli@zhdk.ch
 
 ## References (Who uses leihs?)
