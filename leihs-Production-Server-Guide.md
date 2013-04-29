@@ -15,7 +15,6 @@ We will use these components:
   * Apache to provide a web server
   * Apache's mod_proxy if you want to run leihs 2.9 and 3.0 in parallel
   * Passenger Standalone if you want to run leihs 2.9 and 3.0 in parallel
-  * Node.js to compile assets and run standalone JavaScript
   * MySQL as database server
 
 In the end, you will have a complete leihs production environment.
@@ -56,17 +55,6 @@ Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphi
         # tar xvfz libstemmer_c.tgz
         # ./configure --with-libstemmer && make
         # make install
-
-Download and install Node.js, a JavaScript runtime. You can find the latest version at http://nodejs.org.
-
-        # cd /root/software
-        # wget http://nodejs.org/dist/v0.8.20/node-v0.8.20.tar.gz
-        # tar xvfz node-v0.8.20.tar.gz
-        # cd node-v0.8.20
-        # ./configure
-        # make
-        # make install
-        # ln -s /usr/local/bin/node /usr/bin/node
 
 
 ### Installing Ruby and related software
