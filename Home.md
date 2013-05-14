@@ -15,7 +15,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 ## Live demo
 
-You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
+You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. You can also try the new leihs 3 alpha at http://new.demo.leihs.zhdk.ch, but please note that only manager users are valid there. Normal users don't work on leihs 3.0 at the moment. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 Demo data is deleted and reset every 24 hours.
 
