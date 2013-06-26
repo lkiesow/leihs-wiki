@@ -38,7 +38,7 @@ Username: super_user_1, password: pass
 ## Most important links
 
  * [Installing leihs on your server](wiki/leihs-Admin-Guide)
- * [Downloadable packages](http://github.com/zhdk/leihs/downloads) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
+ * [Downloadable packages](https://github.com/zhdk/leihs/tags) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
  * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
