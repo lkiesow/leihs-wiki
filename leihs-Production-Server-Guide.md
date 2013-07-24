@@ -19,20 +19,28 @@ We will use these components:
 
 In the end, you will have a complete leihs production environment.
 
+_This guide is aimed at experienced GNU/Linux system administrators._ If you have little experience managing GNU/Linux systems or automated deployment systems, you may need to get comfortable with your server environment first; especially managing Apache modules and sites and working with your package manager.
+
+
+## Hardware requirements
+
+You will need at least 1024 MB of memory if you choose to install Capistrano on the same host as the server runs on.
+
+If you run Capistrano on your local workstation and simply deploy to a remote leihs server, you will get by with 512 MB of RAM on the server if you can burst to 1024 MB during the asset precompilation stage that happens automatically on every deploy.
+
+Disk requirements are around 500 MB per instance. The biggest variable is how many images and attachments your users upload.
+
 
 ## Base system
 ### Installing the base components
 
-Follow the instructions from the leihs Admin Guide for your platform (Debian or RPM-based distribution). *But instead of installing Ruby from your package manager in step 1, substitute this new step 1*.
-
 For Debian-based distros:
 
-        # apt-get install curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+        # apt-get install build-essential make libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libcurl4-openssl-dev apache2-prefork-dev apache2 mysql libmagickwand-dev
 
 For RPM-based distros:
 
-        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server ImageMagick ImageMagick-devel
-
+        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server ImageMagick ImageMagick-devel gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server mysql httpd curl-devel httpd-devel apr-devel apr-util-devel
 
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
@@ -63,7 +71,7 @@ Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphi
 
 The RVM install process is usually aided by a simple Bash script you can execute directly. We recommend installing as root, which will create a system-wide RVM installation instead of a per-user RVM installation:
 
-        # curl -L https://get.rvm.io | bash -s stable --ruby 
+        # curl -L https://get.rvm.io | bash -s stable
 
 Reload your shell to make sure RVM is loaded:
 
@@ -203,18 +211,23 @@ These directories are shared between all releases deployed from one recipe.
 
 Your server will run leihs 3.x using Ruby 1.9.x inside Apache. This is in contrast to leihs 2.9.x, which needs to be run on Ruby 1.8.7 and will be handled differently and in a separate process later on.
 
-        # yum install httpd curl-devel httpd-devel apr-devel apr-util-devel
         # rvm use 1.9.3
         # gem install passenger
         # passenger-install-apache2-module
 
-Now create `/etc/httpd/conf.d/passenger.conf` and enter the module loading parameters that were given to you by the Passenger installer.
+Now create `/etc/httpd/conf.d/passenger.conf` (on CentOS/RedHat) or `/etc/apache2/mods-available/passenger.load` (on Debian) and enter the module loading parameters that were given to you by the Passenger installer.
 
-Restart Apache.
+If on Debian, enable the module with `a2enmod passenger`.
+
+Restart Apache (CentOS/RedHat):
 
         # /etc/init.d/httpd restart
 
-It should start fine now. Create a virtual host for your new test instance. The virtual host configuration could go into e.g. `/etc/httpd/conf.d/leihs-test.conf` and can look like this:
+Restart Apache (Debian):
+
+        # service apache2 restart
+
+It should start fine now. Create a virtual host for your new test instance. The virtual host configuration could go into e.g. `/etc/httpd/conf.d/leihs-test.conf` on CentOS/RedHat or  `/etc/apache2/sites-available/leihs-test` and can look like this:
 
         <VirtualHost *:80>
             ServerName leihs-test.example.com
@@ -226,7 +239,11 @@ It should start fine now. Create a virtual host for your new test instance. The 
           </VirtualHost>
 
 
+If on Debian, enable the site with `a2ensite leihs-test`.
+
 The important part is that this points at a directory called `public`, that enables Passenger to recognize that this is a Rails application it's supposed to serve.
+
+Do not restart Apache just yet.
 
 
 ### Deploying in hot mode and creating the default data
@@ -243,7 +260,7 @@ Since this is a first-time installation, you will have to seed the default data 
         $ RAILS_ENV=production bundle exec rake db:seed
         $ exit
 
-And restart Apache.
+And now finally restart Apache.
 
 Navigate to the location of your virtual host (e.g. http://leihs-test.example.com) and see if you can log in as user "super_user_1" with password "password". If so, this concludes our installation of leihs 3.x.
 
@@ -251,6 +268,8 @@ You should repeat the same procedure for a production instance, so that you have
 
 
 ### Installing leihs 2.9.x in tandem with leihs 3.0
+
+This section is completely optional if you are happy with just running leihs 3.0.
 
 leihs 2.9.x has the ability to run against the same database as leihs 3.0, at the same time. This is useful if you are migrating your organization from leihs 2.9 to leihs 3.0 and want to try out leihs 3.0's new interface in production before making the upgrade.
 
@@ -455,24 +474,3 @@ Do you want to be able to configure all these settings directly in LDAP.yml so i
 
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
 
-
-# Appendix: Working with SELinux
-
-You should disable SELinux to host a Rails server as described here. We have tried getting Phusion Passenger to work on a system that has SELinux, but unfortunately, we were not successful. Passenger seems to do many things that a default RedHat or CentOS SELinux policy configuration will never allow.
-
-Here's how far we got:
-
-Phusion Passenger will probably not even start up with SELinux, and it's notoriously hard to get to work. 
-
-        # chcon -R -h -t httpd_sys_content_t `passenger-config --root`
-
-Since you created new users in `/home/leihs-*`, you will have to let SELinux know that the web user can read and write there:
-
-        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-test
-        # chcon -R -v -t httpd_sys_rw_content_t /home/leihs-legacy
-
-And also allow the HTTP server to make network connections:
-
-        # /usr/sbin/setsebool httpd_can_network_connect true
-
-Otherwise you would receive the error "mod_passenger.so: failed to map segment from shared object: Permission denied". If you don't use SELinux, ignore that.

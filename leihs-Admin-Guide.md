@@ -17,7 +17,7 @@ If you are such a person yourself and would like to have your services listed on
 This section is meant for admins experienced with installing Ruby on Rails applications. It lists the necessary installation steps in the briefest possible way, so you can get up and running quickly.
 
 
-## Installation of the base system Debian GNU/Linux
+## Installation of the base system on Debian GNU/Linux
 
 These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
