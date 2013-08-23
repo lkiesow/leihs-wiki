@@ -25,6 +25,12 @@ Or a single Cucumber scenario or feature file:
 
 Please run the entire test suite before and after making any changes to the code, so you can detect whether your change introduced any defects into the code, and also so you know whether those defects weren't there already when you got it :)
 
+# Troubleshooting and common problems in full-stack browser-based testing
+
+Sebastian has put together a list of common pitfalls and problems in browser-based testing. Since the leihs test suite is mainly in that style, you might profit from knowing this:
+
+https://gist.github.com/spape/6305916
+
 # Translation
 
 Our translation system is [gettext](http://www.gnu.org/software/gettext/). We chose gettext because simpler, more primitive translation systems usually find out that they are not good enough for the tough world of internationalization, and then go on to reinvent gettext. Since gettext has already done that more than a decade ago, we stick with it. Also, it's easier to get translation files in .po format from professional software translation services.
