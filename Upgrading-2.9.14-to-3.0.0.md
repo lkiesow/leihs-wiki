@@ -225,6 +225,7 @@ This will ensure that future upgrades to leihs 3 will not break your configurati
 
 leihs 2.9 needed more packages and external dependencies than leihs 3.0. It also needed Ruby 1.8, which you don't need for 3.0. You can remove these unnecessary packages if you like, saving some space on your server and getting rid of dead code.
 
+If you're not sure whether you still need any of these packages for other software, do not remove them.
 
 ### Removing Ruby 1.8.7
 
