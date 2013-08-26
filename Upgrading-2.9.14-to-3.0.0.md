@@ -44,7 +44,27 @@ If you *do not* want to use RVM, you can install a system-wide Ruby 1.9.x versio
 
 ## Upgrading Bundler and Rubygems
 
-You should already have Bundler installed 
+If you use a RVM-managed Ruby, you can update Rubygems:
+
+    # gem update --system
+
+If you use the Debian-managed Ruby, you should *not* update Rubygems in that way. This is managed by your package manager instead.
+
+In both cases, you can install the latest version of Bundler, however:
+
+    # gem install bundler
+
+
+# Retrieving the leihs 3 source code
+
+This step depends a bit on how you've installed leihs 2.9 (from git or from a tarball). We assume that you've installed from a tarball, for example to `/home/leihs2.9` and you're going to install 3.0 in `/home/leihs-3.0.0-alpha.11`.
+
+    # mkdir /home/leihs3.0
+    # cd /home/leihs3.0
+    # wget https://github.com/zhdk/leihs/archive/3.0.0-alpha.11.tar.gz
+    # tar xvfz 3.0.0-alpha.11.tar.gz
+
+Of course you should use the latest leihs version, not 3.0.0-alpha.11. This will give you a new directory `/home/leihs-3.0.0-alpha.11`.
 
 
 # Migrating your existing configuration
