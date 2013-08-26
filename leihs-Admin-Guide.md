@@ -281,6 +281,15 @@ Think of this manager as a "senior manager".
 
 ## Performing upgrades
 
+
+### Upgrading from leihs 2.9.14 to leihs 3.0.0
+
+This is a major upgrade that removes many dependencies from your leihs installation, but adds some others.
+
+Since the guide is pretty long, we have covered this on a separate page: [Upgrading-2.9.14-to-3.0.0].
+
+
+
 ### Upgrading from one 2.9.x version to another 
 
 Make absolutely sure to **back up** your entire leihs installation as well as your entire leihs database before starting.
