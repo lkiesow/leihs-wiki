@@ -18,7 +18,7 @@ Our old guides were written for Debian GNU/Linux 6.0 (squeeze). If you have not 
 
 The following should be enough:
 
-    apt-get install build-essential make libxslt-dev libxml2-dev curl make build-essential git libxslt-dev libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libcurl4-openssl-dev libmagickwand-dev
+    apt-get install build-essential make libxslt-dev libxml2-dev curl make build-essential git libxslt-dev libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libcurl4-openssl-dev libmagickwand-dev apache2-prefork-dev apache2 apache2-worker-mpm
 
 ## Installing MariaDB packages
 
@@ -56,6 +56,18 @@ If you use the Debian-managed Ruby, you should *not* update Rubygems in that way
 In both cases, you can install the latest version of Bundler, however:
 
     # gem install bundler
+
+
+# Installing Phusion Passenger
+
+Make sure you are running the right version of Ruby (1.9.3) and then proceed to install the right gems and finally Phusion Passenger:
+
+        # gem install passenger
+        # passenger-install-apache2-module
+
+The Phusion Passenger installer will walk you through install Passenger. If you run into any trouble, see the [Phusion Passenger](http://www.modrails.com) website.
+
+If you want to be extra sure that Passenger is working correctly for you, you could create a virtual host for a Rails application, install the Rails gem and create an empty Rails app to try under that virtual host. We won't cover that here, though, it's beyond the scope of our upgrade guide.
 
 
 # Retrieving the leihs 3 source code
@@ -181,7 +193,7 @@ Something that's new in Rails 3.0 and that you didn't have to do with leihs 2.9 
 This can take a very long time. Don't be alarmed if it runs for more than 15 minutes. You will have to repeat this step every time you upgrade leihs 3.0, but don't worry, we will give you upgrade instructions when the time comes.
 
 
-# Test the server
+# Testing the server
 
 You should be able to try leihs 3.0 now:
 
@@ -192,8 +204,13 @@ This starts a server in production mode on port 3000. Please keep in mind that i
 
 If there were no error messages on the console or in your browser when accessing your leihs installation, you may stop the test server with Ctrl-C.
 
+# Create a virtual host
 
-# Removing obsolete bits of leihs (compulsory)
+Finally, create a virtual host in your Apache configuration that points to `/home/leihs-3.0.0-alpha.11/public`. After enabling the virtual host and restarting Apache, your new leihs installation should now come up at whichever host you configured.
+
+# Cleaning up after ourselves
+
+## Removing obsolete bits of leihs (compulsory)
 
 Above, we created a backup copy of `config/application.rb`. It's time to copy that back in place:
 
@@ -203,12 +220,12 @@ Above, we created a backup copy of `config/application.rb`. It's time to copy th
 This will ensure that future upgrades to leihs 3 will not break your configuration. In future, you will never have to change `config/application.rb`.
 
 
-# Removing obsolete dependencies (optional)
+## Removing obsolete dependencies (optional)
 
 leihs 2.9 needed more packages and external dependencies than leihs 3.0. It also needed Ruby 1.8, which you don't need for 3.0. You can remove these unnecessary packages if you like, saving some space on your server and getting rid of dead code.
 
 
-## Removing Ruby 1.8.7
+### Removing Ruby 1.8.7
 
 leihs 3.0 only uses Ruby 1.9 or higher, so if you don't want to keep leihs 2.9 around, there is no need to have Ruby 1.8:
 
@@ -222,7 +239,7 @@ If you've installed a Debian package for Ruby 1.8.7, you can remove it like so:
         # apt-get autoremove
 
 
-## Removing obsolete dependencies
+### Removing obsolete dependencies
 
 The following packages are not required for leihs 3.0:
 
