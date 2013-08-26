@@ -59,17 +59,36 @@ In both cases, you can install the latest version of Bundler, however:
 
 This step depends a bit on how you've installed leihs 2.9 (from git or from a tarball). We assume that you've installed from a tarball, for example to `/home/leihs2.9` and you're going to install 3.0 in `/home/leihs-3.0.0-alpha.11`.
 
-    # mkdir /home/leihs3.0
-    # cd /home/leihs3.0
+    # cd /home
     # wget https://github.com/zhdk/leihs/archive/3.0.0-alpha.11.tar.gz
     # tar xvfz 3.0.0-alpha.11.tar.gz
 
-Of course you should use the latest leihs version, not 3.0.0-alpha.11. This will give you a new directory `/home/leihs-3.0.0-alpha.11`.
+This will give you a new directory `/home/leihs-3.0.0-alpha.11`. We'll assume that you install and run leihs from there in future. If you use an automated deployment system such as [Capistrano](http://www.capistranorb.com) (which we recommend), the target directory will probably be somewhere else, and will be managed automatically by Capistrano.
+
+But let's continue to imagine we'll put leihs 3.0 in `/home/leihs-3.0.0-alpha.11`, it's easier to illustrate the upgrade process that way.
 
 
 # Migrating your existing configuration
 
-# Installing Ruby 1.9.2 or newer
+You'll have to retrieve some things from your old leihs 2.9 installation:
+
+* Database configuration.
+* Any customization you have done to `config/environment.rb`
+* Any customization you have done to controllers, such as the LDAP authentication controller.
+
+First things first, you will have to copy the username, password, host, port and database name from your old `config/database.yml`. Do *not* copy the `adapter:` line. Instead, you must change the adapter to `mysql2`. The `mysql` adapter only existed for Ruby 1.8, it can't be used on Ruby 1.9 applications. Here is an example that works:
+
+
+        production:
+           adapter: mysql2
+           database: leihs_production
+           encoding: utf8
+           username: root
+           password:
+           host: localhost
+           port: 3306
+
+We use the `mysql2` adapter even though we're connecting to MariaDB. MariaDB is a drop-in replacement for MySQL and as such, the connectors are usually compatible.
 
 
 # Removing obsolete dependencies (optional)
