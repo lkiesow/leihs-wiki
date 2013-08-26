@@ -65,7 +65,7 @@ Make sure you are running the right version of Ruby (1.9.3) and then proceed to 
         # gem install passenger
         # passenger-install-apache2-module
 
-The Phusion Passenger installer will walk you through install Passenger. If you run into any trouble, see the [Phusion Passenger](http://www.modrails.com) website.
+The Phusion Passenger installer will walk you through installing Passenger. If you run into any trouble, see the [Phusion Passenger](http://www.modrails.com) website.
 
 If you want to be extra sure that Passenger is working correctly for you, you could create a virtual host for a Rails application, install the Rails gem and create an empty Rails app to try under that virtual host. We won't cover that here, though, it's beyond the scope of our upgrade guide.
 
@@ -171,7 +171,8 @@ Then install the gems:
         $ cd /home/leihs-3.0.0-alpha.11
         $ bundle install
 
-It will take a while, but finally
+It will take a while, but finally a whole bunch of new gems should be installed under the `leihs` user's account.
+
 
 # Running the new database migrations
 
