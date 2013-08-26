@@ -286,7 +286,7 @@ Think of this manager as a "senior manager".
 
 This is a major upgrade that removes many dependencies from your leihs installation, but adds some others.
 
-Since the guide is pretty long, we have covered this on a separate page: [Upgrading-2.9.14-to-3.0.0].
+Since the guide is pretty long, we have covered this on a separate page: [[Upgrading-2.9.14-to-3.0.0]].
 
 
 
