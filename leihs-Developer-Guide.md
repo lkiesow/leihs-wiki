@@ -29,7 +29,7 @@ Please run the entire test suite before and after making any changes to the code
 
 Sebastian has put together a list of common pitfalls and problems in browser-based testing. Since the leihs test suite is mainly in that style, you might profit from knowing this:
 
-https://gist.github.com/spape/6305916
+https://github.com/spape/integration-tests-failure-types
 
 # Translation
 
@@ -78,5 +78,4 @@ Next, copy the translation template file locale/leihs.pot into the new directory
     $ cp locale/leihs.pot locale/ro/leihs.po
 
 Now continue as described under _Adding missing translations in existing .po files_.
-
 
