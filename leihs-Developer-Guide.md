@@ -1,5 +1,31 @@
 **NOTE:** This guide is not yet complete, but we're working on it and adding sections whenever we encounter something that might interest other developers. If you happen to run into a problem or discover an undocumented workflow during development, please document it here.
 
+# Vagrant virtual machine
+
+The easiest way to work on the leihs source is by using the Vagrant virtual machine we include with the source code. To use Vagrant, you will have to install Vagrant and a supported virtual machine provider (e.g. VirtualBox) on your desktop. Get Vagrant from: http://www.vagrantup.com.
+
+Once you have it, clone the leihs source code from GitHub and change into that directory, on the next branch:
+
+    $ cd leihs
+    $ git checkout next
+    $ vagrant up
+
+This will download a virtual machine, which can take quite a long time. Once it's done, the virtual machine should come up in your virtual machine provider. To enter it:
+
+    $ vagrant ssh
+
+You will be in a shell inside your Vagrant virtual machine. Here, you must precompile the leihs assets in order for production mode to work:
+
+    vagrant@vagrant-debian-wheezy:~$ cd /vagrant
+    vagrant@vagrant-debian-wheezy:~$ RAILS_ENV=production bundle exec rake assets:precompile
+
+This can take 10 - 30 minutes! Afterwards, if you want to use the virtual hosts that we ship inside Vagrant, you have to set up a hosts entry *on your host machine*:
+
+    192.168.10.10    dev.leihs.vagrant
+    192.168.10.10    leihs.vagrant
+
+The application is configured to listen to the virtual host leihs.vagrant to run in production mode and dev.leihs.vagrant to run in development mode. When you make changes to the application, you will want to be working in development mode. The production mode instance is only there for reference and for e.g. doing some superficial benchmarking, as production mode uses caching and is faster than development mode.
+
 
 # Tests
 
