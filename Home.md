@@ -58,6 +58,10 @@ leihs is in use at several universities and organizations:
  * Digital Arts Centre, University of Worcester, United Kingdom
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
 
+## Vagrant virtual machine
+
+We ship a Vagrant virtual machine with this source code, making it easier for other developers to contribute to the development of leihs without having to install anything on their local systems. Please see the [[leihs-Developer-Guide]] for details on Vagrant.
+
 ## Versioning
 
 We subscribe to the [Semantic Versioning](http://semver.org/) approach, and our versions are handled as follows:
