@@ -37,10 +37,9 @@ Username: super_user_1, password: pass
 
 ## Most important links
 
- * [Installing leihs on your server](wiki/leihs-Admin-Guide)
- * [Downloadable packages](https://github.com/zhdk/leihs/tags) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
- * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project
- * [Discussion group](http://groups.google.com/group/leihs) at Google Groups, where you can get free support and where we discuss development and features
+ * [Downloadable packages](https://github.com/zhdk/leihs/releases) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
+ * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project.
+ * [Issues/discussion](http://github.com/zhdk/leihs/issues), where you can discuss new feature ideas and report bugs.
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
  * Chat with us on IRC, channel #leihs on [Freenode](http://freenode.net/). If you don't have an IRC client, you can use [webchat](https://webchat.freenode.net/?channels=#leihs).
  * Commercial support for leihs from the ZHdK: Talk to Ramón about this at ramon.cahenzli@zhdk.ch
