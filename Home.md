@@ -9,7 +9,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 * **Production servers:** The guide above shows only a simple setup. If you want a production-class server using automated deployment, Phusion Passenger, Apache, Node.js etc., you can find a long and detailed example of how to set up something like that in the [[leihs-Production-Server-Guide]].
 
-* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]].
+* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]]. Also, see [[Contributing]] for information about how to get your contributions back into the project.
 
 * **User guide:** There is no user guide for leihs yet. Do you want to write one? Feel free to start a new page on this wiki.
 
