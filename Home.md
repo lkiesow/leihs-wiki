@@ -23,7 +23,6 @@ Demo data is deleted and reset every 24 hours.
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
 Username: manager_user, password: pass
-
 ### Normal user
 Can book equipment through the frontend and has no backend access.
 
@@ -58,18 +57,7 @@ leihs is in use at several universities and organizations:
 
 ## Versioning
 
-We subscribe to the [Semantic Versioning](http://semver.org/) approach, and our versions are handled as follows:
-
-`Major.Minor.Patch.pre-release`
-
-So for example:
-
-`1.0.5-alpha1`
-
-* Major: Backwards-incompatible changes were added. See the [SemVer](http://semver.org/) document for more details.
-* Minor: Backwards-compatible changes to the API were made, functionality is marked as deprecated or some new functionality was added.
-* Patch: Bugfixes were made, but they are backwards-compatible.
-* Pre-release: We only use these when we target a new major version, e.g. 4.0.0-alpha2 is definitely unstable and incomplete code, aiming for a release of version 4.0.0, which is incompatible with version 3.0.0.
+We subscribe to the [Semantic Versioning](http://semver.org/) approach.
 
 ## License
 
