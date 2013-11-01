@@ -9,7 +9,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 * **Production servers:** The guide above shows only a simple setup. If you want a production-class server using automated deployment, Phusion Passenger, Apache, Node.js etc., you can find a long and detailed example of how to set up something like that in the [[leihs-Production-Server-Guide]].
 
-* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]]. Also, see [[Contributing]] for information about how to get your contributions back into the project.
+* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]]. Also, see **[[Contributing]]** for information about how to get your contributions back into the project.
 
 * **User guide:** There is no user guide for leihs yet. Do you want to write one? Feel free to start a new page on this wiki.
 
@@ -42,7 +42,6 @@ Username: super_user_1, password: pass
  * [Issues/discussion](http://github.com/zhdk/leihs/issues), where you can discuss new feature ideas and report bugs.
  * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where we plan our work and decide when things get done.
  * Chat with us on IRC, channel #leihs on [Freenode](http://freenode.net/). If you don't have an IRC client, you can use [webchat](https://webchat.freenode.net/?channels=#leihs).
- * Commercial support for leihs from the ZHdK: Talk to Ramón about this at ramon.cahenzli@zhdk.ch
 
 ## References (Who uses leihs?)
 
@@ -56,10 +55,6 @@ leihs is in use at several universities and organizations:
  * University of Brighton, United Kingdom
  * Digital Arts Centre, University of Worcester, United Kingdom
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
-
-## Vagrant virtual machine
-
-We ship a Vagrant virtual machine with this source code, making it easier for other developers to contribute to the development of leihs without having to install anything on their local systems. Please see the [[leihs-Developer-Guide]] for details on Vagrant.
 
 ## Versioning
 

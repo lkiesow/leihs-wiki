@@ -20,7 +20,7 @@ You can also run a single rspec test:
 
 
 Or a single Cucumber scenario or feature file:
-    
+
     $ RAILS_ENV=test bundle exec cucumber -p all features/examples/something.feature
 
 Please run the entire test suite before and after making any changes to the code, so you can detect whether your change introduced any defects into the code, and also so you know whether those defects weren't there already when you got it :)
