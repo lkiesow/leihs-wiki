@@ -5,103 +5,61 @@ Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
 leihs is web-based inventory handling and resource booking system. It allows users to view available equipment and place reservations through the frontend. Inventory managers and sysadmins use the backend to handle incoming reservations and manage items in the inventory.
 
-This guide shows you how to install a leihs server. The guide is written from the perspective of a system administrator or developer. If you are interested in running leihs in your own organization but aren't a sysadmin, talk to your IT department. leihs is not intended to be installed on a client, so any software installation on your own machine isn't necessary. All you need is a web browser.
+This guide shows you how to install a leihs server. The guide is written from the perspective of a system administrator or developer. If you are interested in running leihs in your own organization but aren't a sysadmin, talk to your IT department. leihs is not intended to be installed on a client, so any software installation on your own machine isn't necessary. All you need is a web browser, the rest can be taken care of by your IT department.
 
 Consulting and installation services are also available from independent companies supporting Free Software all around the world. Ask around for a company or individual who knows Ruby on Rails applications, you will surely find someone who can help you install leihs.
 
-If you are such a person yourself and would like to have your services listed on the leihs project website and in this document, please write me an e-mail.
+If you are such a person yourself and would like to have your services listed on the leihs project website and in this document, please write an e-mail to ramon.cahenzli@zhdk.ch.
 
+## A note on RVM and other Ruby version managers
 
-## Quick Install
+In the Ruby world, one of the more prominent issues is that Ruby development moves ahead much faster than the development of GNU/Linux distributions. The result is that your GNU/Linux distribution will often have an outdated version of Ruby. To counter this, the Ruby community has developed several version managers that allow you to download, compile and install different versions of Ruby in parallel.
 
-This section is meant for admins experienced with installing Ruby on Rails applications. It lists the necessary installation steps in the briefest possible way, so you can get up and running quickly.
+The advantage is that you can theoretically use any version of Ruby on any GNU/Linux distribution. The disadvantage is that a Ruby version manager adds another layer of complexity to the installation of web applications.
+
+That's why this guide describes installing leihs using the packaged and possibly outdated Ruby of your GNU/Linux distribution. If you know what you're doing around Ruby version managers, feel free to adapt these steps so they fit with a version-managed Ruby install. The leihs developers have had good experiences with both RVM and rbenv, but it would make this guide unecessarily complex to describe the installation of leihs on top of a version-managed Ruby.
+
+We assume that if you have the need to use a Ruby version manager, you probably know enough about Ruby to configure a Rails web application accordingly.
 
 
 ## Installation of the base system on Debian GNU/Linux
 
-These instructions were tested on a minimal install of Debian GNU/Linux 5.0 (Lenny) and Debian GNU/Linux 6.0 (Squeeze). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
+These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (wheezy). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
-1. Install Ruby, irb, libxslt, Cairo, MySQL client libraries, libxml2:
+1. Install some build essentials, Ruby, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
-        # apt-get install ruby irb rdoc build-essential make libopenssl-ruby ruby-dev libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev
+        # apt-get install ruby1.9.3 irb rdoc build-essential make libopenssl-ruby ruby-dev libxslt-dev libmysqlclient-dev libxml2-dev
 
-2. Install the MySQL header files and the MySQL gem:
-
-        # apt-get install libmysqlclient15-dev
-        # gem install mysql
-
-3. Install ImageMagick:
+2. Install ImageMagick:
 
         # apt-get install imagemagick libmagickwand-dev
-
-4. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # apt-get install memcached
-
-    Don't forget to set ENABLE_MEMCACHED to "yes" in /etc/defaults/memcached
 
 
 ## Installation of the base system on RedHat Enterprise Linux, Fedora or CentOS
 
 Please note that **this distribution is not officially supported**, but you are welcome to try these instructions. They were verified on CentOS 6.3.
 
-1. Install Ruby, libxslt, Cairo, MySQL client libraries, libxml2, gcc and some required dependencies:
+1. Install libxslt, MySQL client libraries, libxml2, gcc and some required dependencies:
 
-        # yum install wget ruby irb gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel
+        # yum install wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel
 
-2. Install the MySQL header files and the MySQL gem:
+2. Install [RVM](http://rvm.io/), since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # yum install mysql-server mysql gcc make ruby-devel
-        # gem install mysql
+        # rvm install 1.9.3-p448
 
 3. Install ImageMagick:
 
-        # yum install ImageMagick ImageMagick-devel 
+        # yum install ImageMagick ImageMagick-devel
 
-4. Optional: Speed boost thanks to memcached
-
-    You can install memcached in order to make leihs perform faster, especially for activities that require recalculations of item availability. Memcached can speed up the system by several orders of magnitude.
-
-        # yum install memcached
 
 ## Installing the platform-independent components
 
 These steps apply for both Debian-based and RPM-based distributions.
 
-1. Download the latest version of leihs from our [SourceForge project page](http://sourceforge.net/projects)/leihs. Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
-
-
-2. Install RubyGems from [the RubyGems website](http://rubygems.org/). Make sure *not to install* the edition of RubyGems that is available from Debian's package archives. RubyGem development moves so quickly that we need to use the one from upstream.
-
-        # cd /tmp
-        # wget http://production.cf.rubygems.org/rubygems/rubygems-1.5.2.tgz 
-        # tar xvfz rubygems-1.5.2.tgz
-        # cd rubygems-1.5.2
-        # ruby setup.rb
-        # ln -s /usr/bin/gem1.8 /usr/bin/gem
-
-Note that the URL above might change! Please visit the RubyGems site to find the exact URL under "Downloads". It is important that you use version 1.5.2 or 1.5.3 or RubyGems because newer versions don't work with Rails 2.3.5, which leihs uses.
-
-3. Download Sphinx (a fulltext search system) and install thinking-sphinx (a gem). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9:
-
-        $ cd /tmp
-
-Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphinxsearch.com/downloads/outdated.php?file=sphinx-0.9.9.tar.gz
-
-        $ tar xvfz sphinx-0.9.9.tar.gz
-        $ cd sphinx-0.9.9
-        $ wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
-        $ tar xvfz libstemmer_c.tgz
-        $ ./configure --with-libstemmer && make
-        $ su
-        # make install
-
+1. Download the latest version of leihs from our [GitHub page](http://github.com/zhdk/leihs/releases). Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
 
 4. Install the required version of Rails as well as a few gems that cannot be installed automatically:
 
-        # cd /home/leihs
         # gem install bundler
         # su - leihs
         $ bundle install --deployment --without cucumber development
@@ -130,18 +88,11 @@ Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphi
         $ mkdir -p tmp/sessions
         $ mkdir tmp/cache
         $ mkdir -p log
- 
-8. Configure and start the Sphinx server:
+
+8. Start the leihs server:
 
         $ cd /home/leihs
-        $ RAILS_ENV=production bundle exec rake ts:config
-        $ RAILS_ENV=production bundle exec rake ts:reindex
-        $ RAILS_ENV=production bundle exec rake ts:start
-
-9. Start the leihs server:
-
-        $ cd /home/leihs
-        $ RAILS_ENV=production ./script/server
+        $ RAILS_ENV=production bundle exec rails s
 
     Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
 
@@ -151,9 +102,9 @@ Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphi
 
 10. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
-        1 00    * * *   cd /home/leihs && RAILS_ENV=production rake leihs:cron
+        1 00    * * *   cd /home/leihs && RAILS_ENV=production bundle exec rake leihs:cron
 
-    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
+    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant. If you are using a Ruby version manager, you may run into problems creating cronjobs for it, as your cronjob shell isn't an interactive shell and probably finds neither your Ruby version manager nor a usable version of Ruby. Covering how to adapt your particular Ruby version manager to your cron (or the other way round!) is too complex for this guide.
 
 
 ## Users, logins and levels 
@@ -167,11 +118,9 @@ Please change the super_user_1 password immediately after logging in the first t
 
 ### Hooking up to LDAP for logins 
 
-Currently, leihs contains only a very rudimentary LDAP login adapter. It was developed by the Zurich University of the Arts specifically for the Hochschule der Künste Bern, Switzerland, and some parts of it are hardcoded to fit the environment there.
+Currently, leihs contains only a very rudimentary LDAP login adapter. It was developed by the Zurich University of the Arts specifically for the Hochschule der Künste Bern, Switzerland, and some parts of it are hardcoded to fit the environment there. However, it's not impossible to get leihs to authenticate against your own LDAP server if you are willing to modify two files in leihs.
 
-However, it's not impossible to get leihs to authenticate against your own LDAP server if you are willing to modify two files in leihs.
-
-#### Modifying config/LDAP.yml 
+#### Modifying config/LDAP.yml
 
 Open config/LDAP.yml and adapt the configuration to your own LDAP server:
 
@@ -187,6 +136,8 @@ Open config/LDAP.yml and adapt the configuration to your own LDAP server:
          bind_pwd: ******
 
 You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login.
+
+You will also have to go to the settings dialog in leihs and add the absolute path to your LDAP.yml there in the `ldap_config field.
 
 #### Modifying app/controllers/authenticator/ldap_authentication_controller.rb
 
@@ -211,7 +162,7 @@ You can add any Ruby code here that extracts this user information from your LDA
 
 Finally, you need to tell leihs that you want to use LDAP, not local database authentication. Start a Rails console inside your leihs directory:
 
-    $ RAILS_ENV=production bundle exec ./script/console
+    $ RAILS_ENV=production bundle exec rails c
 
 Then enable LDAP authentication and switch off database authentication:
 
@@ -219,7 +170,7 @@ Then enable LDAP authentication and switch off database authentication:
         >> ldap.is_default = true
         >> ldap.is_active = true
         >> ldap.save
-       
+        
         >> db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
         >> db.is_default = false
         >> db.is_active = false
@@ -281,179 +232,15 @@ Think of this manager as a "senior manager".
 
 ## Performing upgrades
 
-
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
 
 This is a major upgrade that removes many dependencies from your leihs installation, but adds some others.
 
-Since the guide is pretty long, we have covered this on a separate page: [[Upgrading-2.9.14-to-3.0.0]].
+Since the guide is pretty long, we have covered this on a separate page: [Upgrading-2.9.14-to-3.0.0].
 
+### Upgrading from older versions to leihs 2.9.14
 
-
-### Upgrading from one 2.9.x version to another 
-
-Make absolutely sure to **back up** your entire leihs installation as well as your entire leihs database before starting.
-
-1. Download the new leihs version (in this example, 2.9.8 version is used) and unpack it to a new location:
-
-        $ tar xvfz leihs-2.9.8.tar.gz
-        $ cd leihs-2.9.8
-
-2. Copy any images uploaded to your old leihs version so they are also available in the new leihs. 2.9.x refers to your old leihs version in this example:
-
-        $ rm -rf public/images/attachments
-        $ cp -pr ../leihs-2.9.x/public/images/attachments public/images/
-
-3. Copy your old database configuration file:
-
-        $ cp ../leihs-2.9.x/config/database.yml config/
-
-4. Look at your old config/environment.rb file in a text editor. Open the new config/environment.rb. Copy the configuration items from your old config to your new config as necessary. You might find new options in the new environment.rb that weren't present in the old one. Save your new configuration.
-
-5. Install bundler and update rake as root:
-
-        # gem install bundler
-        # gem install rake
-
-6. Run the database migration to get all your data up to the new version:
-
-        $ RAILS_ENV=production rake db:migrate
-
-7. Run the server. Make sure you stop your previous leihs server. If you use mod_passenger, do `touch tmp/restart.txt` instead.
-
-        $ RAILS_ENV=production bundle exec ./script/server
-
-8. Stop the Sphinx server that's running for leihs 2.9.x.:
-
-        $ cd leihs-2.9.x
-        $ RAILS_ENV=production rake ts:stop
-
-9. Reindex Sphinx at the new location and restart the Sphinx server: 
-
-        $ cd leihs-2.9.8
-        $ RAILS_ENV=production bundle exec rake ts:config
-        $ RAILS_ENV=production bundle exec rake ts:reindex
-        $ RAILS_ENV=production bundle exec rake ts:start
-
-If everything went correctly, you should see leihs coming up at http://localhost:3000 or, if using mod_passenger, at the location you configured. 
-
-
-### Upgrading from leihs 2.0 to leihs 2.1 
-
-The upgrade should be painless.
-
-1. Download the new leihs version (in this example, the .tar.gz version is used) and unpack it to a new location:
-
-        $ tar xvfz leihs-2.1.tar.gz
-        $ cd leihs-2.1
-
-2. Copy any images uploaded to your old leihs version so they are also available in the new leihs:
-
-        $ rm -rf public/images/attachments
-        $ cp -pr ../leihs-2.0/public/images/attachments public/images/
-
-3. Copy your old database configuration file:
-
-        $ cp ../leihs-2.0/config/database.yml config/
-
-4. Look at your old config/environment.rb file in a text editor. Open the new config/environment.rb. Copy the configuration items from your old config to your new config as necessary. You might find new options in the new environment.rb that weren't present in the old one. Save your new configuration.
-
-5. Run the database migration to get all your data up to the new version:
-
-        $ RAILS_ENV=production rake db:migrate
-
-6. Rerun the steps from the section "Configure and start the Sphinx server" relevant for your operating system in order to create/update your fulltext search index and make sure Sphinx is running.
-
-7. Run the server. Make sure you stop your previous leihs server!
-
-        $ RAILS_ENV=production ./script/server
-
-If everything went correctly, you should see leihs coming up at http://localhost:3000. 
-
-
-
-### Upgrading from leihs 2.1 to leihs 2.2 
-
-The upgrade should be painless.
-
-1. Download the new leihs version (in this example, the .tar.gz version is used) and unpack it to a new location:
-
-        $ tar xvfz leihs-2.2.tar.gz
-        $ cd leihs-2.2
-
-2. Copy any images uploaded to your old leihs version so they are also available in the new leihs:
-
-        $ rm -rf public/images/attachments
-        $ cp -pr ../leihs-2.1/public/images/attachments public/images/
-
-3. Copy your old database configuration file:
-
-        $ cp ../leihs-2.1/config/database.yml config/
-
-4. Look at your old config/environment.rb file in a text editor. Open the new config/environment.rb. Copy the configuration items from your old config to your new config as necessary. You might find new options in the new environment.rb that weren't present in the old one. Save your new configuration.
-
-5. Run the database migration to get all your data up to the new version:
-
-        $ RAILS_ENV=production rake db:migrate
-
-6. Run the server. Make sure you stop your previous leihs server!
-
-        $ RAILS_ENV=production ./script/server
-
-If everything went correctly, you should see leihs coming up at http://localhost:3000. 
-
-
-### Upgrading from leihs 2.2 to leihs 2.9 
-
-WARNING: You must upgrade from 2.2.x to 2.9.1 before continuing on with the 2.9 series. The reason is that with 2.9, we rolled up all previous migrations into one single file to make future migrations faster and easier. The system will warn you if you try to upgrade beyond 2.9.1 without installing 2.9.1 first. The sequence of actions is the same for all 2.9 releases, so once you have 2.9.1, you can just grab e.g. 2.9.4 and follow these instructions again.
-
-The upgrade should be painless, but please note that the access levels were replaced by user groups in this release. This can give you almost the same behavior, but it's different to manage. You now specify groups in the admin interface or your inventory pool's backend, and then specify how many items of each model that each group can have.
-
-If you had existing user levels in your system, these will be automatically converted to user groups during the database migration (db:migrate). This is documented below.
-
-1. Download the new leihs version (in this example, the .tar.gz version is used) and unpack it to a new location:
-
-        $ tar xvfz leihs-2.9.tar.gz
-        $ cd leihs-2.9
-
-2. Copy any images uploaded to your old leihs version so they are also available in the new leihs:
-
-        $ rm -rf public/images/attachments
-        $ cp -pr ../leihs-2.2/public/images/attachments public/images/
-
-3. Copy your old database configuration file:
-
-        $ cp ../leihs-2.2/config/database.yml config/
-
-4. Look at your old config/environment.rb file in a text editor. Open the new config/environment.rb. Copy the configuration items from your old config to your new config as necessary. You might find new options in the new environment.rb that weren't present in the old one. Save your new configuration.
-
-5. Install bundler and update rake as root:
-
-        # gem install bundler
-        # gem install rake
-
-6. Run the database migration to get all your data up to the new version:
-
-        $ RAILS_ENV=production rake db:migrate
-
-7. Run the server. Make sure you stop your previous leihs server! If you use mod_passenger, do `touch tmp/restart.txt` instead.
-
-        $ RAILS_ENV=production bundle exec ./script/server
-
-8. Stop the Sphinx server that's running for leihs 2.2.:
-
-        $ cd leihs-2.2
-        $ RAILS_ENV=production rake ts:stop
-
-9. Reindex Sphinx at the new location and restart the Sphinx server: 
-
-        $ cd leihs-2.9
-        $ RAILS_ENV=production bundle exec rake ts:config
-        $ RAILS_ENV=production bundle exec rake ts:reindex
-        $ RAILS_ENV=production bundle exec rake ts:start
-
-If everything went correctly, you should see leihs coming up at http://localhost:3000 or, if using mod_passenger, at the location you configured. 
-
+This is described in the guide [Upgrading-older-versions].
 
 
 ## Installing a production environment 
@@ -469,7 +256,7 @@ The Zurich University of the Arts supports Free Software http://www.gnu.org/phil
 
 One of the advantages this freedom brings with it is that it enables anyone in the world to provide local support services for leihs at the same quality level as the Zurich University of the Arts can provide itself.
 
-If you would like to take part in the development of leihs, please see our http://code.zhdk.ch/projects/leihs[project page].
+If you would like to take part in the development of leihs, please see [Contributing].
 
 ## References 
 
@@ -478,72 +265,13 @@ Setting up production environments with Rails:
 * http://www.modrails.com/
 * http://blog.codahale.com/2006/06/19/time-for-a-grown-up-server-rails-mongrel-apache-capistrano-and-you/
 
-## Appendices 
+## Appendices
 
-### Appendix A: ZHdK configuration file for mongrel cluster 
-
-As an example to help you set up a production environment, here is the Apache configuration we use. You will need mod_proxy:
-
-
-
-       <VirtualHost *:80>
-          ServerName ausleihe.zhdk.ch
-       
-          DocumentRoot /home/rails/leihs/leihs/public/
-          ErrorLog /var/log/apache2/leihs/error.log
-       
-          # Which Rails environment to use (production, testing, production)
-          DefaultInitEnv RAILS_ENV production
-          SetEnv RAILS_ENV production
-       
-         # Proxy balancer for leihs
-         <Proxy balancer://leihs_cluster>
-           BalancerMember http://127.0.0.1:10010
-           BalancerMember http://127.0.0.1:10011
-           BalancerMember http://127.0.0.1:10012
-           BalancerMember http://127.0.0.1:10013
-         </Proxy>
-       
-       
-          # We want to completely ignore the application's own
-          # .htaccess, as all relevant options are configured
-          # right here in this file.
-          <Directory /home/rails/leihs/leihs/public>
-             AllowOverride none
-          </Directory>
-       
-       
-          # Don't do forward proxying
-          ProxyRequests Off
-       
-          # Enable reverse proxying
-          <Proxy *>
-            Order deny,allow
-            Allow from all
-          </Proxy>
-       
-          RewriteEngine On
-       
-          # Check for maintenance file. Let apache load it if it exists
-          RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
-          RewriteRule . /system/maintenance.html [L]
-       
-          # Rewrite index to check for static
-          RewriteRule ^/$ /index.html [QSA]
-       
-          # Let apache serve static files (send everything via mod_proxy that
-          # is *no* static file (!-f)
-          RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
-          RewriteRule .* balancer://leihs_cluster%{REQUEST_URI} [L,P,QSA]
-       </VirtualHost>
-
-
-
-### Appendix B: ZHdK configuration file for mod_passenger 
+### Appendix A: ZHdK configuration file for mod_passenger 
 
 This configuration is recommended for anyone who is already running an Apache or nginx web server.
 
-http://www.modrails.com[Download Phusion Passenger] and install it according to the http://modrails.com/install.html[installation instructions].
+[Download Phusion Passenger](http://www.modrails.com) and install it according to the instructions there.
 
 Afterwards, a simple VirtualHost entry will be enough for Apache to pick up your leihs/Rails app:
 
@@ -551,10 +279,10 @@ Afterwards, a simple VirtualHost entry will be enough for Apache to pick up your
        <VirtualHost *:80>
           ServerName your.leihs.example.com
           DocumentRoot /home/leihs/public/
-       
+
           <Directory /home/leihs/public>
              AllowOverride all
              Options -MultiViews
           </Directory>
-       
+   
        </VirtualHost>

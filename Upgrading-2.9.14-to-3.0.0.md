@@ -72,18 +72,18 @@ If you want to be extra sure that Passenger is working correctly for you, you co
 
 # Retrieving the leihs 3 source code
 
-This step depends a bit on how you've installed leihs 2.9 (from git or from a tarball). We assume that you've installed from a tarball, for example to `/home/leihs2.9` and you're going to install 3.0 in `/home/leihs-3.0.0-alpha.11`.
+This step depends a bit on how you've installed leihs 2.9 (from git or from a tarball). We assume that you've installed from a tarball, for example to `/home/leihs2.9` and you're going to install 3.0 in `/home/leihs-3.0.2`.
 
         # cd /home
-        # wget https://github.com/zhdk/leihs/archive/3.0.0-alpha.11.tar.gz
-        # tar xvfz 3.0.0-alpha.11.tar.gz
-        # chown -R leihs /home/leihs-3.0.0-alpha.11
+        # wget https://github.com/zhdk/leihs/archive/3.0.2.tar.gz
+        # tar xvfz 3.0.2.tar.gz
+        # chown -R leihs /home/leihs-3.0.2
 
 Note that we assume you have a user `leihs` that you ran leihs 2.9 as, and that you also want to use for leihs 3.0.
 
-This will give you a new directory `/home/leihs-3.0.0-alpha.11`. We'll assume that you install and run leihs from there in future. If you use an automated deployment system such as [Capistrano](http://www.capistranorb.com) (which we recommend), the target directory will probably be somewhere else, and will be managed automatically by Capistrano.
+This will give you a new directory `/home/leihs-3.0.2`. We'll assume that you install and run leihs from there in future. If you use an automated deployment system such as [Capistrano](http://www.capistranorb.com) (which we recommend), the target directory will probably be somewhere else, and will be managed automatically by Capistrano.
 
-But let's continue to imagine we'll put leihs 3.0 in `/home/leihs-3.0.0-alpha.11`, it's easier to illustrate the upgrade process that way.
+But let's continue to imagine we'll put leihs 3.0 in `/home/leihs-3.0.2`, it's easier to illustrate the upgrade process that way.
 
 
 # Migrating your existing configuration
@@ -116,18 +116,10 @@ We use the `mysql2` adapter even though we're connecting to MariaDB. MariaDB is 
 
 ## environment.rb customizations
 
-If you have changed any of the constants in `config/environment.rb` in your leihs 2.9 installation, you will have to make the same alterations to `config/application.rb` in leihs 3.0. First, make a backup copy of the `application.rb` that comes with leihs:
+If you have changed any of the constants in `config/environment.rb` in your leihs 2.9 installation, you will have to transfer these settings to the new Settings area in the admin section.
 
-        $ cp config/application.rb config/application.rb.bak
+Examples for these settings are:
 
-We will need this later on. Then copy all the constants you want to use in leihs 3.0 from `config/environment.rb` in your leihs 2.9 installation to `config/application.rb` in leihs 3.0. Some examples of constants and settings that go in `config/application.rb`:
-
-        ActionMailer::Base.smtp_settings = {
-          :address => "smtp.yourcompany.co.uk",
-          :port => 25,
-          :domain => "yourcompany.co.uk"
-        }
-        ActionMailer::Base.default :charset => 'utf-8'
 
         LOCAL_CURRENCY_STRING = "GBP"
         CONTRACT_TERMS = "Don't break anything, please"
@@ -138,7 +130,8 @@ We will need this later on. Then copy all the constants you want to use in leihs
         DELIVER_ORDER_NOTIFICATIONS = false
         USER_IMAGE_URL = "http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}"
 
-At a later point, we will be able to remove these constants again since the upgrade process will write them to the database, making changes to config/application.rb obsolete. But for now, we need to have these values there.
+Copy these settings to some safe place so you can copy/paste them into your browser later. *Do not* use a `config/environment.rb` file with leihs 3.0.0. This file only applies to leihs 2.9.
+
 
 
 ## Controller customizations
@@ -150,8 +143,8 @@ If you have customized any controllers, e.g. the LDAP authentication controller,
 
 Let's copy the images and attachments to leihs 3.0. They can be used unaltered for both leihs 2 and leihs 3:
 
-        $ cp -a /home/leihs2.9/public/images/attachments /home/leihs-3.0.0-alpha.11/public/images/attachments
-        $ cp -a /home/leihs2.9/public/attachments /home/leihs-3.0.0-alpha.11/public/attachments
+        $ cp -a /home/leihs2.9/public/images/attachments /home/leihs-3.0.0/public/images/attachments
+        $ cp -a /home/leihs2.9/public/attachments /home/leihs-3.0.0/public/attachments
 
 If you've done something else, like symlinking your images to some central location, you can of course simply link your leihs 3 attachments and image attachment directories to those locations as well. Nothing will break.
 
@@ -164,11 +157,11 @@ Install the Rubygems necessary for leihs 3.0. First off, verify that you're runn
 
 The output should look something like this:
 
-        ruby 1.9.3p194 (2012-04-20 revision 35410) [i486-linux]
+        ruby 1.9.3p448 (2013-06-27 revision 41675) [i686-linux]
 
 Then install the gems:
 
-        $ cd /home/leihs-3.0.0-alpha.11
+        $ cd /home/leihs-3.0.0
         $ bundle install
 
 It will take a while, but finally a whole bunch of new gems should be installed under the `leihs` user's account.
@@ -178,7 +171,7 @@ It will take a while, but finally a whole bunch of new gems should be installed 
 
 Now *back up your production database*. Once you're done, continue by migrating the database:
 
-        $ cd /home/leihs-3.0.0-alpha.11
+        $ cd /home/leihs-3.0.0
         $ RAILS_ENV=production bundle exec rake db:migrate
 
 If everything went well, the migration took some time but exited without errors.
@@ -188,7 +181,7 @@ If everything went well, the migration took some time but exited without errors.
 
 Something that's new in Rails 3.0 and that you didn't have to do with leihs 2.9 (because it uses Rails 2.1) is precompile assets. Precompiling will generate all sorts of images, JavaScripts etc. that are necessary to display the leihs web pages.
 
-        $ cd /home/leihs-3.0.0-alpha.11
+        $ cd /home/leihs-3.0.0
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
 This can take a very long time. Don't be alarmed if it runs for more than 15 minutes. You will have to repeat this step every time you upgrade leihs 3.0, but don't worry, we will give you upgrade instructions when the time comes.
@@ -198,28 +191,20 @@ This can take a very long time. Don't be alarmed if it runs for more than 15 min
 
 You should be able to try leihs 3.0 now:
 
-        $ cd /home/leihs-3.0.0-alpha.11
+        $ cd /home/leihs-3.0.0
         $ RAILS_ENV=production bundle exec rails s -p 3000
 
 This starts a server in production mode on port 3000. Please keep in mind that in production mode, your Rails server will not serve any assets, so if you visit your server at port 3000 in your browser, you will get a page that looks weird. You will either have to start serving static assets through this Rails server by setting `config.serve_static_assets` to `true` in `config/environments/production.rb` or you will have to install an e.g. Apache or nginx server in front of your leihs installation through Phusion Passenger.
 
 If there were no error messages on the console or in your browser when accessing your leihs installation, you may stop the test server with Ctrl-C.
 
-# Create a virtual host
+# Creating a virtual host
 
-Finally, create a virtual host in your Apache configuration that points to `/home/leihs-3.0.0-alpha.11/public`. After enabling the virtual host and restarting Apache, your new leihs installation should now come up at whichever host you configured.
+Finally, create a virtual host in your Apache configuration that points to `/home/leihs-3.0.0/public`. After enabling the virtual host and restarting Apache, your new leihs installation should now come up at whichever host you configured.
+
+Now is a good time to insert the settings you copied from your `config/environment.rb` file. Log in as an administrator and go to "Settings". You should recognize most options there.
 
 # Cleaning up after ourselves
-
-## Removing obsolete bits of leihs (compulsory)
-
-Above, we created a backup copy of `config/application.rb`. It's time to copy that back in place:
-
-        $ cd /home/leihs-3.0.0-alpha.11
-        $ cp config/application.rb.bak config/application.rb
-
-This will ensure that future upgrades to leihs 3 will not break your configuration. In future, you will never have to change `config/application.rb`.
-
 
 ## Removing obsolete dependencies (optional)
 
