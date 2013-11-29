@@ -245,7 +245,7 @@ This is described in the guide [Upgrading-older-versions].
 
 ## Installing a production environment 
 
-Please note that this quick-start guide does not cover running a Ruby on Rails application for production. Please look into http://www.modrails.com/[Phusion Passenger] or the Apache Mongrel cluster in the reference section for how to set up a production environment.
+Please note that this quick-start guide does not cover running a Ruby on Rails application for production. Please look into [Phusion Passenger](http://www.modrails.com/) for how to set up a production environment.
 
 Without a real production environment, leihs can handle upwards of 1000 users (not concurrently, of course!). If you need better performance or want an easier to handle setup, you must set up a proper production environment.
 
