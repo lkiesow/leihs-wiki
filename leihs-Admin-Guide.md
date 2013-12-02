@@ -26,9 +26,10 @@ We assume that if you have the need to use a Ruby version manager, you probably 
 
 These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (wheezy). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
-1. Install some build essentials, Ruby, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
+1. Install some build essentials, Ruby, Bundler, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
-        # apt-get install ruby1.9.3 irb rdoc build-essential make libopenssl-ruby ruby-dev libxslt-dev libmysqlclient-dev libxml2-dev
+        # apt-get install ruby1.9.3 irb rdoc build-essential make git libopenssl-ruby ruby-dev libxslt-dev libmysqlclient-dev libxml2-dev
+        # gem install bundler
 
 2. Install ImageMagick:
 
@@ -41,11 +42,12 @@ Please note that **this distribution is not officially supported**, but you are 
 
 1. Install libxslt, MySQL client libraries, libxml2, gcc and some required dependencies:
 
-        # yum install wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel
+        # yum install wget gcc gcc-c++ libreadline-devel openssl-devel git libxslt-devel libxml2-devel libxml2 mysql-devel
 
-2. Install [RVM](http://rvm.io/), since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
+2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
         # rvm install 1.9.3-p448
+        # gem install bundler
 
 3. Install ImageMagick:
 
@@ -58,16 +60,20 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 1. Download the latest version of leihs from our [GitHub page](http://github.com/zhdk/leihs/releases). Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
 
-4. Install the required version of Rails as well as a few gems that cannot be installed automatically:
-
-        # gem install bundler
         # su - leihs
+        $ wget https://github.com/zhdk/leihs/archive/3.0.4.tar.gz
+        $ tar xvfz 3.0.4.tar.gz
+
+2. Install the RubyGems that leihs needs. Bundler can do this automatically: 
+
+        # su - leihs
+        $ cd leihs-3.0.4
         $ bundle install --deployment --without cucumber development
 
-5. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
+3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
 
         production:
-           adapter: mysql
+           adapter: mysql2
            database: leihs_production
            encoding: utf8
            username: root
@@ -75,13 +81,13 @@ These steps apply for both Debian-based and RPM-based distributions.
            host: localhost
            port: 3306
 
-6. Create and migrate the database:
+4. Create and migrate the database:
 
         # su - leihs
         $ RAILS_ENV=production bundle exec rake db:migrate
         $ RAILS_ENV=production bundle exec rake db:seed
 
-7. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
+5. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
         $ cd /home/leihs
         $ mkdir -p public/images/attachments
@@ -89,7 +95,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ mkdir tmp/cache
         $ mkdir -p log
 
-8. Start the leihs server:
+6. Start the leihs server:
 
         $ cd /home/leihs
         $ RAILS_ENV=production bundle exec rails s
@@ -100,7 +106,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
     Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-10. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
+7. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   cd /home/leihs && RAILS_ENV=production bundle exec rake leihs:cron
 
