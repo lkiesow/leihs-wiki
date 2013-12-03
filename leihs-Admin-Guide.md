@@ -87,8 +87,9 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         # su - leihs
         $ cd leihs-3.0.4
-        $ RAILS_ENV=production bundle exec rake db:migrate
-        $ RAILS_ENV=production bundle exec rake db:seed
+        $ RAILS_ENV=production bundle exec rake db:create db:migrate db:seed
+
+    If you have created the database by hand earlier, or if the user you're using in config/database.yml does not have privileges to create a database, skip db `db:create` part.
 
 5. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
