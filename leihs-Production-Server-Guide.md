@@ -13,9 +13,7 @@ We will use these components:
   * Capistrano for automated deployment
   * Phusion Passenger to manage the Rails application server pool
   * Apache to provide a web server
-  * Apache's mod_proxy if you want to run leihs 2.9 and 3.0 in parallel
-  * Passenger Standalone if you want to run leihs 2.9 and 3.0 in parallel
-  * MySQL as database server
+  * MariaDB or MySQL as database server
 
 In the end, you will have a complete leihs production environment.
 
@@ -36,33 +34,17 @@ Disk requirements are around 500 MB per instance. The biggest variable is how ma
 
 For Debian-based distros:
 
-        # apt-get install build-essential make libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev curl make build-essential git libxslt-dev libcairo2-dev libmysqlclient-dev libxml2-dev mysql-server libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libcurl4-openssl-dev apache2-prefork-dev apache2 mysql-client libmagickwand-dev
+        # apt-get install build-essential make libxslt-dev libmysqlclient-dev libxml2-dev curl make build-essential git libxslt-dev libmysqlclient-dev libxml2-dev mysql-server libreadline6-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libcurl4-openssl-dev apache2-prefork-dev apache2 mysql-client libmagickwand-dev
 
 For RPM-based distros:
 
-        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server ImageMagick ImageMagick-devel gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel cairo-devel mysql-server mysql httpd curl-devel httpd-devel apr-devel apr-util-devel
+        # yum install curl make git wget gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 mysql-devel mysql-server ImageMagick ImageMagick-devel gcc gcc-c++ libreadline-devel openssl-devel libxslt-devel libxml2-devel libxml2 httpd curl-devel httpd-devel apr-devel apr-util-devel
 
 Continue following the rest of the distribution-specific instructions from step 2 on until you get to the section "Installing the platform-independent components". Instead of following the Admin Guide, follow these steps:
 
 ## A note on SELinux
 
 You will need to *disable SELinux* for these instructions to work. Phusion Passenger does not work well with SELinux. To disable SELinux on CentOS, for example, change SELINUX to "disabled" in /etc/selinux/config and restart.
-
-## Installing the platform-independent components in a production situation
-
-Download and install Sphinx (a fulltext search system). In this example we also include libstemmer, a library that allows for word stem searching in various languages. We use version 0.9.9: 
-
-        # mkdir -p /root/software
-        # cd /root/software
-
-Download the (very old!) Sphinx 0.9.9 version from the archive here: http://sphinxsearch.com/downloads/outdated.php?file=sphinx-0.9.9.tar.gz
-
-        # tar xvfz sphinx-0.9.9.tar.gz
-        # cd sphinx-0.9.9
-        # wget http://snowball.tartarus.org/dist/libstemmer_c.tgz
-        # tar xvfz libstemmer_c.tgz
-        # ./configure --with-libstemmer && make
-        # make install
 
 
 ### Installing Ruby and related software
@@ -79,23 +61,13 @@ Reload your shell to make sure RVM is loaded:
 
 Install Ruby 1.9.3 (you may have received Ruby 2.0.0 by default from RVM, which is too new for leihs right now):
 
-        # rvm install 1.9.3 
+        # rvm install 1.9.3
 
 This will install RVM as well as the latest stable Ruby version and RubyGems, a management system for Ruby libraries.
 
 Now install the Bundler gem, a Ruby dependency manager:
 
         # gem install bundler
-
-Install Ruby 1.8.7 if you want to use leihs 2.9 in parallel with leihs 3.0. If you only want to use 3.0 or higher, this is not necessary:
-
-        # rvm install 1.8.7
-        # rvm use 1.8.7
-        # gem install bundler
-
-Revert to using Ruby 1.9.3 once you're done (we'll be using Ruby 1.9 for Capistrano later on):
-
-        # rvm use 1.9.3
 
 ### Setting up Capistrano
 
@@ -209,7 +181,7 @@ These directories are shared between all releases deployed from one recipe.
 
 ### Installing Phusion Passenger and creating a Rails virtual host
 
-Your server will run leihs 3.x using Ruby 1.9.x inside Apache. This is in contrast to leihs 2.9.x, which needs to be run on Ruby 1.8.7 and will be handled differently and in a separate process later on.
+Your server will run leihs 3.x using Ruby 1.9.x inside Apache:
 
         # rvm use 1.9.3
         # gem install passenger
@@ -265,128 +237,6 @@ And now finally restart Apache.
 Navigate to the location of your virtual host (e.g. http://leihs-test.example.com) and see if you can log in as user "super_user_1" with password "password". If so, this concludes our installation of leihs 3.x.
 
 You should repeat the same procedure for a production instance, so that you have one test and one production server. The instructions for a production server are the same except for the directories and host names.
-
-
-### Installing leihs 2.9.x in tandem with leihs 3.0
-
-This section is completely optional if you are happy with just running leihs 3.0.
-
-leihs 2.9.x has the ability to run against the same database as leihs 3.0, at the same time. This is useful if you are migrating your organization from leihs 2.9 to leihs 3.0 and want to try out leihs 3.0's new interface in production before making the upgrade.
-
-However, since leihs 2.9 needs Ruby 1.8.7 due to its dependencies, you cannot easily run leihs 2.9 in the same Apache instance. Future versions of Phusion Passenger will make this possible, but until then, the best way is to start a separate Passenger Standalone instance using Ruby 1.8.7 and then proxy any requests to the leihs 2.9 instance through a reverse proxy created using Apache's mod_proxy.
-
-First, install the matching Ruby version for leihs 2.9:
-
-        # rvm install 1.8.7
-
-
-### Creating a deployment recipe for leihs 2.9
-
-Go the leihs source code directory and create a new deployment recipe for this legacy instance:
-
-        # cd /root/software/leihs
-        # cp config/deploy/production.rb config/deploy/legacy-myserver.rb
-
-Open `config/deploy/legacy-myserver.rb` in your favorite text editor. You should be familiar with the format of the file now (see above for an explanation). You need to set some special variables for Rails 2.9.x:
-
- * `rvm_ruby_string`: The version of Ruby to use on the target server for running this copy of leihs. 1.8.7 works for leihs 2.9.
- * `app_config`: The location of the `environment.rb` file on the target server. This file is needed to define a few constants and global settings that cannot be set from inside the database.
-
-Around line 143, make sure that the port that is in use there (3003 by default) is still free on this machine. We will be running this instance on port 3003 and then proxy from Apache's port 80 to there. If you need to run on a different port, adapt the following steps accordingly.
-
-The rest is the same as for leihs 3.0.
-
-### Preparing the system for the legacy leihs instance
-
-Create the system user and home directory specified as deploy directory in your deployment recipe. We will use `/home/leihs-legacy` in this example.
-
-Create the database configuration file at the location specified as db_config in your deployment recipe:
-
-        production:
-           adapter: mysql
-           database: leihs_staging
-           encoding: utf8
-           username: root
-           password: root
-           host: localhost
-           port: 3306
-
-Note that leihs 2.9 uses the `mysql` database adapter, not `mysql2`!
-
-Go to the leihs source directory and change to the `master` branch so you can retrieve the `config/environemnt.rb` file from there:
-
-        # cd /root/software/leihs
-        # git checkout master
-        # cp config/environment.rb /home/leihs-legacy/environment.rb
-        # git checkout next
-
-Install passenger-standalone on Ruby 1.8.7
-
-        # rvm use 1.8.7
-        # gem install passenger
-        # passenger start
-
-Starting the server will *fail* with permission denied errors, but that doesn't matter, since the goal was to install a copy of passenger-standalone, the server we will be using to run Ruby 1.8.7 instances. Stop the server with Ctrl-C.
-
-Finally, create a shared directory that deploy:setup cannot take care of:
-
-        # mkdir /home/leihs-legacy/shared/db_backups && chown leihs-legacy $_
-        # mkdir /home/leihs-legacy/shared/sphinx && chown leihs-legacy $_
-        # mkdir /home/leihs-legacy/shared/attachments && chown leihs-legacy $_
-
-### Deploying via Capistrano
-
-Time to try out that deployment recipe. Change to the leihs source directory and try to run deploy:setup:
-
-        # cd /root/software/leihs
-        # cap legacy-myserver deploy:setup
-
-If this worked, you can run a cold deploy:
-
-        # cd /root/software/leihs
-        # cap legacy-myserver deploy:cold
-
-If all of that worked, we continue with setting up the reverse proxy in Apache.
-
-
-### Creating a reverse proxy configuration for the legacy application
-
-Create `/etc/httpd/conf.d/leihs-legacy.conf` with this special virtual host:
-
-        <VirtualHost *:80>
-          ServerName leihs-legacy.example.com
-
-          PassengerEnabled off
-          ProxyPass / http://127.0.0.1:3003/
-          ProxyPassReverse / http://127.0.0.1:3003/
-
-          DocumentRoot /home/leihs-legacy/current/public
-          <Directory /home/leihs-legacy/current/public>
-           AllowOverride none
-           Options -MultiViews
-          </Directory>
-        </VirtualHost>
-
-Observe that / is redirected to / on port 3003 of the same server. If your ports are different, adjust accordingly.
-
-If you now visit this virtual host in your browser, you should see the leihs 2.9 GUI, pointing at the same database and showing the same data as your leihs 3.0 instance.
-
-### Setting up cronjobs for e-mail reminders
-
-Edit the crontab for each leihs instance that you want to have sending automated e-mail reminders:
-
-        # yum install cronie
-        # su - leihs-legacy
-        $ crontab -e
-
-Here is an example crontab entry:
-
-        SHELL=/bin/bash --login
-        1 4     * * *   cd /home/leihs-legacy/current && RAILS_ENV='production' bundle exec rake leihs:cron
-
-This sends e-mail from the leihs 2.9 instance. Since leihs 3.0 does not send e-mail reminders yet, this is the only way to send reminders for the moment.
-
-Note that we are using a bash shell in login mode. This is due to RVM: RVM does some evil things to your shell in order to let you manage multiple Ruby versions. In future, it may be enough to only install Ruby 1.9.3 and not rely on RVM anymore for a production server. Since we need 1.8.7 and 1.9.3 side by side, this is not possible at the moment and we have to use RVM.
 
 
 ## Upgrading
