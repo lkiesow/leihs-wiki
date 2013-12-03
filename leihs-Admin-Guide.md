@@ -96,7 +96,13 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-3.0.4
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
-6. Start the leihs server:
+
+6. Precompile the assets (images, javascripts, etc.):
+
+        $ cd /home/leihs/leihs-3.0.4
+        $ RAILS_ENV=production bundle exec rake assets:precompile
+
+7. Start the leihs server:
 
         $ cd /home/leihs/leihs-3.0.4
         $ RAILS_ENV=production bundle exec rails s
