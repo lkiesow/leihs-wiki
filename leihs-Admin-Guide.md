@@ -70,7 +70,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd leihs-3.0.4
         $ bundle install --deployment --without cucumber development
 
-3. Configure database access for this installation of leihs. Copy the file config/database.yml.example to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs. Here is an example of a production database configuration:
+3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
 
         production:
            adapter: mysql2
@@ -81,23 +81,23 @@ These steps apply for both Debian-based and RPM-based distributions.
            host: localhost
            port: 3306
 
+    You won't need more than a production section, since your leihs instance will be running in the production environment. Rails supports other environments, typically 'development' and 'test', but you won't need those unless you are developing leihs or running the test suite.
+
 4. Create and migrate the database:
 
         # su - leihs
+        $ cd leihs-3.0.4
         $ RAILS_ENV=production bundle exec rake db:migrate
         $ RAILS_ENV=production bundle exec rake db:seed
 
-5. Create any temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
+5. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
-        $ cd /home/leihs
-        $ mkdir -p public/images/attachments
-        $ mkdir -p tmp/sessions
-        $ mkdir tmp/cache
-        $ mkdir -p log
+        $ cd /home/leihs/leihs-3.0.4
+        $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
 6. Start the leihs server:
 
-        $ cd /home/leihs
+        $ cd /home/leihs/leihs-3.0.4
         $ RAILS_ENV=production bundle exec rails s
 
     Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
@@ -108,7 +108,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 7. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
-        1 00    * * *   cd /home/leihs && RAILS_ENV=production bundle exec rake leihs:cron
+        1 00    * * *   cd /home/leihs/leihs-3.0.4 && RAILS_ENV=production bundle exec rake leihs:cron
 
     The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant. If you are using a Ruby version manager, you may run into problems creating cronjobs for it, as your cronjob shell isn't an interactive shell and probably finds neither your Ruby version manager nor a usable version of Ruby. Covering how to adapt your particular Ruby version manager to your cron (or the other way round!) is too complex for this guide.
 
