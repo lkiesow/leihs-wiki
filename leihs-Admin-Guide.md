@@ -125,7 +125,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
     The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant. If you are using a Ruby version manager, you may run into problems creating cronjobs for it, as your cronjob shell isn't an interactive shell and probably finds neither your Ruby version manager nor a usable version of Ruby. Covering how to adapt your particular Ruby version manager to your cron (or the other way round!) is too complex for this guide.
 
-Once you have tested that everything works correctly, make sure
+Once you have tested that everything works correctly, make sure you read through the section below on setting up a real production environment.
 
 ## Users, logins and levels 
 
