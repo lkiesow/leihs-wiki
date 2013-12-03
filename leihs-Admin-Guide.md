@@ -256,11 +256,11 @@ Think of this manager as a "senior manager".
 
 This is a major upgrade that removes many dependencies from your leihs installation, but adds some others.
 
-Since the guide is pretty long, we have covered this on a separate page: [Upgrading-2.9.14-to-3.0.0].
+Since the guide is pretty long, we have covered this on a separate page: [[Upgrading-2.9.14-to-3.0.0]].
 
 ### Upgrading from older versions to leihs 2.9.14
 
-This is described in the guide [Upgrading-older-versions].
+This is described in the guide [[Upgrading-older-versions]].
 
 
 ## Installing a production environment 
@@ -276,7 +276,7 @@ The Zurich University of the Arts supports Free Software http://www.gnu.org/phil
 
 One of the advantages this freedom brings with it is that it enables anyone in the world to provide local support services for leihs at the same quality level as the Zurich University of the Arts can provide itself.
 
-If you would like to take part in the development of leihs, please see [Contributing].
+If you would like to take part in the development of leihs, please see [[Contributing]].
 
 ## References 
 
