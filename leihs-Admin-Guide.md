@@ -102,7 +102,13 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-3.0.4
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
-7. Start the leihs server:
+7. Enable serving static assets by changing the setting in `config/environments/production.rb`:
+
+        config.serve_static_assets = true
+
+    This is only for testing! You will disable this again once you start setting up a real production environment using Phusion Passenger. See 'Setting up a production environment' below for some hints about this.
+
+8. Start the leihs server:
 
         $ cd /home/leihs/leihs-3.0.4
         $ RAILS_ENV=production bundle exec rails s
@@ -113,12 +119,13 @@ These steps apply for both Debian-based and RPM-based distributions.
 
     Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-7. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
+9. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   cd /home/leihs/leihs-3.0.4 && RAILS_ENV=production bundle exec rake leihs:cron
 
     The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant. If you are using a Ruby version manager, you may run into problems creating cronjobs for it, as your cronjob shell isn't an interactive shell and probably finds neither your Ruby version manager nor a usable version of Ruby. Covering how to adapt your particular Ruby version manager to your cron (or the other way round!) is too complex for this guide.
 
+Once you have tested that everything works correctly, make sure
 
 ## Users, logins and levels 
 
