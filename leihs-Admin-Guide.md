@@ -11,16 +11,6 @@ Consulting and installation services are also available from independent compani
 
 If you are such a person yourself and would like to have your services listed on the leihs project website and in this document, please write an e-mail to ramon.cahenzli@zhdk.ch.
 
-## A note on RVM and other Ruby version managers
-
-In the Ruby world, one of the more prominent issues is that Ruby development moves ahead much faster than the development of GNU/Linux distributions. The result is that your GNU/Linux distribution will often have an outdated version of Ruby. To counter this, the Ruby community has developed several version managers that allow you to download, compile and install different versions of Ruby in parallel.
-
-The advantage is that you can theoretically use any version of Ruby on any GNU/Linux distribution. The disadvantage is that a Ruby version manager adds another layer of complexity to the installation of web applications.
-
-That's why this guide describes installing leihs using the packaged and possibly outdated Ruby of your GNU/Linux distribution. If you know what you're doing around Ruby version managers, feel free to adapt these steps so they fit with a version-managed Ruby install. The leihs developers have had good experiences with both RVM and rbenv, but it would make this guide unecessarily complex to describe the installation of leihs on top of a version-managed Ruby.
-
-We assume that if you have the need to use a Ruby version manager, you probably know enough about Ruby to configure a Rails web application accordingly.
-
 
 ## Installation of the base system on Debian GNU/Linux
 
@@ -28,10 +18,14 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 1. Install some build essentials, Ruby, Bundler, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
-        # apt-get install ruby1.9.3 irb rdoc build-essential make git libopenssl-ruby ruby-dev libxslt-dev libmysqlclient-dev libxml2-dev
+        # apt-get install  build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev
+
+2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
+
+        # rvm install 1.9.3-p448
         # gem install bundler
 
-2. Install ImageMagick:
+3. Install ImageMagick:
 
         # apt-get install imagemagick libmagickwand-dev
 
@@ -68,6 +62,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         # su - leihs
         $ cd leihs-3.0.4
+        $ rvm use 1.9.3-p448
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
@@ -121,9 +116,19 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 9. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
-        1 00    * * *   cd /home/leihs/leihs-3.0.4 && RAILS_ENV=production bundle exec rake leihs:cron
+        1 00    * * *   /home/leihs/cron.sh
 
-    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant. If you are using a Ruby version manager, you may run into problems creating cronjobs for it, as your cronjob shell isn't an interactive shell and probably finds neither your Ruby version manager nor a usable version of Ruby. Covering how to adapt your particular Ruby version manager to your cron (or the other way round!) is too complex for this guide.
+    Then use something like the following shell script to actually execute what's necessary. We use a shell script wrapper like this because getting RVM and crontab to cooperate is not so easy otherwise.
+
+        #!/bin/bash
+
+        source /usr/local/rvm/environments/ruby-1.9.3-p448
+        rvm use 1.9.3-p448
+        cd /home/leihs/leihs-3.0.4
+        RAILS_ENV=production bundle exec rake leihs:cron
+
+
+    The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
 
 Once you have tested that everything works correctly, make sure you read through the section below on setting up a real production environment.
 
