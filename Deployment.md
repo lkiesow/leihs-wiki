@@ -92,7 +92,7 @@ Most of it should be self-explanatory, but let's look at some of the more specif
 
 `:application` sets the application name, this just saves us some typing when this variable is used in paths further down. It also helps prevent clashes between two applications on the same host by making sure that each application, as long as it has a unique name in its `config/deploy/production.rb`, gets deployed to a different directory.
 
-`load 'config/deploy/stable_version'` is a bit special: This loads the `branch` setting from an external file, telling Capistrano which branch to deploy from. By having it in a separate file, we make sure that only the version accepted by the product owner is considered stable, so that only this is deployed to production. Having it in a separate file means that every developer on the project, if they use the latest version of the deployment stuff from the next branch, will deploy the correct version.
+`load 'config/deploy/stable_version'` is a bit special: This loads the `branch` setting from an external file, telling Capistrano which branch to deploy from. By having it in a separate file, we make sure that only the version accepted by the product owner is considered stable, so that only this is deployed to production. Having it in a separate file means that every developer on the project, if they use the latest version of the deployment stuff from the master branch, will deploy the correct version.
 
 The value of the `branch` setting can be a tag, a commit or a branch name. If it's a branch name, Capistrano will deploy the newest commit from that branch.
 

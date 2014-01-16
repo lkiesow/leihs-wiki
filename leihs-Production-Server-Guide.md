@@ -90,9 +90,9 @@ Prepare a directory for the leihs source code to live in and clone the leihs git
         # cd /root/software
         # git clone git://github.com/zhdk/leihs.git
         # cd leihs
-        # git checkout next
+        # git checkout master
 
-You will be working on the "next" branch for now, the latest development code.
+You will be working on the "master" branch for now, the latest development code.
 
 ### Creating a new deployment recipe for your own servers
 
