@@ -52,7 +52,7 @@ leihs is in use at several universities and organizations:
  * [University of Applied Sciences HTW Chur](http://www.fh-htwchur.ch), Switzerland
  * [Lucerne University of Applied Sciences and Arts](http://www.hslu.ch), Switzerland
  * University of Brighton, United Kingdom
- * Digital Arts Centre, University of Worcester, United Kingdom
+ * University of Worcester, United Kingdom. 3 instances of leihs
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
 
 ## Versioning
