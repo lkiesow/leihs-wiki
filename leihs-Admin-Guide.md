@@ -18,16 +18,12 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 1. Install some build essentials, Ruby, Bundler, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
-        # apt-get install  build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev curl
+        # apt-get install  build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev curl imagemagick libmagickwand-dev
 
 2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
 
         # rvm install 1.9.3-p448
         # gem install bundler
-
-3. Install ImageMagick:
-
-        # apt-get install imagemagick libmagickwand-dev
 
 
 ## Installation of the base system on RedHat Enterprise Linux, Fedora or CentOS
@@ -36,17 +32,12 @@ Please note that **this distribution is not officially supported**, but you are 
 
 1. Install libxslt, MySQL client libraries, libxml2, gcc and some required dependencies:
 
-        # yum install curl gcc gcc-c++ libreadline-devel openssl-devel git libxslt-devel libxml2-devel libxml2 mysql-devel
+        # yum install curl gcc gcc-c++ libreadline-devel openssl-devel git libxslt-devel libxml2-devel libxml2 mysql-devel ImageMagick ImageMagick-devel
 
 2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
         # rvm install 1.9.3-p448
         # gem install bundler
-
-3. Install ImageMagick:
-
-        # yum install ImageMagick ImageMagick-devel
-
 
 ## Installing the platform-independent components
 
