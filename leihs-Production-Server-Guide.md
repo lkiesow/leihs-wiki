@@ -154,13 +154,6 @@ Next, create an LDAP configuration file in the location specified in `ldap_confi
           bind_dn: *****
           bind_pwd: ******
 
-Finally, copy config/application.rb from the leihs source code to your instance:
-
-        # cp /root/leihs/config/application.rb /home/leihs-test/application.rb
-
-Open the file in your favorite text editor. You can change some constants in this file if necessary: LOCAL_CURRENCY_STRING, CONTRACT_TERMS, CONTRACT_LENDING_STRING, EMAIL_SIGNATURE, DEFAULT_EMAIL, DELIVER_ORDER_NOTIFICATIONS, USER_IMAGE_URL and PER_PAGE.
-
-Please note that some of these variables can be customized via the deployment recipe on every deploy as well, so you might not need to change them here. Instead, they could be changed using sed in `config/deploy/staging-myserver.rb`.
 
 Now it's time to try our recipe in earnest (well, almost). A cold deploy, meaning that all the steps that are normally taken during deploy will be taken, except for actually starting the application.
 
