@@ -198,54 +198,6 @@ Do you want to be able to configure all these settings directly in LDAP.yml so i
 
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
 
-
-### User levels and roles 
-
-leihs decides what it lets users do based on their role and level. Each role or level is specific to an inventory pool, the only exception is the admin role, which covers the whole system.
-
-There are three available roles: customer, manager and admin. 
-
-#### Customer
-
-Customers may only use the frontend and submit orders.
-
-#### Manager level 1
-
-Think of this manager as the "lending and borrowing manager".
-
-* May only use the "Booking" section of the backend and parts of the "Administration" section
-* May acknowledge orders for their inventory pool
-* May hand over orders and create contracts
-* May take back orders
-
-#### Manager level 2
-
-Think of this manager as a "junior manager".
-
-* Everything that a manager at level 1 can do, plus:
-* May assign levels and permissions (within their own inventory pool) up to and including level 2
-* May create new models
-* May create new items that are not inventory relevant, and the manager may not change this setting
- * These items have "Responsible department" set to their own inventory pool and the manager may not change this setting
-
-#### Manager level 3
-
-Think of this manager as a "senior manager".
-
-* Everything that levels 1 and 2 can do, plus:
-* Sees the "Inventory" section of leihs
-* Has no restrictions on editing items
- * May create things that are inventory relevant
- * May assign items to any inventory pool as "Responsible department"
- * Using these functions, managers of level 3 can purchase items using their own inventory pool, but assign responsibility for the items to other inventory pools, so those other pools can manage their borrowing and lending independently
-* May manage categories
-
-#### Admin
-
-* May manage users and assign permissions
-* May manage inventory pools
-* May manage groups
-
 ## Performing upgrades
 
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
