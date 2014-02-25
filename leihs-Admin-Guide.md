@@ -113,9 +113,9 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         #!/bin/bash
 
-        source /usr/local/rvm/environments/ruby-1.9.3-p448
-        rvm use 1.9.3-p448
-        cd /home/leihs/leihs-3.0.4
+        source /usr/local/rvm/environments/ruby-1.9.3-p545
+        rvm use 1.9.3-p545
+        cd /home/leihs/leihs-3.3.1
         RAILS_ENV=production bundle exec rake leihs:cron
 
 
