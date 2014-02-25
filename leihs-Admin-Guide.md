@@ -72,20 +72,20 @@ These steps apply for both Debian-based and RPM-based distributions.
 4. Create and migrate the database:
 
         # su - leihs
-        $ cd leihs-3.0.4
+        $ cd leihs-3.3.1
         $ RAILS_ENV=production bundle exec rake db:create db:migrate db:seed
 
     If you have created the database by hand earlier, or if the user you're using in config/database.yml does not have privileges to create a database, skip db `db:create` part.
 
 5. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
-        $ cd /home/leihs/leihs-3.0.4
+        $ cd /home/leihs/leihs-3.3.1
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
 
 6. Precompile the assets (images, javascripts, etc.):
 
-        $ cd /home/leihs/leihs-3.0.4
+        $ cd /home/leihs/leihs-3.3.1
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
 7. Enable serving static assets by changing the setting in `config/environments/production.rb`:
@@ -96,7 +96,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 8. Start the leihs server:
 
-        $ cd /home/leihs/leihs-3.0.4
+        $ cd /home/leihs/leihs-3.3.1
         $ RAILS_ENV=production bundle exec rails s
 
     Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
