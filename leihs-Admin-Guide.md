@@ -22,7 +22,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
 
-        # rvm install 1.9.3-p448
+        # rvm install 1.9.3-p545
         # gem install bundler
 
 
@@ -36,7 +36,7 @@ Please note that **this distribution is not officially supported**, but you are 
 
 2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # rvm install 1.9.3-p448
+        # rvm install 1.9.3-p545
         # gem install bundler
 
 ## Installing the platform-independent components
@@ -46,14 +46,14 @@ These steps apply for both Debian-based and RPM-based distributions.
 1. Download the latest version of leihs from our [GitHub page](http://github.com/zhdk/leihs/releases). Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
 
         # su - leihs
-        $ wget https://github.com/zhdk/leihs/archive/3.0.4.tar.gz
-        $ tar xvfz 3.0.4.tar.gz
+        $ wget https://github.com/zhdk/leihs/archive/3.3.1.tar.gz
+        $ tar xvfz 3.3.1.tar.gz
 
 2. Install the RubyGems that leihs needs. Bundler can do this automatically: 
 
         # su - leihs
-        $ cd leihs-3.0.4
-        $ rvm use 1.9.3-p448
+        $ cd leihs-3.3.1
+        $ rvm use 1.9.3-p545
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
