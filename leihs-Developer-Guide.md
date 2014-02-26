@@ -1,15 +1,24 @@
 **NOTE:** This guide is not yet complete, but we're working on it and adding sections whenever we encounter something that might interest other developers. If you happen to run into a problem or discover an undocumented workflow during development, please document it here.
 
 
-# Tests
+# Test Prerequisites
+
+You'll need to setup your config/database.yml file
+
+You'll need to have gettext installed.  If you have [Homebrew](http://brew.sh/) installed, do the following:
+    
+    $ brew install gettext
+    $ brew link gettext --force # At the time of this writing, gettext is 'keg only' so it needs to be manually linked
 
 To run our test suite, you need to make sure the directories for the test result reports exist:
 
-    $ mkdir tmp/html tmp/junit tmp/capybara
+    $ mkdir tmp/ tmp/html tmp/junit tmp/capybara
+
+# Running the Tests
 
 Afterwards, it's easy to run the entire test suite:
 
-    $ RAILS_ENV=test bundle exec rake leihs:test
+    $ RAILS_ENV=test bundle exec rake app:test
 
 This will first run the Rspec tests (they are more low-level), and if those are successful, the Cucumber tests, examples and scenarios (those are higher-level).
 
@@ -78,4 +87,3 @@ Next, copy the translation template file locale/leihs.pot into the new directory
     $ cp locale/leihs.pot locale/ro/leihs.po
 
 Now continue as described under _Adding missing translations in existing .po files_.
-
