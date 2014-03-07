@@ -7,7 +7,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 * **Installation and administration:** To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
 
-* **Production servers:** The guide above shows only a simple setup. If you want a production-class server using automated deployment, Phusion Passenger, Apache, Node.js etc., you can find a long and detailed example of how to set up something like that in the [[leihs-Production-Server-Guide]].
+* **Production servers:** The guide above shows only a simple setup. If you want a production-class server using automated deployment, Phusion Passenger, Apache etc., you can find a long and detailed example of how to set up something like that in the [[leihs-Production-Server-Guide]].
 
 * **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]]. Also, see **[[Contributing]]** for information about how to get your contributions back into the project.
 
