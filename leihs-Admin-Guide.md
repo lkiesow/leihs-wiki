@@ -18,7 +18,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 1. Install some build essentials, Ruby, Bundler, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
-        # apt-get install  build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev curl imagemagick libmagickwand-dev
+        # apt-get install build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev curl imagemagick libmagickwand-dev
 
 2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
 

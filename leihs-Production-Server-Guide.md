@@ -69,19 +69,15 @@ Now install the Bundler gem, a Ruby dependency manager:
 
         # gem install bundler
 
-### Setting up Capistrano
+### Setting up Capistrano (optional)
 
 Capistrano is a deployment system that automates deployments for you. You write Capistrano recipes, and Capistrano then executes those recipes against your production server via SSH.
 
-If you already have Capistrano, this chapter won't be news to you. If not, you need to set up Capistrano on some machine that can reach the deployment servers.
+If you already have the leihs source code on your machine and have executed `bundle install`, you automatically also have Capistrano there. You can also install Capistrano on the target server itself and then deploy from the target server to the target server, in case you do not wish to install Ruby on any local workstations. *Make sure to use Capistrano 2.1, not Capistrano 3.0*. The recipes mentioned here are not yet compatible with Capistrano 3.0.
 
-If you have your own local machine that can run Ruby and SSH, you can install Capistrano on that machine. You can also install Capistrano on the target server itself and then deploy from the target server to the target server, in case you do not wish to install Ruby on any local workstations.
-
-The idea is this: You install Capistrano on an SSH-capable machine, check out the leihs source code to that machine and run the Capistrano deployment recipes included with leihs. You will write your own copies of those recipes, adapted for your production servers, so that the recipes deploy leihs on the actual production servers.
+The whole idea of using Capistrano is this: You install Capistrano on an SSH-capable machine, check out the leihs source code to that machine and run the Capistrano deployment recipes included with leihs. You will write your own copies of those recipes, adapted for your production servers, so that the recipes deploy leihs to *your* environment, not ours.
 
 In the following example, we will install Capistrano on the production server itself and then deploy from the server to itself.
-
-        # gem install capistrano capistrano-ext rvm-capistrano
 
 ### Getting the leihs source code
 
