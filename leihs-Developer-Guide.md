@@ -5,7 +5,11 @@
 
 You'll need to setup your config/database.yml file
 
-You'll need to have gettext installed.  If you have [Homebrew](http://brew.sh/) installed, do the following:
+You'll need to have gettext installed. On Debian GNU/Linux, this is:
+
+    # apt-get install gettext
+
+On Mac OS X, if you have [Homebrew](http://brew.sh/) installed, do the following:
     
     $ brew install gettext
     $ brew link gettext --force # At the time of this writing, gettext is 'keg only' so it needs to be manually linked
