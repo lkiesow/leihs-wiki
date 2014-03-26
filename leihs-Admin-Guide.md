@@ -203,6 +203,14 @@ Almost all leihs upgrades work the same way:
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
 * Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
 
+If you run leihs straight from git, you can of course also just switch to the newest release tag right in your source code directory:
+
+        $ git fetch
+        $ git checkout 3.3.0
+        $ RAILS_ENV=production bundle exec rake db:migrate
+
+But again, this only works if you've checked out leihs straight from git before. This won't work on a leihs installation unpacked from a tarball.
+
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
 
 This is a major upgrade that removes many dependencies from your leihs installation, but adds some others.
