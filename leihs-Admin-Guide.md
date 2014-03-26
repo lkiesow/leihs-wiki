@@ -144,18 +144,18 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
           host: your.ldap.server
           port: 636 
           encryption: simple_tls
-          base: dc=yourcompany,dc=com
           log_file: log/ldap_server.log
           log_level: warn
           master_bind_dn: CN=blah,OU=diblah,DC=example,DC=org
           master_bind_pw: 12345
           base_dn: OU=user,DC=example,DC=org
           admin_dn: CN=admin,DC=example,DC=org
-          port: 636
           unique_id_field: pager
           search_field: samaccountname
 
 You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login. `unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required. `unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
+
+`encryption` can be set to "none" or "simple_tls" for unencrypted or encrypted connections.
 
 
 #### Enabling LDAP authentication in the system
