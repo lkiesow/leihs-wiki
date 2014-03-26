@@ -247,53 +247,37 @@ After installation, a default user is created for the Database Authentication mo
 Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
 
-### Hooking up to LDAP for logins 
+### Hooking up to LDAP for logins
 
-Currently, leihs contains only a very rudimentary LDAP login adapter. It was developed by the Zurich University of the Arts specifically for the Hochschule der Künste Bern, Switzerland, and some parts of it are hardcoded to fit the environment there.
+You can hook up leihs to an LDAP server. So far, we've only tried ActiveDirectory, but at three different universities. We're reasonably sure the adapter should work for any LDAP server. If it doesn't work for yours, please submit a pull request with the changes you need.
 
-However, it's not impossible to get leihs to authenticate against your own LDAP server if you are willing to modify two files in leihs.
+#### Modifying config/LDAP.yml
 
-#### Modifying config/LDAP.yml 
-
-Open config/LDAP.yml and adapt the configuration to your own LDAP server:
+Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to your own LDAP server. You will also have to go to the settings dialog in leihs and add the absolute path to your LDAP.yml there in the `ldap_config field. Here is an example configuration:
 
         production:
-         host: your.ldap.server
-         port: 636
-         encryption: simple_tls
-         base: dc=yourcompany,dc=com
-         log_file: log/ldap_server.log
-         log_level: warn
-         search_field: uid
-         bind_dn: *****
-         bind_pwd: ******
+          host: your.ldap.server
+          port: 636 
+          encryption: simple_tls
+          log_file: log/ldap_server.log
+          log_level: warn
+          master_bind_dn: CN=blah,OU=diblah,DC=example,DC=org
+          master_bind_pw: 12345
+          base_dn: OU=user,DC=example,DC=org
+          admin_dn: CN=admin,DC=example,DC=org
+          unique_id_field: pager
+          search_field: samaccountname
 
-You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login.
+You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login. `unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required. `unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
 
-#### Modifying app/controllers/authenticator/ldap_authentication_controller.rb
+`encryption` can be set to "none" or "simple_tls" for unencrypted or encrypted connections.
 
-This controller handles the login itself. You will have to modify a few strings to point at the right attributes for your own LDAP server.
-
-On line 33:
-
-        email = users.first.mail if users.first.mail
-        email ||= "#{user}@hkb.bfh.ch"
-
-If your LDAP server does not store the e-mail address in the field "mail", change `users.first.mail` to `users.first.your_email_field_name`. You can also change `"#{user}@hkb.bfh.ch"` to `"#{user}@your.domain.com"` so that such an e-mail is automatically constructed out of the user's login plus your domain name. This is useful in case you don't store any e-mail addresses in your LDAP server at all.
-
-On line 52:
-
-        u.firstname = users.first["givenname"].to_s
-        u.lastname = users.first["sn"].to_s
-        u.phone = users.first["telephonenumber"].to_s unless users.first["telephonenumber"].blank?
-
-You can add any Ruby code here that extracts this user information from your LDAP. Currently things are set up to point at the default fields from the InetOrgPerson class (givenname, sn, telephonenumber, etc.). This should be okay for most LDAP servers, but feel free to change the strings in e.g. `users.first["givenname"].to_s` to your own field names. For a field called "firstname", that would change to: `users.first["firstname"].to_s`.
 
 #### Enabling LDAP authentication in the system
 
 Finally, you need to tell leihs that you want to use LDAP, not local database authentication. Start a Rails console inside your leihs directory:
 
-    $ RAILS_ENV=production bundle exec ./script/console
+    $ RAILS_ENV=production bundle exec rails c
 
 Then enable LDAP authentication and switch off database authentication:
 

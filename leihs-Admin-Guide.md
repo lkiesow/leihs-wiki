@@ -77,24 +77,32 @@ These steps apply for both Debian-based and RPM-based distributions.
 
     If you have created the database by hand earlier, or if the user you're using in config/database.yml does not have privileges to create a database, skip db `db:create` part.
 
-5. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
+5. Generate a new secret (for encrypting cookies) and configure it in `config/initializers/secret_token.rb`:
+
+        $ RAILS_ENV=production bundle exec rake secret
+
+    This gives you a secret. Then put it in secret_token.rb:
+
+    Leihs::Application.config.secret_key_base = 'YOUR_SECRET_HERE'
+
+6. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
         $ cd /home/leihs/leihs-3.3.1
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
 
-6. Precompile the assets (images, javascripts, etc.):
+7. Precompile the assets (images, javascripts, etc.):
 
         $ cd /home/leihs/leihs-3.3.1
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
-7. Enable serving static assets by changing the setting in `config/environments/production.rb`:
+8. Enable serving static assets by changing the setting in `config/environments/production.rb`:
 
         config.serve_static_assets = true
 
     This is only for testing! You will disable this again once you start setting up a real production environment using Phusion Passenger. See 'Setting up a production environment' below for some hints about this.
 
-8. Start the leihs server:
+9. Start the leihs server:
 
         $ cd /home/leihs/leihs-3.3.1
         $ RAILS_ENV=production bundle exec rails s
@@ -105,7 +113,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
     Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-9. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
+10. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
         1 00    * * *   /home/leihs/cron.sh
 
@@ -183,6 +191,17 @@ Do you want to be able to configure all these settings directly in LDAP.yml so i
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
 
 ## Performing upgrades
+
+Almost all leihs upgrades work the same way:
+
+* Put the new leihs source code somewhere.
+* Copy the following things from your old leihs installation to your new installation:
+ * `config/database.yml`
+ * `config/initializers/secret_token.rb`
+ * `config/LDAP.yml` (if it exists and is used by your installation)
+ * `public/images/attachments`
+* Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
+* Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
 
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
 
