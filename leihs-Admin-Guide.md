@@ -146,7 +146,7 @@ You can hook up leihs to an LDAP server. So far, we've only tried ActiveDirector
 
 #### Modifying config/LDAP.yml
 
-Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to your own LDAP server. You will also have to go to the settings dialog in leihs and add the absolute path to your LDAP.yml there in the `ldap_config field. Here is an example configuration:
+Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to your own LDAP server:
 
         production:
           host: your.ldap.server
