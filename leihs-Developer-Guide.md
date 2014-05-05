@@ -5,38 +5,65 @@
 
 You'll need to setup your config/database.yml file
 
+
+## Tools to install on Debian GNU/Linux
 You'll need to have gettext installed. On Debian GNU/Linux, this is:
 
     # apt-get install gettext
 
+
+## Tools to install on Mac OS X
+
 On Mac OS X, if you have [Homebrew](http://brew.sh/) installed, do the following:
-    
+
     $ brew install gettext
     $ brew link gettext --force # At the time of this writing, gettext is 'keg only' so it needs to be manually linked
 
+
+## Creating temporary directory
+
 To run our test suite, you need to make sure the directories for the test result reports exist:
 
-    $ mkdir tmp/ tmp/html tmp/junit tmp/capybara
+    $ mkdir tmp/
 
 # Running the Tests
 
-Afterwards, it's easy to run the entire test suite:
+Before you can run tests for the first time, you need to set up some things:
 
-    $ RAILS_ENV=test bundle exec rake app:test
+## Preparation
 
-This will first run the Rspec tests (they are more low-level), and if those are successful, the Cucumber tests, examples and scenarios (those are higher-level).
+First, reset your leihs instance and generate the various database dumps that will be loaded during testing:
+
+    $ RAILS_ENV=test bundle exec rake leihs:reset
+    $ RAILS_ENV=test bundle exec rake app:test:generate_personas_dumps
+
+## Execution
+
+After preparing, it's easy to run all the rspec tests:
+
+    $ RAILS_ENV=test bundle exec rspec
+
+Or the entire Cucumber test suite:
+
+    $ RAILS_ENV=test bundle exec cucumber
+
+This will first run the Rspec tests (they are more low-level), and if those are successful, you should run the Cucumber tests, examples and scenarios (those are higher-level).
 
 You can also run a single rspec test:
 
-
     $ RAILS_ENV=test bundle exec rspec spec/something_spec.rb
-
 
 Or a single Cucumber scenario or feature file:
 
-    $ RAILS_ENV=test bundle exec cucumber -p all features/examples/something.feature
+    $ RAILS_ENV=test bundle exec cucumber features/examples/something.feature
 
 Please run the entire test suite before and after making any changes to the code, so you can detect whether your change introduced any defects into the code, and also so you know whether those defects weren't there already when you got it :)
+
+## Validating Gettext files
+
+It's also a good idea to validate the Gettext-based translation files before you push any changes:
+
+    $ RAILS_ENV=test bundle exec rake app:test:validate_gettext_files
 
 # Troubleshooting and common problems in full-stack browser-based testing
 
