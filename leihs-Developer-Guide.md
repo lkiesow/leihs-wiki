@@ -3,22 +3,29 @@
 
 # Test Prerequisites
 
-You'll need to setup your config/database.yml file
+## Database setup
 
+You'll need to setup your config/database.yml file. Point the ```test``` entry at a new or empty database. Keep in mind that Rails tests will delete all data from this database when they are run.
 
-## Tools to install on Debian GNU/Linux
+## Tools to install
+
+* [Firefox](https://www.mozilla.org/firefox/) or [Iceweasel](http://www.geticeweasel.org/)
+* [PhantomJS](http://phantomjs.org/)
+* [Chromedriver](https://code.google.com/p/chromedriver/)
+* [Chrome](https://www.google.com/intl/en/chrome/browser/) or [Chromium](http://www.chromium.org/Home)
+
+You can easily install all these on a modern version of Debian GNU/Linux:
+
+    # apt-get install chromium chromedriver phantomjs iceweasel
+
 You'll need to have gettext installed. On Debian GNU/Linux, this is:
 
     # apt-get install gettext
-
-
-## Tools to install on Mac OS X
 
 On Mac OS X, if you have [Homebrew](http://brew.sh/) installed, do the following:
 
     $ brew install gettext
     $ brew link gettext --force # At the time of this writing, gettext is 'keg only' so it needs to be manually linked
-
 
 ## Creating temporary directory
 
