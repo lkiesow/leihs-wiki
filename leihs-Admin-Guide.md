@@ -22,7 +22,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
 
-        # rvm install 1.9.3-p545
+        # rvm install 2.1.1
         # gem install bundler
 
 
@@ -36,7 +36,7 @@ Please note that **this distribution is not officially supported**, but you are 
 
 2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # rvm install 1.9.3-p545
+        # rvm install 2.1.1
         # gem install bundler
 
 ## Installing the platform-independent components
@@ -122,7 +122,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         #!/bin/bash
 
         source /usr/local/rvm/environments/ruby-1.9.3-p545
-        rvm use 1.9.3-p545
+        rvm use 2.1.1
         cd /home/leihs/leihs-3.3.1
         RAILS_ENV=production bundle exec rake leihs:cron
 
