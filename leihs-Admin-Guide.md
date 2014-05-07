@@ -53,7 +53,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         # su - leihs
         $ cd leihs-3.3.1
-        $ rvm use 1.9.3-p545
+        $ rvm use 2.1.1
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
@@ -121,7 +121,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         #!/bin/bash
 
-        source /usr/local/rvm/environments/ruby-1.9.3-p545
+        source /usr/local/rvm/environments/ruby-2.1.1
         rvm use 2.1.1
         cd /home/leihs/leihs-3.3.1
         RAILS_ENV=production bundle exec rake leihs:cron
