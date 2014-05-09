@@ -36,6 +36,8 @@ Also make sure to install libmariadbclient-dev:
 
 You will need a Ruby version manager in order to get Ruby 2.1.1 onto your system. We recommend rbenv.
 
+**Note that all the following steps are meant to be carried out using Ruby 2.1.1, not any older Ruby version.**
+
 ## Upgrading Bundler and Rubygems
 
 Upgrade Rubygems in case you haven't done that in a while:
