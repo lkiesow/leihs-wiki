@@ -26,49 +26,25 @@ We recommend not using MySQL because MySQL development is moving in a direction 
 
 Instead, we strongly recommend you use MariaDB if the well-being of the Free Software ecosystem is important to you. Please see the [MariaDB web page](https://mariadb.org) for installation instructions for your distribution.
 
-If you're on Debian GNU/Linux 7.0, you can follow [this installation guide](http://www.x2q.net/blog/2013/05/05/howto-install-mariadb-on-debian-7-slash-wheezy/).
+If you're on Debian GNU/Linux 7, you can follow [this installation guide](http://www.x2q.net/blog/2013/05/05/howto-install-mariadb-on-debian-7-slash-wheezy/).
 
 Also make sure to install libmariadbclient-dev:
 
         # apt-get install libmariadbclient-dev
 
+## Installing Ruby 2.1.1
 
-## Installing a Ruby version manager (optional)
-
-If you've followed other guides involving Ruby or have some other Rails applications installed, you probably already have [RVM](http://rvm.io). If not, we really recommend installing RVM. A combination of Phusion Passenger 4.0 and RVM will allow you to host web applications using different Ruby versions side by side, which might be useful while you are migrating from leihs 2 to leihs 3.
-
-If you're happy with just one Ruby version per server, feel free to skip RVM.
-
-## Installing Ruby 1.9.3
-
-If you *do not* want to use RVM, you can install a system-wide Ruby 1.9.x version:
-
-    # apt-get install ruby1.9.3
+You will need a Ruby version manager in order to get Ruby 2.1.1 onto your system. We recommend rbenv.
 
 ## Upgrading Bundler and Rubygems
 
-If you use a RVM-managed Ruby, you can update Rubygems:
+Upgrade Rubygems in case you haven't done that in a while:
 
     # gem update --system
 
-If you use the Debian-managed Ruby, you should *not* update Rubygems in that way. This is managed by your package manager instead.
-
-In both cases, you can install the latest version of Bundler, however:
+Install the latest version of Bundler:
 
     # gem install bundler
-
-
-# Installing Phusion Passenger
-
-Make sure you are running the right version of Ruby (1.9.3) and then proceed to install the right gems and finally Phusion Passenger:
-
-        # gem install passenger
-        # passenger-install-apache2-module
-
-The Phusion Passenger installer will walk you through installing Passenger. If you run into any trouble, see the [Phusion Passenger](http://www.modrails.com) website.
-
-If you want to be extra sure that Passenger is working correctly for you, you could create a virtual host for a Rails application, install the Rails gem and create an empty Rails app to try under that virtual host. We won't cover that here, though, it's beyond the scope of our upgrade guide.
-
 
 # Retrieving the leihs 3 source code
 
@@ -151,16 +127,6 @@ If you've done something else, like symlinking your images to some central locat
 
 # Install the gems
 
-Install the Rubygems necessary for leihs 3.0. First off, verify that you're running Ruby 1.9:
-
-        $ ruby -v
-
-The output should look something like this:
-
-        ruby 1.9.3p448 (2013-06-27 revision 41675) [i686-linux]
-
-Then install the gems:
-
         $ cd /home/leihs-3.0.0
         $ bundle install
 
@@ -200,9 +166,7 @@ If there were no error messages on the console or in your browser when accessing
 
 # Creating a virtual host
 
-Finally, create a virtual host in your Apache configuration that points to `/home/leihs-3.0.0/public`. After enabling the virtual host and restarting Apache, your new leihs installation should now come up at whichever host you configured.
-
-Now is a good time to insert the settings you copied from your `config/environment.rb` file. Log in as an administrator and go to "Settings". You should recognize most options there.
+We recommend using [Phusion Passenger](http://www.modrails.com) and creating a virtual host for your leihs installation.
 
 # Cleaning up after ourselves
 
