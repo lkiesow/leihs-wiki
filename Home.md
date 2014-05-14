@@ -18,19 +18,22 @@ You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. It's 
 Demo data is deleted and reset every 24 hours.
 
 ### Manager
+**Username**: manager_user  
+**Password**: pass
+
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
-Username: manager_user, password: pass
 ### Normal user
+**Username**: normal_user  
+**Password**: pass
+
 Can book equipment through the frontend and has no backend access.
 
-Username: normal_user, password: pass
-
 ### Admin user
+**Username**: normal_user  
+**Password**: pass
+
 Can manage the system, create system-wide categories, create and remove new inventory pools.
-
-Username: super_user_1, password: pass
-
 
 ## Most important links
 
