@@ -13,7 +13,7 @@ leihs is a system with which universities or other organizations can **manage an
 
 ## Live demo
 
-You can try out a live installation of leihs at http://demo.leihs.zhdk.ch. It's always pointing to the latest release available. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
+You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable release available. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
 
 Demo data is deleted and reset every 24 hours.
 
@@ -34,6 +34,9 @@ Can book equipment through the frontend and has no backend access.
 **Password**: pass
 
 Can manage the system, create system-wide categories, create and remove new inventory pools.
+
+The demo installation is located at http://demo.leihs.zhdk.ch.
+
 
 ## Most important links
 
