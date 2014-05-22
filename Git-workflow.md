@@ -38,10 +38,12 @@ Your branch will now merge conflict-free onto next, if you've followed the instr
 ```
 git checkout next
 git pull
-git merge xx_my_new_feature
+git merge --squash xx_my_new_feature
 ```
 
 Make sure to use merge, **not rebase**. We want to keep all history from both branches without rewriting any published history. When your feature branch gets deleted, its history will fold into next anyhow, so don't worry about a cluttered history.
+
+The squash helps roll the entire feature into a single commit.
 
 # Tagging a new release
 
