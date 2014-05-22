@@ -4,6 +4,14 @@ The following illustrates our git workflow. Please try to observe it when workin
 
 ![Workflow illustration](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow.png)
 
+There are some basic rules you need to observe:
+
+* You never work directly on master. Only on topic or bugfix branches, and then you merge your branch to master.
+* You merge up from master into your branch and resolve conflicts in your branch. Only when you took care of all conflicts, merge that into master.
+* Use a squash merge (see below) when merging into master.
+* Rewriting published history is forbidden. That means **no rebasing** on branches that have ever been pushed. Rebasing on branches that only you have (local branches) is fine.
+* `push --force` is disabled in our repository and will not work. If you need to do a non-fast-forward push, it means you did something wrong.
+
 # Adding a new feature
 
 Branch out from master to a feature branch:
