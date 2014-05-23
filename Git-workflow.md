@@ -2,7 +2,7 @@
 
 The following illustrates our git workflow. Please try to observe it when working on leihs.
 
-![Workflow illustration](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow.png)
+![Workflow illustration (the text below explains this in readable form)](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow.png)
 
 There are some basic rules you need to observe:
 
@@ -55,7 +55,7 @@ The squash helps roll the entire feature into a single commit.
 
 # Tagging a new release
 
-Whenever master is all green, at the end of a sprint/iteration, we are ready to release a new version of leihs. We do that by tagging a specific commit *that we know is green*:
+Whenever master is all green, at the end of a sprint/iteration and when the product owner approves the release, we are ready to release a new version of leihs. We do that by tagging a specific commit:
 
 ```
 git checkout master
@@ -86,6 +86,8 @@ git push
 ```
 
 ## In an older tag
+
+![Workflow illustration (the text below explains this)](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow_for_fixes.png)
 
 Fixing on a tag is a bit trickier. You have to base off the tag instead of master:
 
