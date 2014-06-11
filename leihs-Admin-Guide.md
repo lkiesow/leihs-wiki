@@ -46,13 +46,13 @@ These steps apply for both Debian-based and RPM-based distributions.
 1. Download the latest version of leihs from our [GitHub page](http://github.com/zhdk/leihs/releases). Unpack it to a convenient directory. We use the home directory of the 'leihs' user (/home/leihs) to install leihs in. Of course you can use any directory.
 
         # su - leihs
-        $ wget https://github.com/zhdk/leihs/archive/3.3.1.tar.gz
-        $ tar xvfz 3.3.1.tar.gz
+        $ wget https://github.com/zhdk/leihs/archive/n.n.n.tar.gz
+        $ tar xvfz n.n.n.tar.gz
 
 2. Install the RubyGems that leihs needs. Bundler can do this automatically: 
 
         # su - leihs
-        $ cd leihs-3.3.1
+        $ cd leihs-n.n.n
         $ rvm use 2.1.1
         $ bundle install --deployment --without cucumber development
 
@@ -72,7 +72,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 4. Create and migrate the database:
 
         # su - leihs
-        $ cd leihs-3.3.1
+        $ cd leihs-n.n.n
         $ RAILS_ENV=production bundle exec rake db:create db:migrate db:seed
 
     If you have created the database by hand earlier, or if the user you're using in config/database.yml does not have privileges to create a database, skip db `db:create` part.
@@ -87,13 +87,13 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 6. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
-        $ cd /home/leihs/leihs-3.3.1
+        $ cd /home/leihs/leihs-n.n.n
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
 
 7. Precompile the assets (images, javascripts, etc.):
 
-        $ cd /home/leihs/leihs-3.3.1
+        $ cd /home/leihs/leihs-n.n.n
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
 8. Enable serving static assets by changing the setting in `config/environments/production.rb`:
@@ -104,7 +104,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
 9. Start the leihs server:
 
-        $ cd /home/leihs/leihs-3.3.1
+        $ cd /home/leihs/leihs-n.n.n
         $ RAILS_ENV=production bundle exec rails s
 
     Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
@@ -123,7 +123,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         source /usr/local/rvm/environments/ruby-2.1.1
         rvm use 2.1.1
-        cd /home/leihs/leihs-3.3.1
+        cd /home/leihs/leihs-n.n.n
         RAILS_ENV=production bundle exec rake leihs:cron
 
 
@@ -203,10 +203,10 @@ Almost all leihs upgrades work the same way:
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
 * Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
 
-If you run leihs straight from git, you can of course also just switch to the newest release tag right in your source code directory:
+If you run leihs straight from git, you can of course also just switch to the newest release tag right in your source code directory. Substitute the latest released version for n.n.n.:
 
         $ git fetch
-        $ git checkout 3.3.0
+        $ git checkout n.n.n
         $ RAILS_ENV=production bundle exec rake db:migrate
 
 But again, this only works if you've checked out leihs straight from git before. This won't work on a leihs installation unpacked from a tarball.
