@@ -107,11 +107,11 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ RAILS_ENV=production bundle exec rails s
 
-    Now you should see your local leihs server at http://localhost:3000. You can log in with username "super_user_1" and password "pass".
+    Now you should see your local leihs server at http://localhost:3000. You can log in with username "admin" and password "pass".
 
     This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
 
-    Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
+    Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
 10. Set up a system cronjob that sends nightly e-mail reminders and, more importantly, updates all the models' availability counts. There are many ways to schedule repeating tasks on GNU/Linux, but here's a line in crontab-format that you can add to your leihs user's crontab using e.g. `crontab -e`:
 
@@ -135,9 +135,9 @@ Once you have tested that everything works correctly, make sure you read through
 
 ### Default admin username/password 
 
-After installation, a default user is created for the Database Authentication module. Username: super_user_1. Password: pass.
+After installation, a default user is created for the Database Authentication module. Username: admin. Password: pass.
 
-Please change the super_user_1 password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
+Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
 
 ### Hooking up to LDAP for logins 
