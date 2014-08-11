@@ -30,7 +30,7 @@ Can manage inventory, hand over items, create contracts, take back equipment and
 Can book equipment through the frontend and has no backend access.
 
 ### Admin user
-**Username**: admin_user  
+**Username**: admin
 **Password**: pass
 
 Can manage the system, create system-wide categories, create and remove new inventory pools.
