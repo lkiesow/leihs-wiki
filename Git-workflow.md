@@ -2,7 +2,7 @@
 
 The following illustrates our git workflow. Please try to observe it when working on leihs.
 
-![Workflow illustration (the text below explains this in readable form)](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow.png)
+![Workflow illustration (the text below explains this in readable form)](https://raw.githubusercontent.com/zhdk/leihs/master/doc/images/git_workflow.png)
 
 There are some basic rules you need to observe:
 
@@ -87,7 +87,7 @@ git push
 
 ## In an older tag
 
-![Workflow illustration (the text below explains this)](https://raw.githubusercontent.com/zhdk/leihs/next/doc/images/git_workflow_for_fixes.png)
+![Workflow illustration (the text below explains this)](https://raw.githubusercontent.com/zhdk/leihs/master/doc/images/git_workflow_for_fixes.png)
 
 Fixing on a tag is a bit trickier. You have to base off the tag instead of master:
 
