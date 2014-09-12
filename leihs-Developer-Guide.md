@@ -43,8 +43,6 @@ After preparing, it's easy to run all the cucumber scenarios:
 
     $ RAILS_ENV=test bundle exec cucumber
 
-This will first run the Rspec tests (they are more low-level), and if those are successful, you should run the Cucumber tests, examples and scenarios (those are higher-level).
-
 You can also run a single Cucumber scenario or feature file:
 
     $ RAILS_ENV=test bundle exec cucumber features/examples/something.feature
