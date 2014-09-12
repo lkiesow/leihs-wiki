@@ -35,6 +35,10 @@ To run our test suite, you need to make sure the directories for the test result
 
 # Running the Tests
 
+Create your test database, it will be populated later with database dumps representing a known state of the system:
+
+    $ RAILS_ENV=test bundle exec rake db:create
+
 After preparing, it's easy to run all the cucumber scenarios:
 
     $ RAILS_ENV=test bundle exec cucumber
