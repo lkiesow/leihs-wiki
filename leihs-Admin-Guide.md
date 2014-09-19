@@ -222,9 +222,9 @@ Each block in this report is labelled with the consistency problem it represents
 
 You also see the SQL statement that discovered these inconsistencies, for example:
 
-        ```sql
-        SELECT `groups`.* FROM `groups` LEFT JOIN inventory_pools AS t2 ON groups.inventory_pool_id = t2.id WHERE (`groups`.`inventory_pool_id` IS NOT NULL) AND `t2`.`id` IS NULL 
-        ```
+```sql
+SELECT `groups`.* FROM `groups` LEFT JOIN inventory_pools AS t2 ON groups.inventory_pool_id = t2.id WHERE (`groups`.`inventory_pool_id` IS NOT NULL) AND `t2`.`id` IS NULL 
+```
 You may use these statements as a basis for deleting the offending data, if you prefer to use SQL.
 
 Once all the problems have been cleared, the report will be empty. You can now upgrade beyond version 3.14.0 to 3.15.0 or higher. 3.15.0 is the version that introduces foreign key checks so that inconsistencies like these are impossible.
