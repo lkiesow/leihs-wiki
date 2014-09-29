@@ -107,7 +107,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ RAILS_ENV=production bundle exec rails s
 
-    Now you should see your local leihs server at http://localhost:3000. You can log in with username "admin" and password "pass".
+    Now you should see your local leihs server at http://localhost:3000. You can log in with username "admin" and password "password".
 
     This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
 
