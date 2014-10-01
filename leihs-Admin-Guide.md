@@ -135,7 +135,9 @@ Once you have tested that everything works correctly, make sure you read through
 
 ### Default admin username/password 
 
-After installation, a default user is created for the Database Authentication module. Username: admin. Password: pass.
+After installation, a default user is created for the Database Authentication module.
+Username: admin
+Password: password
 
 Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
