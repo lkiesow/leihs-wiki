@@ -90,6 +90,8 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
+Note: the pre-existing directory `./log` should be given write permission as well, otherwise no logging (of LDAP authentication for example) is possible.
+
 
 7. Precompile the assets (images, javascripts, etc.):
 
@@ -171,35 +173,37 @@ Active Directory: enter your AD domain name here, not just a hostname. The domai
 'example.org'
 
 #### port
-Active Directory: Use 636 if you want to use 'simple_tls' encryption. Use 389 if you set 'encryption' to 'none'. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
+Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if you set `encryption` to `none`. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
 
 #### encryption
-`encryption` can be set to "none" for unencrypted or "simple_tls" for SSL encrypted connections.
-'simple_tls' uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using'none'. Beware: your Active Directory Server needs a certificate for SSL to work. (Note: need to test the specifics of this, will update documentation later, DBR)
+`encryption` can be set to `none` for unencrypted or `simple_tls` for SSL encrypted connections.
+`simple_tls` uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using `none`. Beware: your Active Directory Server needs a certificate for SSL to work. (Note: need to test the specifics of this, will update documentation later, DBR)
 
 #### master_bind
-`master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to. -> Create a new user in your Active Directory, for example "LeihsEnumUser". Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. Just update the password in this case to the new value.
-The value of 'master_bind_dn' should equal the LDAP 'distinguishedName' attribute of your 'LeihsEnumUser' user.
+`master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to. -> Create a new user in your Active Directory, for example `LeihsEnumUser`. Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. Just update the password in this case to the new value.
+The value of `master_bind_dn` should equal the LDAP `distinguishedName` attribute of your LeihsEnumUser user.
 
 To copy the whole distinguishedName out of the Active Directory console (for convenience):
 * Open the 'Active Directory Users and Computers' console
 * In the view menu enable "Advanced Features"
 * Open the properties of your new user and look for the "Attribute-Editor" register
-* Copy the contents of the attribute 'distinguishedName' as the value of 'master_bind_dn'
+* Copy the contents of the attribute `distinguishedName` to the value of `master_bind_dn` in the config file.
 
 #### base_dn
-The Ldap-tree that is searched for usernames. Active Directory: Copy the 'distinguishedName' of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in 'search_field'.
+The Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
 
 #### unique_id_field
-`unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique. Alternative: Active Directory by default creates the 'objectGUID' attribute for every user which is ideal for this purpose (just looks uglier in the database, as it is a random string of hex-values).
+`unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique. Alternative: Active Directory by default creates the `objectGUID` attribute for every user which is ideal for this purpose (just looks uglier in the database, as it is a random string of hex-values).
 
 #### search_field
 The `search_field` dictates what users will have to write in the "Login" field on login.
-You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. In Active Directory this should normally be the 'sAMAccountName' attribute, which is the 'User-Logon-Name (pre Windows 2000)' in the GUI.
+You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
 
 #### LDAP Library
-Leihs uses the GEM net-ldap for connectivity to LDAP (as of v3.16). [https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
-It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation. [http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod) 
+Leihs uses the GEM net-ldap for connectivity to LDAP (as of v3.16).
+[https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
+It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation.
+[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod) 
 
 #### Enabling LDAP authentication in the system
 
