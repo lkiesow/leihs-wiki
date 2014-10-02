@@ -231,15 +231,15 @@ Finally, you need to tell leihs that you want to use LDAP and not the user crede
 
     $ RAILS_ENV=production bundle exec rails c
 
-Then enable LDAP authentication and switch off database authentication:
+Then enable LDAP authentication as default but leave database authentication enabled as well:
 
         >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
-        >> ldap.is_default = **true**
-        >> ldap.is_active = **true**
+        >> ldap.is_default = true
+        >> ldap.is_active = true
         >> ldap.save
         
         >> db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
-        >> db.is_default = **false**
+        >> db.is_default = false
         >> db.is_active = true
         >> db.save
 
