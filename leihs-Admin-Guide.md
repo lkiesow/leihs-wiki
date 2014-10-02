@@ -90,8 +90,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
-Note: the pre-existing directory `./log` should be given write permission as well, otherwise no logging (of LDAP authentication for example) is possible.
-
+Note: the pre-existing directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
 
 7. Precompile the assets (images, javascripts, etc.):
 
