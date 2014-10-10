@@ -1,5 +1,14 @@
 # Upgrading from and to versions older than 2.9.14
 
+For all of these versions: You need to use a very *old* version of Ruby and a very *old* version of RubyGems to perform upgrades between these *extremely old* versions of leihs.
+
+You cannot use RubyGems newer than 1.8.25, so make sure to install that:
+
+    # gem update --system 1.8.25
+
+RubyGems 2.x will not work at all! You must also use the ancient Ruby 1.8.7, which you can get (with patches so it actually compiles on modern systems) from a Ruby version manager such as RVM.
+
+
 ### Upgrading from one 2.9.x version to another 
 
 Make absolutely sure to **back up** your entire leihs installation as well as your entire leihs database before starting.
