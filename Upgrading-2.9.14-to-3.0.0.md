@@ -2,7 +2,7 @@
 
 You will need to have the following on your server:
 
-* Ruby 1.9.3
+* Ruby 2.1.1
 * ImageMagick
 * Compilers: gcc and g++
 * MariaDB or, if you can't get to that, MySQL

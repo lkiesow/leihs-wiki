@@ -35,36 +35,21 @@ To run our test suite, you need to make sure the directories for the test result
 
 # Running the Tests
 
-Before you can run tests for the first time, you need to set up some things:
+Create your test database, it will be populated later with database dumps representing a known state of the system:
 
-## Preparation
+    $ RAILS_ENV=test bundle exec rake db:create
 
-First, reset your leihs instance and generate the various database dumps that will be loaded during testing:
-
-    $ RAILS_ENV=test bundle exec rake leihs:reset
-    $ RAILS_ENV=test bundle exec rake app:test:generate_personas_dumps
-
-## Execution
-
-After preparing, it's easy to run all the rspec tests:
-
-    $ RAILS_ENV=test bundle exec rspec
-
-Or the entire Cucumber test suite:
+After preparing, it's easy to run all the cucumber scenarios:
 
     $ RAILS_ENV=test bundle exec cucumber
 
-This will first run the Rspec tests (they are more low-level), and if those are successful, you should run the Cucumber tests, examples and scenarios (those are higher-level).
-
-You can also run a single rspec test:
-
-    $ RAILS_ENV=test bundle exec rspec spec/something_spec.rb
-
-Or a single Cucumber scenario or feature file:
+You can also run a single Cucumber scenario or feature file:
 
     $ RAILS_ENV=test bundle exec cucumber features/examples/something.feature
 
 Please run the entire test suite before and after making any changes to the code, so you can detect whether your change introduced any defects into the code, and also so you know whether those defects weren't there already when you got it :)
+
+You will notice that the suite takes very long to run and that certain tests will fail on the first run, but not on the second. You can use the "rerun" profile to run only failed tests.
 
 ## Validating Gettext files
 

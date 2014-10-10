@@ -90,6 +90,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ mkdir -p public/images/attachments tmp/sessions tmp/cache
 
+Note: the pre-existing directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
 
 7. Precompile the assets (images, javascripts, etc.):
 
@@ -107,7 +108,7 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ cd /home/leihs/leihs-n.n.n
         $ RAILS_ENV=production bundle exec rails s
 
-    Now you should see your local leihs server at http://localhost:3000. You can log in with username "admin" and password "pass".
+    Now you should see your local leihs server at http://localhost:3000. You can log in with username "admin" and password "password".
 
     This gives you a test setup using the pure Ruby WebRick web server. For production setups, we recommend mod_passenger. See the "Installing a production environment" section of this guide for more information.
 
@@ -135,10 +136,13 @@ Once you have tested that everything works correctly, make sure you read through
 
 ### Default admin username/password 
 
-After installation, a default user is created for the Database Authentication module. Username: admin. Password: pass.
+After installation, a default user is created for the Database Authentication module.
+Username: admin
+Password: password
 
 Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
+If logging in does not work, you should try deleting your browser cache / cookies. I had trouble especially with the admin user in Firefox 32.x. 
 
 ### Hooking up to LDAP for logins 
 
@@ -149,30 +153,114 @@ You can hook up leihs to an LDAP server. So far, we've only tried ActiveDirector
 Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to your own LDAP server:
 
         production:
-          host: your.ldap.server
+          host: ldapserver.example.org
           port: 636 
           encryption: simple_tls
           log_file: log/ldap_server.log
           log_level: warn
-          master_bind_dn: CN=blah,OU=diblah,DC=example,DC=org
+          master_bind_dn: CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
           master_bind_pw: 12345
-          base_dn: OU=user,DC=example,DC=org
-          admin_dn: CN=admin,DC=example,DC=org
-          unique_id_field: pager
-          search_field: samaccountname
+          base_dn: OU=users,DC=example,DC=org
+          admin_dn: CN=LeihsAdmin,OU=NonHuman,OU=users,DC=example,DC=org
+          unique_id_field: userPrincipalName
+          search_field: sAMAccountName
 
-You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. The `search_field` dictates what users will have to write in the "Login" field on login. `unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required. `unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
+`unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required.
 
-`encryption` can be set to "none" or "simple_tls" for unencrypted or encrypted connections.
+#### host
+The hostname of your LDAP server.
+Active Directory: enter your AD domain name here, not just a hostname. The domain name resolves to all available Domain Controllers - good for redundancy. In the example above the value should read
+'example.org'
 
+#### port
+Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if you set `encryption` to `none`. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
+
+#### encryption
+`encryption` can be set to `none` for unencrypted or `simple_tls` for SSL encrypted connections.
+`simple_tls` uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using `none`. Beware: your Active Directory Server needs a certificate for SSL to work. (Todo: need to test the specifics of this, will update documentation later, DBR)
+
+#### master_bind
+`master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
+-> Create a new user in your Active Directory, for example `LeihsEnumUser`.
+Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. Just update the password in this case to the new value.
+The value of `master_bind_dn` should equal the LDAP `distinguishedName` attribute of your LeihsEnumUser user.
+
+To copy the whole distinguishedName out of the Active Directory console (for convenience):
+* Open the 'Active Directory Users and Computers' console
+* In the view menu enable "Advanced Features"
+* Open the properties of your new user and look for the "Attribute-Editor" register
+* Copy the contents of the attribute `distinguishedName` to the value of `master_bind_dn` in the config file.
+
+#### base_dn
+The Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
+
+#### admin_dn
+The `distinguishedName` of the LDAP user you intend to use as master-admin for Leihs.
+DBR todo: unclear to me if this setting does anything at the moment, 3.16. Filed an Issue regarding access rights on first login. You should set it to the correct user, just to be on the safe side.
+
+#### unique_id_field
+`unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique.
+DBR: I have read that `sAMAccountName` normally is unique on the Active Directory domain level (not forest level). For practical purposes it can be considered 'unique' I guess. Source:
+[http://blogs.msdn.com/b/openspecification/archive/2009/07/10/understanding-unique-attributes-in-active-directory.aspx](http://blogs.msdn.com/b/openspecification/archive/2009/07/10/understanding-unique-attributes-in-active-directory.aspx)
+
+Alternative: `userPrincipalName` is guaranteed to be unique, even on the forest level. If you are unsure, I would suggest you use `userPrincipalName` instead of `sAMAccountName` for the unique ID.
+
+Warning: do not use the AD `objectGUID`attribute for this. Though tempting, the value cannot be written to database and will cause an error on first login. You will need a string-based attribute with a maximum of 255 characters for `unique_id_field` (field in database is varchar(255) ).
+
+#### search_field
+The `search_field` dictates what users will have to write in the "Login" field on login.
+You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
+
+#### LDAP Library
+Leihs uses the GEM net-ldap for connectivity to LDAP (as of v3.16).
+[https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
+It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation.
+[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod) 
+
+#### Creating the LeihsAdmin User
+You need to create a new LDAP account or use an existing one to use as master-admin for Leihs. 
+When you decide to create a new LeihsAdmin LDAP user, at least fill out the following attributes or you will get an ugly looking error message on first login:
+* `email`
+* `givenName` (the surname, e.g. Alexander)
+* `sn` (the family name, e. g. Smith)
+
+Make SURE you do not use any eMail address for the LeihsAdmin user that is already taken by a user account in the local Leihs database. Even if local authentication is disabled, Leihs will still keep the local users and will not create your LeihsAdmin in the database if the address is taken (Error: >Could not create new user for 'leihsadmin' from LDAP source. Contact your leihs system administrator>).
 
 #### Enabling LDAP authentication in the system
-
-Finally, you need to tell leihs that you want to use LDAP, not local database authentication. Start a Rails console inside your leihs directory:
+Finally, you need to tell leihs that you want to use LDAP and not the user credentials stored in your local database. You will still need local database authentication for a last step. Start a Rails console inside your leihs directory:
 
     $ RAILS_ENV=production bundle exec rails c
 
-Then enable LDAP authentication and switch off database authentication:
+Then enable LDAP authentication as default but leave database authentication enabled as well:
+
+        >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
+        >> ldap.is_default = true
+        >> ldap.is_active = true
+        >> ldap.save
+        
+        >> db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
+        >> db.is_default = false
+        >> db.is_active = true
+        >> db.save
+
+#### First login with LeihsAdmin over LDAP
+Now restart your Rails application. Next time you try to access it, you should be forwarded to `/authenticator/ldap/login` instead of `/authenticator/db/login`, and then you can log in via LDAP. Nothing will happen however, as the new user needs admin permissions to see anything in Leihs, so you get thrown back to the login prompt. Your goal in this step is simply to automatically create the entry for your LDAP user in the `users` table AND verify your LDAP settings. You are done if you get no errors after login. The information stored in LDAP (email, surname, name) gets copied to your Leihs database and can be (locally) edited later in the admin dashboard of Leihs.
+
+If anything goes wrong give the Leihs webserver user write permission to `./log/`. Check `production.log` after a failed login attempt and search for 'leihsAdmin' (or your username). The error messages were very straightforward to understand in my "testing" (as in "flailing about, trying to get the damn thing to work")
+DerBachmannRocker, Windows Server 2012 AD + Leihs 3.16
+
+You might need to delete a half-created LeihsAdmin user from the database manually in case the first login goes wrong because of some error. Simply delete the the offending row from the database table `users` and try again with a new config. I got "eMail already taken" in the log, for example, as the user was already created but not 100% correctly (DBR).
+
+#### Give the LDAP user admin permissions
+After you made a successful login attempt (no errors visible, but you get thrown back to the login page), you log in one final time with the admin from the local database. Connect to Leihs appending `/authenticator/db/login` to the URL. You should be able to log in using your old database authentication based admin user. Go to the `users` tab, and look for your LeihsAdmin (LDAP) user. If it is in the list: congratulations, your 1 login was successful. Edit LeihsAdmin and grant it admin permissions.
+-> Done! Log out and log back in using the normal URL of your Leihs server. Use your LDAP admin user and you should be able to see the Leihs interface and can manage the system as expected.
+
+#### Turning off database authentication for good
+After you made your LDAP user admin and everything runs as it should, you might disable database authentication for your production server:
+
+    $ RAILS_ENV=production bundle exec rails c
+
+Enable only LDAP authentication and switch off database authentication:
 
         >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
         >> ldap.is_default = true
@@ -184,11 +272,13 @@ Then enable LDAP authentication and switch off database authentication:
         >> db.is_active = false
         >> db.save
 
-Now restart your Rails application and next time you try to access it, you should be forwarded to /authenticator/ldap/login instead of /authenticator/db/login, and then you can log in via LDAP.
+Restart your webserver afterwards.
 
+#### Contribute!
 Do you want to be able to configure all these settings directly in LDAP.yml so it's easier to hook up to your LDAP server? Feel free to improve our LDAP connector and send us a pull request on GitHub. Alternatively, you could also pay some Rails developers (even us!) to develop this feature for you.
 
-Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web.
+#### A fair warning
+Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web using plain HTTP.
 
 ## Performing upgrades
 
@@ -210,6 +300,30 @@ If you run leihs straight from git, you can of course also just switch to the ne
         $ RAILS_ENV=production bundle exec rake db:migrate
 
 But again, this only works if you've checked out leihs straight from git before. This won't work on a leihs installation unpacked from a tarball.
+
+
+### Upgrading from < 3.14.0 to >= 3.14.0
+
+In leihs 3.15.0, we fixed a lot of potential database inconsistency problems. An inconsistency can for example be that a contract exists for an inventory pool that has since been deleted. Because databases with such inconsistencies are no longer compatible with leihs 3.15.0, we introduced a report page in leihs 3.14.0 that lets you look at your inconsistent data and decide what to do with it. leihs cannot decide automatically, a human with good knowledge about the inventory in question is required.
+
+So if you have a leihs database from a leihs version older than 3.14.0, you will first have to upgrade to 3.14.0 before continuing. This is easily done checking out version 3.5.0 as described above under "Performing Upgrades", then logging into your leihs 3.14.0 instance as an administrator. Navigate to "Database Check" -> "Consistency" (the direct path is `/admin/database/consistency`.
+
+Each block in this report is labelled with the consistency problem it represents, for example "3 groups with missing inventory_pools". Looking at the report, you should be able to decide whether deleting any of these items is safe. If you want to delete an item directly from this screen, there is a big red "Delete from the database" button there for you to use.
+
+You also see the SQL statement that discovered these inconsistencies, for example:
+
+```sql
+SELECT `groups`.* FROM `groups` LEFT JOIN inventory_pools AS t2 ON groups.inventory_pool_id = t2.id WHERE (`groups`.`inventory_pool_id` IS NOT NULL) AND `t2`.`id` IS NULL 
+```
+You may use these statements as a basis for deleting the offending data, if you prefer to use SQL.
+
+Once all the problems have been cleared, the report will be empty. You can now upgrade beyond version 3.14.0 to 3.15.0 or higher. 3.15.0 is the version that introduces foreign key checks so that inconsistencies like these are impossible.
+
+
+### Upgrading from < 3.5.0 to >= 3.5.0
+
+If you have a version older than 3.5.0, you will first have to upgrade to 3.5.0 in order to get the database into a state compatible with versions higher than 3.5.0. This is easily done checking out version 3.5.0 as described above under "Performing Upgrades", then checking out the version you want.
+
 
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
 
