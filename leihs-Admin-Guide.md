@@ -22,7 +22,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
 
-        # rvm install 2.1.1
+        # rvm install 2.1.3
         # gem install bundler
 
 
@@ -36,7 +36,7 @@ Please note that **this distribution is not officially supported**, but you are 
 
 2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # rvm install 2.1.1
+        # rvm install 2.1.3
         # gem install bundler
 
 ## Installing the platform-independent components
@@ -53,7 +53,7 @@ These steps apply for both Debian-based and RPM-based distributions.
 
         # su - leihs
         $ cd leihs-n.n.n
-        $ rvm use 2.1.1
+        $ rvm use 2.1.3
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
@@ -122,8 +122,8 @@ Note: the pre-existing directory `./log` will need write permission for logs to 
 
         #!/bin/bash
 
-        source /usr/local/rvm/environments/ruby-2.1.1
-        rvm use 2.1.1
+        source /usr/local/rvm/environments/ruby-2.1.3
+        rvm use 2.1.3
         cd /home/leihs/leihs-n.n.n
         RAILS_ENV=production bundle exec rake leihs:cron
 
