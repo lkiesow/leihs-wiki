@@ -31,7 +31,7 @@ Can book equipment through the frontend and has no backend access.
 
 ### Admin user
 **Username**: admin
-**Password**: pass
+**Password**: password
 
 Can manage the system, create system-wide categories, create and remove new inventory pools.
 
