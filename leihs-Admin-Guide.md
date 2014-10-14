@@ -167,6 +167,10 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
 
 `unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required.
 
+WARNING: be sure to include a space after the `:` characters:
+* wrong: 'master_bind_pw:12345'
+* correct: 'master_bind_pw: 12345'
+
 #### host
 The hostname of your LDAP server.
 Active Directory: enter your AD domain name here, not just a hostname. The domain name resolves to all available Domain Controllers - good for redundancy. In the example above the value should read
