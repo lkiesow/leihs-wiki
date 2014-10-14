@@ -146,7 +146,7 @@ If logging in does not work, you should try deleting your browser cache / cookie
 
 ### Hooking up to LDAP for logins 
 
-You can hook up leihs to an LDAP server. So far, we've only tried ActiveDirectory, but at three different universities. We're reasonably sure the adapter should work for any LDAP server. If it doesn't work for yours, please submit a pull request with the changes you need.
+You can hook up leihs to an LDAP server. So far, we've only tried ActiveDirectory, but at four different universities. We're reasonably sure the adapter should work for any LDAP server. If it doesn't work for yours, please submit a pull request with the changes you need.
 
 #### Modifying config/LDAP.yml
 
@@ -161,7 +161,7 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
           master_bind_dn: CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
           master_bind_pw: 12345
           base_dn: OU=users,DC=example,DC=org
-          admin_dn: CN=LeihsAdmin,OU=NonHuman,OU=users,DC=example,DC=org
+          admin_dn: CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org
           unique_id_field: userPrincipalName
           search_field: sAMAccountName
 
@@ -195,8 +195,7 @@ To copy the whole distinguishedName out of the Active Directory console (for con
 The Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
 
 #### admin_dn
-The `distinguishedName` of the LDAP user you intend to use as master-admin for Leihs.
-DBR todo: unclear to me if this setting does anything at the moment, 3.16. Filed an Issue regarding access rights on first login. You should set it to the correct user, just to be on the safe side.
+The `distinguishedName` of the LDAP group you intend to give admin rights to in Leihs. This MUST be a group, a single user is not a tested/supported scenario.
 
 #### unique_id_field
 `unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique.
@@ -209,29 +208,37 @@ Warning: do not use the AD `objectGUID`attribute for this. Though tempting, the 
 
 #### search_field
 The `search_field` dictates what users will have to write in the "Login" field on login.
-You may have to adapt the `search_field` option to point at the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
+You may have to adapt the `search_field` option to point to the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
 
 #### LDAP Library
+Info inserted by a non-developer. May not be accurate.
 Leihs uses the GEM net-ldap for connectivity to LDAP (as of v3.16).
 [https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
-It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation.
-[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod) 
+It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation. Normally the information given above should be enough to get Leihs running, so this is just for reference.
+[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod)
 
-#### Creating the LeihsAdmin User
-You need to create a new LDAP account or use an existing one to use as master-admin for Leihs. 
-When you decide to create a new LeihsAdmin LDAP user, at least fill out the following attributes or you will get an ugly looking error message on first login:
+#### Example Admin
+For the sake of simplicity we will use a user called `LeihsAdmin`, which is a member of the group `grpAllLeihsAdmins` we configured above as `admin_dn`. Therefore, this user will automatically have complete administrative control in the Leihs dashboard. When I speak of 'LeihsAdmin', your LDAP user is meant.
+
+#### Requirements for LDAP users in Leihs
+The LDAP users you intend to use as Leihs users need to have at least the following attributes set (not empty). **This applies to the admin users as well**.
 * `email`
 * `givenName` (the surname, e.g. Alexander)
 * `sn` (the family name, e. g. Smith)
 
-Make SURE you do not use any eMail address for the LeihsAdmin user that is already taken by a user account in the local Leihs database. Even if local authentication is disabled, Leihs will still keep the local users and will not create your LeihsAdmin in the database if the address is taken (Error: >Could not create new user for 'leihsadmin' from LDAP source. Contact your leihs system administrator>).
+If a needed user attribute is empty, you will get an ugly looking error message on first login.
+
+Make SURE you do not use any eMail address for the LeihsAdmin user that is already taken by any user account in the local Leihs database. Even if local authentication is disabled, Leihs will still keep the local users and will not create your LeihsAdmin in the database if the address is already taken (Error: >Could not create new user for 'leihsadmin' from LDAP source. Contact your leihs system administrator>). Also make sure you do not have a local database user with the same login as one of your LDAP users.
+
 
 #### Enabling LDAP authentication in the system
-Finally, you need to tell leihs that you want to use LDAP and not the user credentials stored in your local database. You will still need local database authentication for a last step. Start a Rails console inside your leihs directory:
+Finally, you need to tell Leihs that you want to use LDAP and not the user credentials stored in your local database. We will keep local database authentication enabled at first. This is to show you that local and LDAP authentication may be enabled at the same time. This might be useful as a fall-back method in case there is a problem with the initial LDAP configuration.
+
+Start a Rails console inside your Leihs directory:
 
     $ RAILS_ENV=production bundle exec rails c
 
-Then enable LDAP authentication as default but leave database authentication enabled as well:
+Then enable LDAP authentication as default but leave database authentication enabled for now:
 
         >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
         >> ldap.is_default = true
@@ -244,19 +251,25 @@ Then enable LDAP authentication as default but leave database authentication ena
         >> db.save
 
 #### First login with LeihsAdmin over LDAP
-Now restart your Rails application. Next time you try to access it, you should be forwarded to `/authenticator/ldap/login` instead of `/authenticator/db/login`, and then you can log in via LDAP. Nothing will happen however, as the new user needs admin permissions to see anything in Leihs, so you get thrown back to the login prompt. Your goal in this step is simply to automatically create the entry for your LDAP user in the `users` table AND verify your LDAP settings. You are done if you get no errors after login. The information stored in LDAP (email, surname, name) gets copied to your Leihs database and can be (locally) edited later in the admin dashboard of Leihs.
+Now restart your Rails application. Next time you try to access it, you should be forwarded to `/authenticator/ldap/login` instead of `/authenticator/db/login`, where you can log in via LDAP. If login was successful, the information stored in LDAP (email, surname, name, phone, etc.) gets copied to your Leihs database as a new user is created in table `users`. It can be (locally) edited later in the admin dashboard of Leihs. You may still login with the local database users by simply changing the URL in your browser to ...`/authenticator/db/login`
 
-If anything goes wrong give the Leihs webserver user write permission to `./log/`. Check `production.log` after a failed login attempt and search for 'leihsAdmin' (or your username). The error messages were very straightforward to understand in my "testing" (as in "flailing about, trying to get the damn thing to work")
+If anything goes wrong give the Leihs webserver user write permission to `./log/` (the log directory inside the Leihs directory). Check `production.log` after a failed login attempt and search for 'leihsAdmin'. The error messages were very straightforward to understand in my "testing" (or better: "flailing about, trying to get the damn thing to work")
 DerBachmannRocker, Windows Server 2012 AD + Leihs 3.16
 
-You might need to delete a half-created LeihsAdmin user from the database manually in case the first login goes wrong because of some error. Simply delete the the offending row from the database table `users` and try again with a new config. I got "eMail already taken" in the log, for example, as the user was already created but not 100% correctly (DBR).
+You might need to delete a half-created user from the database manually in case the first login goes wrong (e.g. because of some error). Simply delete the the offending row from the database table `users` and try again with a new config. I got "eMail already taken" in the log, for example, as the user was already created but not 100% correctly (DBR).
 
-#### Give the LDAP user admin permissions
-After you made a successful login attempt (no errors visible, but you get thrown back to the login page), you log in one final time with the admin from the local database. Connect to Leihs appending `/authenticator/db/login` to the URL. You should be able to log in using your old database authentication based admin user. Go to the `users` tab, and look for your LeihsAdmin (LDAP) user. If it is in the list: congratulations, your 1 login was successful. Edit LeihsAdmin and grant it admin permissions.
--> Done! Log out and log back in using the normal URL of your Leihs server. Use your LDAP admin user and you should be able to see the Leihs interface and can manage the system as expected.
+After you eliminated all errors (no errors visible in browser and the logfile) you should be able to login successfully for the first time. A successful first login results in the following being created:
+* table `users`: a new row for LeihsAdmin containing information out of LDAP (email, etc.). Note the user's `ID`
+* table `access_rights`: a new row with `user_id` equal to the ID of LeihsAdmin. `role` should be 'admin'.
+
+You might get thrown back to the login page as your user is created in the database and not immediately see 
+the Leihs interface. In this case simply enter your credentials for LeihsAdmin one more time. This time you should be able to see the Leihs dashboard and have admin permissions (verify this in the `users` page).
+
+Delete your browser cache if repeated login attempts fail unexpectedly (I noticed this problem now and then on Windows with Firefox, DBR).
+
 
 #### Turning off database authentication for good
-After you made your LDAP user admin and everything runs as it should, you might disable database authentication for your production server:
+After you made your first login with LeihsAdmin and everything runs as it should, you might disable database authentication for your production server:
 
     $ RAILS_ENV=production bundle exec rails c
 
@@ -282,7 +295,7 @@ Warning: Please make sure that your Rails application server has SSL enabled bef
 
 ## Performing upgrades
 
-Almost all leihs upgrades work the same way:
+Almost all Leihs upgrades work the same way:
 
 * Put the new leihs source code somewhere.
 * Copy the following things from your old leihs installation to your new installation:
