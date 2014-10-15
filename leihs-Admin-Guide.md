@@ -11,7 +11,7 @@ This guide shows you how to install a leihs server. The guide is written from th
 
 Consulting and installation services are also available from independent companies supporting Free Software all around the world. Ask around for a company or individual who knows Ruby on Rails applications, you will surely find someone who can help you install leihs.
 
-Companies known to offer commercial support for leihs can be found on the [respective wiki page](Commercial-support.md). You can also add your company there.
+Companies known to offer commercial support for leihs can be found on the [respective wiki page](https://github.com/zhdk/leihs/wiki/Commercial-support). You can also add your company there.
 
 
 ## Installation of the base system on Debian GNU/Linux
