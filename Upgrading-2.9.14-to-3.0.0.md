@@ -2,7 +2,7 @@
 
 You will need to have the following on your server:
 
-* Ruby 2.1.3
+* Ruby 2.1.1
 * ImageMagick
 * Compilers: gcc and g++
 * MariaDB or, if you can't get to that, MySQL
@@ -32,11 +32,11 @@ Also make sure to install libmariadbclient-dev:
 
         # apt-get install libmariadbclient-dev
 
-## Installing Ruby 2.1.3
+## Installing Ruby 2.1.1
 
-You will need a Ruby version manager in order to get Ruby 2.1.3 onto your system. We recommend rbenv.
+You will need a Ruby version manager in order to get Ruby 2.1.1 onto your system. We recommend rbenv.
 
-**Note that all the following steps are meant to be carried out using Ruby 2.1.3, not any older Ruby version.**
+**Note that all the following steps are meant to be carried out using Ruby 2.1.1, not any older Ruby version.**
 
 ## Upgrading Bundler and Rubygems
 
