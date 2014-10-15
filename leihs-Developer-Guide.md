@@ -51,11 +51,12 @@ Please run the entire test suite before and after making any changes to the code
 
 You will notice that the suite takes very long to run and that certain tests will fail on the first run, but not on the second. You can use the "rerun" profile to run only failed tests.
 
-## Validating Gettext files
+There is a little script that reruns tests automatically if some of them fail:
 
-It's also a good idea to validate the Gettext-based translation files before you push any changes:
+    $ RAILS_ENV=test bundle exec ./script/run_tests.rb
 
-    $ RAILS_ENV=test bundle exec rake app:test:validate_gettext_files
+There are three profiles you can run there: "nojs" runs all tests that don't require JavaScript, "headless" runs all tests that need or "default" which runs all tests and requires the graphical browsers Chrome/Chromium and Firefox/Iceweasel.
+
 
 # Troubleshooting and common problems in full-stack browser-based testing
 
