@@ -7,9 +7,11 @@ leihs is web-based inventory handling and resource booking system. It allows use
 
 This guide shows you how to install a leihs server. The guide is written from the perspective of a system administrator or developer. If you are interested in running leihs in your own organization but aren't a sysadmin, talk to your IT department. leihs is not intended to be installed on a client, so any software installation on your own machine isn't necessary. All you need is a web browser, the rest can be taken care of by your IT department.
 
+## Commercial support
+
 Consulting and installation services are also available from independent companies supporting Free Software all around the world. Ask around for a company or individual who knows Ruby on Rails applications, you will surely find someone who can help you install leihs.
 
-If you are such a person yourself and would like to have your services listed on the leihs project website and in this document, please write an e-mail to ramon.cahenzli@zhdk.ch.
+Companies known to offer commercial support for leihs can be found on the [respective wiki page](Commercial-support.md). You can also add your company there.
 
 
 ## Installation of the base system on Debian GNU/Linux
