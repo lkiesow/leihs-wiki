@@ -19,18 +19,18 @@ Demo data is deleted and reset every 24 hours.
 
 ### Manager
 **Username**: manager_user  
-**Password**: pass
+**Password**: password
 
 Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
 
 ### Normal user
 **Username**: normal_user  
-**Password**: pass
+**Password**: password
 
 Can book equipment through the frontend and has no backend access.
 
 ### Admin user
-**Username**: admin
+**Username**: admin  
 **Password**: password
 
 Can manage the system, create system-wide categories, create and remove new inventory pools.
