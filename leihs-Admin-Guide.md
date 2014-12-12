@@ -217,10 +217,9 @@ The `search_field` dictates what users will have to write in the "Login" field o
 You may have to adapt the `search_field` option to point to the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
 
 #### LDAP Library
-Info inserted by a non-developer. May not be accurate.
-Leihs uses the GEM net-ldap for connectivity to LDAP (as of v3.16).
+Leihs uses the gem net-ldap for connectivity to LDAP (as of leihs 3.16.0).
 [https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
-It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the sourcecode / documentation. Normally the information given above should be enough to get Leihs running, so this is just for reference.
+It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the source code/documentation. Normally the information given above should be enough to get Leihs running, so this is just for reference.
 [http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod)
 
 #### Example Admin
@@ -234,7 +233,7 @@ The LDAP users you intend to use as Leihs users need to have at least the follow
 
 If a needed user attribute is empty, you will get an ugly looking error message on first login.
 
-Make SURE you do not use any eMail address for the LeihsAdmin user that is already taken by any user account in the local Leihs database. Even if local authentication is disabled, Leihs will still keep the local users and will not create your LeihsAdmin in the database if the address is already taken (Error: >Could not create new user for 'leihsadmin' from LDAP source. Contact your leihs system administrator>). Also make sure you do not have a local database user with the same login as one of your LDAP users.
+Make *sure* you do not use any email address for the LeihsAdmin user that is already taken by any user account in the local Leihs database. Even if local authentication is disabled, Leihs will still keep the local users and will not create your LeihsAdmin in the database if the address is already taken (Error: >Could not create new user for 'leihsadmin' from LDAP source. Contact your leihs system administrator>). Also make sure you do not have a local database user with the same login as one of your LDAP users.
 
 
 #### Enabling LDAP authentication in the system
