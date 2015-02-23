@@ -59,6 +59,7 @@ leihs is in use at several universities and organizations:
  * University of Worcester, United Kingdom. 3 instances of leihs
  * [Middle Tennessee State University](http://www.mtsu.edu), Tennessee, USA
  * Fachhochschule Vorarlberg, Austria
+ * [Konstfack Stockholm](http://www.konstfack.se), Sweden
  * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
 
 ## Versioning
