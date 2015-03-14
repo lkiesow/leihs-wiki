@@ -21,7 +21,7 @@ Demo data is deleted and reset every 24 hours.
 **Username**: manager_user  
 **Password**: password
 
-Can manage inventory, hand over items, create contracts, take back equipment and much more. He is mostly active in the backend, that's why he doesn't need frontend access.
+Can manage inventory, hand over items, create contracts, take back equipment and much more. They are mostly active in the backend, that's why they don't need frontend access.
 
 ### Normal user
 **Username**: normal_user  
