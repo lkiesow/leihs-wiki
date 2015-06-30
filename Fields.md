@@ -16,8 +16,8 @@ Models have a fixed number of fields describing them, and the available fields c
 
 Item fields can be customized to a large extent. There are however some core fields that are guaranteed to be present:
 
-* Inventory Code: A unique alphanumeric code identifying this item. Example: INV1234.
-* Model: The model (see above) that this item is one of. Example: Sony Xperia Z2 Tablet.
+* **Inventory Code:** A unique alphanumeric code identifying this item. Example: INV1234.
+* **Model:** The model (see above) that this item is one of. Example: Sony Xperia Z2 Tablet.
 
 The rest of the fields can be customized.
 
