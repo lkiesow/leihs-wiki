@@ -10,7 +10,7 @@ Models have a fixed number of fields describing them, and the available fields c
 * **Description:** A long-form text description also shown to customers when ordering/borrowing. Example: Waterproof tablet running CyanogenMod.
 * **Technical Details:** Technical description of the item, shown on the detail page when ordering. Example: 12" Screen with vibrant colors, WiFi, GPS.
 * **Internal Description:** Shown only to lending and inventory managers. Useful to keep information that customers don't need to see, perhaps written in internal shorthand. Example: Chargers on shelf 2.
-* **Important notes for hand over:** Prominently displayed notes specifically for lending managers. Example: Don't forget to include Micro-USB cable.
+* **Important notes for hand over:** Notes specifically for lending managers, prominently displayed during hand over. Example: Don't forget to include Micro-USB cable.
 
 ## Fields for items
 
