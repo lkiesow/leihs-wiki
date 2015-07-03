@@ -44,21 +44,45 @@ The following is a typical field definition, which is written in [JSON](https://
 }
 ```
 
-These definitions are edited in very simple text areas in leihs. You may of course use an external editor to syntax highlight and format your JSON more easily. If you don't want to install any software, a simple online editor we can recommend is [JSON Editor Online](http://jsoneditoronline.org/). Click the ![Screenshot of JSON Editor Online's indent button button](images/indent_button.png) button in the top left corner of that editor to have your code indented beautifully. You can copy and paste it back into leihs' textareas when you're done.
+These definitions are edited in simple text areas in leihs. You may of course use an external editor to syntax highlight and format your JSON more easily. If you don't want to install any software, a simple online editor we can recommend is [JSON Editor Online](http://jsoneditoronline.org/). Click the ![Screenshot of JSON Editor Online's indent button button](images/indent_button.png) button in the top left corner of that editor to have your code indented beautifully. With the left and right arrows you can convert your JSON into a graphically editable tree on the right and back to code on the left. This can help with e.g. comma errors when listing properties. You can then copy and paste your definition back into leihs' textareas when you're done.
 
-Using such a JSON-specific editor helps make sure that you don't introduce syntax errors or other problems. If you do create a syntax error, leihs will not let you save any fields at all until you fix it, preventing problems with your database.
+Using such a JSON-specific editor helps make sure that you don't introduce syntax errors or other problems. If you do create a syntax error, leihs will not let you save any fields at all until you fix it, thus preventing problems with your database.
 
 ## Available keys and values
 
-There are a couple of keys and values that you can use, they are described in more detail below:
+There are the keys and values that you can use, they are described in more detail below:
 
 Key   | Type | Description  
 ----- | --- | --- | ---
-label | String | The human-friendly label that appears for this field on the inventory editor
 attribute | String | Which DB column or hash key the data is saved in
-required | Boolean | If true, field must be filled in in order to save the item
-permissions | Hash | Hash of permissions and ownership restrictions
-type | String | The type of the field, such as string, integer, etc.
+data_dependency_field_id | Field ID | What data to use for a composite field
+form_name | String | ?
 group | String | Group of interface elements to add this field to, or null for no grouping
+label | String | The human-friendly label that appears for this field on the inventory editor
+permissions | Hash | Hash of permissions and ownership restrictions
+required | Boolean | If true, field must be filled in in order to save the item
+target_type | String | Restrict the field to phsyical items or software licenses
+type | String | The type of the field, such as string, integer, etc.
+type | String | Type of the field
+value_label | Array | ?
+value_label_ext | Array | ?
+visibility_dependency_field_id | Field ID | The field only appears if the field of the given id has the value specified by `visibility_dependency_value`
+visibility_dependency_value | String | Combine with `visibility_dependency_field_id` to make a field only appear when another field has a certain value
+
+### type
+
+Type determines the type of the field, in the sense of datatype. Possible values are:
+
+* **autocomplete-search**: A search field that autocompletes its selection with values from the database.
+* **text**: Plain text, stored in UTF-8.
+* **select**: A dropdown menu that shows values you can predefine. Requires `values` to be defined to be useful.
+* **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
+* **checkbox**: A group of checkboxes with values defined in the `values` array.
+* **radio**: A group of radio buttons with values defined in the `values` array.
+
+### target_type
+
+One of `item` to make the field only appear on edit forms for physical items or `license` to appear only on software licenses. Not setting `target_type` at all makes fields appear on both items and software licenses.
+
 
 NOTE: This documentation is still incomplete but constantly being expanded. Expect a full list of all possible values in July 2015.
