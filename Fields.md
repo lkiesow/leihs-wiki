@@ -25,7 +25,7 @@ This is a typical field. Here it's the rather important `inventory_code`:
 ![Screenshot of a field in leihs' field editor](images/field_editor_01.png)
 
 From left to right we have:
-- **inventory_code**, the id of the field. This must be unique and it's the name you can use to refer to the field in other places, such as making another field depend on this one. The database will automatically make sure that all names are unique, if you try to add a field with an id that is already taken, you'll get an error message.
+- **inventory_code**, the id of the field. This must be unique and it's the name you can use to refer to the field in other places, such as when making another field depend on this one. The database will automatically make sure that all names are unique, if you try to add a field with an id that is already taken, you'll get an error message.
 - **Active checkbox**: This field is active, which means it shows up on each item's item editor.
 - **Reordering arrow**: You can grab fields by this arrow and reorder them via drag and drop. Actually, it doesn't matter where in the grey area you click and drag, the arrow is just there to indicate that this is draggable.
 
