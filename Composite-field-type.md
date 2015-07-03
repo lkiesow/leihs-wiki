@@ -1,5 +1,3 @@
-# The composite field type
-
 A composite is a rarely used [field](Fields) type in leihs, because it's very specialized. A composite field looks like this:
 
 ![An example of what a composite field looks like](images/composite_field.png)
