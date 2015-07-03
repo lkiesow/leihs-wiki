@@ -43,7 +43,8 @@ The following is a typical field definition, which is written in [JSON](https://
 	"group":null
 }
 ```
-You may of course use an external editor to syntax highlight and format your JSON more easily. If you don't want to install any software, a simple online editor we can recommend is [JSON Editor Online](http://jsoneditoronline.org/). Click the ![Screenshot of JSON Editor Online's indent button button](images/indent_button.png) button in the top left corner of that editor to have your code indented beautifully. You can copy and paste it back into leihs' textareas when you're done.
+
+These definitions are edited in very simple text areas in leihs. You may of course use an external editor to syntax highlight and format your JSON more easily. If you don't want to install any software, a simple online editor we can recommend is [JSON Editor Online](http://jsoneditoronline.org/). Click the ![Screenshot of JSON Editor Online's indent button button](images/indent_button.png) button in the top left corner of that editor to have your code indented beautifully. You can copy and paste it back into leihs' textareas when you're done.
 
 Using such a JSON-specific editor helps make sure that you don't introduce syntax errors or other problems. If you do create a syntax error, leihs will not let you save any fields at all until you fix it, preventing problems with your database.
 
