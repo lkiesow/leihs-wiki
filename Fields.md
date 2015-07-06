@@ -75,9 +75,14 @@ visibility_dependency_value | String | Combine with `visibility_dependency_field
 
 `attribute` specifies where data in this field is saved. There are two choices: a database column or the value part of a property hash, serialized into one big database column that contains all the other properties as well.
 
-To decide between the two, there are a few considerations to take into account.
+To decide between the two, there are a few considerations to take into account:
+
+* Saving into the property hash is the easier and safer option. It requires no database changes and you run no risk of losing data. The downside is that with many (read: hundreds) of properties, performance of the item edit page might suffer.
 
 
+* Saving into the database is the riskier option. It requires a database column of the correct name and type. You will have to maintain your own patches against the vanilla leihs database and it if vanilla leihs ever gains a field with the same name as yours, you might have to adapt your field definitions to kick out the vanilla field and reintroduce yours.
+
+Either way is supported by the field editor.
 
 #### Saving attributes into a database column
 
@@ -88,6 +93,7 @@ To save into a column, make sure the column is of the right type (the same type 
 ```
 Make sure the name contains only letters a to z and the underscore.
 
+Data stored in an attribute is never destroyed, even if you were to remove a field or make it save into a different property. If this ever becomes an issue for you, removing data can be done by going through all items with a script on the Rails console to clear that particular property and save the item.
 
 #### Saving attributes into the property hash
 
@@ -100,17 +106,17 @@ The properties hash is always present and you an always define new attributes on
 
 ### type
 
-Type determines the type of the field, in the sense of datatype. Possible values are:
+Type determines the datatype of the field. The following types are supported:
 
-* **autocomplete-search**: A search field that autocompletes its selection with values from the database.
+* **autocomplete-search**: A search field that autocompletes its selection by searching on a specific URL. Requires `search_path`, `search_attr`, `value_attr`, `display_attr` to be defined.
+* **autocomplete**: An autocomplete field that allows searching in a list of values defined in the `values` array.
+* **checkbox**: A group of checkboxes with values defined in the `values` array.
+* **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
+* **date**: A date picker for a date.
+* **radio**: A group of radio buttons with values defined in the `values` array.
+* **select**: A dropdown menu that shows values you can predefine. Requires `values` to be defined to be useful.
 * **text**: Plain text, stored in UTF-8. Presented as a normal input box (single-line)
 * **textarea**: Plain text, stored in UTF-8. Presented as a multi-line text area.
-* **select**: A dropdown menu that shows values you can predefine. Requires `values` to be defined to be useful.
-* **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
-* **checkbox**: A group of checkboxes with values defined in the `values` array.
-* **radio**: A group of radio buttons with values defined in the `values` array.
-* **date**: A date picker for a date.
-* **autocomplete**: An autocomplete field that allows searching in a list of values defined in the `values` array.
 
 
 ### target_type
