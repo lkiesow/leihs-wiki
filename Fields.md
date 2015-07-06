@@ -74,7 +74,8 @@ visibility_dependency_value | String | Combine with `visibility_dependency_field
 Type determines the type of the field, in the sense of datatype. Possible values are:
 
 * **autocomplete-search**: A search field that autocompletes its selection with values from the database.
-* **text**: Plain text, stored in UTF-8.
+* **text**: Plain text, stored in UTF-8. Presented as a normal input box (single-line)
+* **textarea**: Plain text, stored in UTF-8. Presented as a multi-line text area.
 * **select**: A dropdown menu that shows values you can predefine. Requires `values` to be defined to be useful.
 * **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
 * **checkbox**: A group of checkboxes with values defined in the `values` array.
