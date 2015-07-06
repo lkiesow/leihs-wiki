@@ -57,6 +57,7 @@ Key   | Type | Description
 attribute | String | Which DB column or hash key the data is saved in
 data_dependency_field_id | Field ID | What data to use for a composite field
 form_name | String | ?
+forPackage | Boolean | ?
 group | String | Group of interface elements to add this field to, or null for no grouping
 label | String | The human-friendly label that appears for this field on the inventory editor
 permissions | Hash | Hash of permissions and ownership restrictions
@@ -69,6 +70,34 @@ value_label_ext | Array | ?
 visibility_dependency_field_id | Field ID | The field only appears if the field of the given id has the value specified by `visibility_dependency_value`
 visibility_dependency_value | String | Combine with `visibility_dependency_field_id` to make a field only appear when another field has a certain value
 
+
+### attribute
+
+`attribute` specifies where data in this field is saved. There are two choices: a database column or the value part of a property hash, serialized into one big database column that contains all the other properties as well.
+
+To decide between the two, there are a few considerations to take into account.
+
+
+
+#### Saving attributes into a database column
+
+To save into a column, make sure the column is of the right type (the same type that you chose for the `type` of the field) and then simply give the name of that column as a string:
+
+```json
+"attribute" : "name_of_database_column"
+```
+Make sure the name contains only letters a to z and the underscore.
+
+
+#### Saving attributes into the property hash
+
+To save into the properties hash, make the name of the property you want to use is not already in use, then give it in this array notation:
+
+```json
+"attribute" : ["properties", "name_of_property"]
+```
+The properties hash is always present and you an always define new attributes on it simply by declaring them in one of your fields. Make sure the names contain only letters a to z and the underscore.
+
 ### type
 
 Type determines the type of the field, in the sense of datatype. Possible values are:
@@ -80,10 +109,13 @@ Type determines the type of the field, in the sense of datatype. Possible values
 * **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
 * **checkbox**: A group of checkboxes with values defined in the `values` array.
 * **radio**: A group of radio buttons with values defined in the `values` array.
+* **date**: A date picker for a date.
+* **autocomplete**: An autocomplete field that allows searching in a list of values defined in the `values` array.
+
 
 ### target_type
 
-One of `item` to make the field only appear on edit forms for physical items or `license` to appear only on software licenses. Not setting `target_type` at all makes fields appear on both items and software licenses.
+Either `item` to make the field only appear on edit forms for physical items or `license` to appear only for software licenses. Not setting `target_type` at all makes fields appear on both items and software licenses.
 
 
 NOTE: This documentation is still incomplete but constantly being expanded. Expect a full list of all possible values in July 2015.
