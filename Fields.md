@@ -104,6 +104,19 @@ To save into the properties hash, make the name of the property you want to use 
 ```
 The properties hash is always present and you an always define new attributes on it simply by declaring them in one of your fields. Make sure the names contain only letters a to z and the underscore.
 
+### permissions
+
+A hash telling leihs who is allowed to do what on this field. There are two keys that you can specify:
+
+* **role**: Defines which role a user needs to have (at least) to be able to write to this field. One of `lending_manager`, `inventory_manager`.
+* **owner**: Whether the user's inventory pool needs to be the owner of this item in order to change this field. Otherwise they get a read-only field.
+
+By default, ??? is set. An example permissions definition looks like this:
+
+```json
+"permissions" : { "role":"inventory_manager", "owner" : true }
+```
+
 ### type
 
 Type determines the datatype of the field. The following types are supported:
