@@ -112,7 +112,7 @@ Type determines the datatype of the field. The following types are supported:
 * **autocomplete**: An autocomplete field that allows searching in a list of values defined in the `values` array.
 * **checkbox**: A group of checkboxes with values defined in the `values` array.
 * **composite**: A widget that allows assigning quantities and strings to count down from a value specified in a dependent field. Slightly more complex, therefore [explained on a separate page](Composite-field-type)
-* **date**: A date picker for a date.
+* **date**: A date picker.
 * **radio**: A group of radio buttons with values defined in the `values` array.
 * **select**: A dropdown menu that shows values you can predefine. Requires `values` to be defined to be useful.
 * **text**: Plain text, stored in UTF-8. Presented as a normal input box (single-line)
