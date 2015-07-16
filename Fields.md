@@ -56,17 +56,22 @@ Key   | Type | Description
 ----- | --- | --- | ---
 attribute | String | Which DB column or hash key the data is saved in
 data_dependency_field_id | Field ID | What data to use for a composite field
+default | Any | What default value to use for this field
 form_name | String | ?
-forPackage | Boolean | ?
+forPackage | Boolean | Whether this field also appears on a package's edit form (not just items or licenses)
 group | String | Group of interface elements to add this field to, or null for no grouping
 label | String | The human-friendly label that appears for this field on the inventory editor
 permissions | Hash | Hash of permissions and ownership restrictions
 required | Boolean | If true, field must be filled in in order to save the item
+search_attr | String | ???
+search_path | String | ???
+search_term | String | ???
 target_type | String | Restrict the field to phsyical items or software licenses
 type | String | The type of the field, such as string, integer, etc.
 type | String | Type of the field
-value_label | Array | ?
-value_label_ext | Array | ?
+values | Array | An array of hashes of values and their labels that are available for this field
+value_label | Array | ???
+value_label_ext | Array | ???
 visibility_dependency_field_id | Field ID | The field only appears if the field of the given id has the value specified by `visibility_dependency_value`
 visibility_dependency_value | String | Combine with `visibility_dependency_field_id` to make a field only appear when another field has a certain value
 
@@ -91,7 +96,7 @@ To save into a column, make sure the column is of the right type (the same type 
 ```json
 "attribute" : "name_of_database_column"
 ```
-Make sure the name contains only letters a to z and the underscore.
+Make sure the name contains only letters a to z and the underscore. If the column does not exist yet, you need to manually create it in your database. Please note that this is a potential source of errors if e.g. a future version of leihs introduces a field of the same name. You could for example prefix your column names with your organization's name, e.g.  `my_university_field_x`. Users will never notice this as they will only see the label you specify in the field's JSON configuration, not the column name.
 
 Data stored in an attribute is never destroyed, even if you were to remove a field or make it save into a different property. If this ever becomes an issue for you, removing data can be done by going through all items with a script on the Rails console to clear that particular property and save the item.
 
@@ -102,7 +107,9 @@ To save into the properties hash, make the name of the property you want to use 
 ```json
 "attribute" : ["properties", "name_of_property"]
 ```
-The properties hash is always present and you an always define new attributes on it simply by declaring them in one of your fields. Make sure the names contain only letters a to z and the underscore.
+The properties hash is always present and you can always define new attributes on it simply by declaring them in one of your fields. Make sure the names contain only letters a to z and the underscore.
+
+You do not need to take particular care to prefix your property names with anything, but if you think it's likely that leihs itself might one day add a property with a name you're using, do prefix it now instead of later.
 
 ### permissions
 
@@ -135,6 +142,60 @@ Type determines the datatype of the field. The following types are supported:
 ### target_type
 
 Either `item` to make the field only appear on edit forms for physical items or `license` to appear only for software licenses. Not setting `target_type` at all makes fields appear on both items and software licenses.
+
+### values
+
+When you use field types that provide a selection, such as `select`, `checkbox` or `radio`, you need to specify which selections are possible. That's done through the `values` array. An example:
+
+```json
+"values" : [
+  {
+    "label": "Free",
+    "value": "free"
+  },
+  {
+    "label": "Single Workplace",
+    "value": "single_workplace"
+  },
+  {
+    "label": "Multiple Workplace",
+    "value": "multiple_workplace"
+  },
+  {
+    "label": "Site License",
+    "value": "site_license"
+  },
+  {
+    "label": "Concurrent",
+    "value": "concurrent"
+  }
+]
+```
+
+This is taken directly from a live leihs instance and describes the types of software licenses available. Users see the label in the user interface, what's stored to the database or properties hash is the value.
+
+You can specify a default in the separate `default` key.
+
+### default
+
+The default value for any field, although it is most useful in selection fields such as `select`, `checkbox`, etc. If the user picks nothing and enters nothing, this value is picked for them. Make sure the value you want actually exists in that field's values if you're using this with a selection field.
+
+Example:
+
+```json
+"default":"free"
+```
+
+This would set the value of this field to the string "free" by default.
+
+# Built-in arrays of values
+
+There are some function names that you can use in place of values for your "values" configuration. They are:
+
+ * `all_buildlings`: A list of all buildings as configured in the `buildings` table, sorted alphabetically.
+ * `all_inventory_pools`: A list of all inventory pools in the system, sorted alphabetically.
+ * `all_suppliers`: A list of all suppliers in the system, sorted alphabetically.
+ * `all_currencies`: A list of all currencies known to the system, sorted alphabetically.
 
 
 NOTE: This documentation is still incomplete but constantly being expanded. Expect a full list of all possible values in July 2015.
