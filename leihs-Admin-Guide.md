@@ -320,6 +320,19 @@ If you run leihs straight from git, you can of course also just switch to the ne
 But again, this only works if you've checked out leihs straight from git before. This won't work on a leihs installation unpacked from a tarball.
 
 
+## Upgrade stepping stones from very old versions
+
+If your leihs version has not been updated in quite some time, you will need to use a combination of different older versions of tools and you will have to reach specific stepping stones in leihs history so that you can upgrade to the very latest version.
+
+Here is a table summarizing what you need:
+
+| from leihs |to leihs  | Rubygems version |
+|---|---|---|
+|< 3.5.0  | 3.5.0 | 2.0.12  |
+|< 3.14.0  | 3.14.0  | 2.0.12 |
+| 3.14.0 | latest | latest |
+
+
 ### Upgrading from < 3.14.0 to >= 3.14.0
 
 In leihs 3.15.0, we fixed a lot of potential database inconsistency problems. An inconsistency can for example be that a contract exists for an inventory pool that has since been deleted. Because databases with such inconsistencies are no longer compatible with leihs 3.15.0, we introduced a report page in leihs 3.14.0 that lets you look at your inconsistent data and decide what to do with it. leihs cannot decide automatically, a human with good knowledge about the inventory in question is required.
@@ -340,7 +353,13 @@ Once all the problems have been cleared, the report will be empty. You can now u
 
 ### Upgrading from < 3.5.0 to >= 3.5.0
 
-If you have a version older than 3.5.0, you will first have to upgrade to 3.5.0 in order to get the database into a state compatible with versions higher than 3.5.0. This is easily done checking out version 3.5.0 as described above under "Performing Upgrades", then checking out the version you want.
+If you have a version older than 3.5.0, you will first have to upgrade to 3.5.0 in order to get the database into a state compatible with versions higher than 3.5.0. This is easily done checking out version 3.5.0 as described above under "Performing Upgrades", then checking out the version you want and upgrading to that.
+
+Please note that to upgrade to 3.5.0, you need an older version of Rubygems since leihs 3.5.0 uses an old version of the acts-as-dag gem, whose gemspec is not compatible with newer version of Rubygems. Therefore you must first downgrade your Rubygems version:
+
+```gem update --system 2.0.14```
+
+Once you have upgraded to leihs 3.14.0 and beyond, you can freely move to a newer version or Rubygems as well.
 
 
 ### Upgrading from leihs 2.9.14 to leihs 3.0.0
