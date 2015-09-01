@@ -176,7 +176,13 @@ But again, this only works if you've checked out leihs straight from git before.
 
 If your leihs version has not been updated in quite some time, you will need to use a combination of different older versions of tools and you will have to reach specific stepping stones in leihs history so that you can upgrade to the very latest version.
 
-Here is a table summarizing what you need:
+The sequence that works is:
+ * Anything older than 2.9.14 to 3.0.0
+ * 3.0.0 to 3.5.0
+ * 3.5.0 to 3.14.0
+ * 3.14.0 to the latest version
+
+It's necessary to use a specific (and outdated) version of Rubygems to be able to install all the gems for specific (and also outdated) versions of leihs. The following table shows which Rubygems version is needed at which point:
 
 | from leihs |to leihs  | Rubygems version |
 |---|---|---|
