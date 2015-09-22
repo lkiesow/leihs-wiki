@@ -166,7 +166,8 @@ Almost all Leihs upgrades work the same way:
 If you run leihs straight from git, you can of course also just switch to the newest release tag right in your source code directory. Substitute the latest released version for n.n.n.:
 
         $ git fetch
-        $ git checkout n.n.n
+        $ git reset --hard n.n.n
+        $ bundle install
         $ RAILS_ENV=production bundle exec rake db:migrate
 
 But again, this only works if you've checked out leihs straight from git before. This won't work on a leihs installation unpacked from a tarball.
