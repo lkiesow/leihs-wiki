@@ -134,17 +134,20 @@ Note: the pre-existing directory `./log` will need write permission for logs to 
 
 Once you have tested that everything works correctly, make sure you read through the section below on setting up a real production environment.
 
-## Users, logins and levels
+## Users, logins and roles
 
 ### Default admin username/password
 
 After installation, a default user is created for the Database Authentication module.
+
 Username: admin
 Password: password
 
 Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
 
-If logging in does not work, you should try deleting your browser cache / cookies. I had trouble especially with the admin user in Firefox 32.x.
+If logging in does not work, you should try deleting your browser cache/cookies. Some users had issues using older versions of Firefox (32.x).
+
+The roles themselves are described under [Roles](Roles).
 
 ### Hooking up to LDAP for logins
 

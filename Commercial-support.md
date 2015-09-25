@@ -1,9 +1,9 @@
 
-Commercial support is available for leihs, but not from the Zürich University of the Arts.
+Commercial support is available from the following companies:
 
 ## Companies and individuals offering commercial support
 
-* Ramón Cahenzli (rca@psy-q.ch) offers: Installation, upgrades, migrations and automated deployments.
+* The Zürich University of the Arts. Contact: nadja.weisskopf@zhdk.ch.
 
 
 Add yourself to this list by editing this wiki page if you want to offer services around leihs.
