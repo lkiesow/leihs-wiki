@@ -1,5 +1,3 @@
-# Roles
-
 ## Admin
 
 Admins take decisions that affect the entire system, but they don't take part in lending or inventory management. This is instead delegated to specialized managers. Admins can:
