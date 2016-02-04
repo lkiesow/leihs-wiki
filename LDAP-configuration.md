@@ -50,8 +50,18 @@ To copy the whole distinguishedName out of the Active Directory console (for con
 #### base_dn
 The Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
 
+If using ActiveDirectory and a Windows client joined to your domain, you can find out the base_dn via this command on a Windows session for a normal user:
+
+     whoami /FQDN
+
+
 #### admin_dn
 The `distinguishedName` of the LDAP group you intend to give admin rights to in Leihs. This MUST be a group, a single user is not a tested/supported scenario.
+
+If using ActiveDirectory and a Windows client joined to your domain, you can find out the base_dn via this command on a Windows session for an admin user:
+
+     whoami /FQDN
+
 
 #### unique_id_field
 `unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique.
