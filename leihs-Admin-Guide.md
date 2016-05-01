@@ -165,6 +165,7 @@ Almost all Leihs upgrades work the same way:
  * `public/images/attachments`
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
 * Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
+* Change the hardcoded path to the new Leihs directory inside your cronjob shellscript
 
 If you run leihs straight from git, you can of course also just switch to the newest release tag right in your source code directory. Substitute the latest released version for n.n.n.:
 
