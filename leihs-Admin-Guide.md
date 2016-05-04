@@ -195,7 +195,8 @@ It's necessary to use a specific (and outdated) version of Rubygems to be able t
 |< 3.5.0  | 3.5.0 | 2.0.12  |
 |< 3.14.0  | 3.14.0  | 2.0.12 |
 | 3.14.0  | 3.23.0  | 2.0.12 |
-| 3.23.0 | latest | latest |
+| 3.23.0 | 3.36.0 | latest |
+| 3.36.0 | latest | latest |
 
 
 ### Upgrading from < 3.14.0 to >= 3.14.0
