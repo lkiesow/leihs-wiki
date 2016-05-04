@@ -186,7 +186,8 @@ The sequence that works is:
  * 3.0.0 to 3.5.0
  * 3.5.0 to 3.14.0
  * 3.14.0 to 3.23.0
- * 3.23.0 to the latest version
+ * 3.23.0 to 3.36.0
+ * 3.36.0 to the latest version
 
 It's necessary to use a specific (and outdated) version of Rubygems to be able to install all the gems for specific (and also outdated) versions of leihs. The following table shows which Rubygems version is needed at which point:
 
