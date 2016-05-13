@@ -31,6 +31,9 @@ WARNING: be sure to include a space after the `:` characters:
 * Copy the contents of the attribute `distinguishedName` to the value of `master_bind_dn` in the config file (click on "Edit" first).
 * Paste the whole string to your config file where needed.
 
+If you are unable to access the Users and Computers console, you may build the DN strings by hand. If using ActiveDirectory and a Windows client joined to your domain, you can find out the Distiguished Name of the currently logged on user via this command on a Windows session:
+`whoami /FQDN`
+
 Examples
 * A user: `CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org`
 * An Object Unit (folder): `OU=users,DC=example,DC=org`
