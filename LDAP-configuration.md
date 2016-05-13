@@ -23,10 +23,27 @@ WARNING: be sure to include a space after the `:` characters:
 * wrong: 'master_bind_pw:12345'
 * correct: 'master_bind_pw: 12345'
 
+#### Distinguished Names
+'Distinguished Name' is LDAP speak for "complete, unambiguous path to an object inside LDAP". You will need to specify DN strings in LDAP.yml. It can be hard /error prone to build a complete DN string by hand. To make your life easier copy the whole distinguishedName of an object out of the 'Active Directory Users and Computers' console:
+* Open the 'Active Directory Users and Computers' console
+* In the view menu enable "Advanced Features"
+* Open the properties of an OU, User or Group and look for the "Attribute-Editor" tab
+* Copy the contents of the attribute `distinguishedName` to the value of `master_bind_dn` in the config file (click on "Edit" first).
+* Paste the whole string to your config file where needed.
+
+Examples
+A user:
+CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
+An Object Unit (folder):
+OU=users,DC=example,DC=org
+A user group object:
+CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org
+
 #### host
 The hostname of your LDAP server.
 Active Directory: enter your AD domain name here, not just a hostname. The domain name resolves to all available Domain Controllers - good for redundancy. In the example above the value should read
 'example.org'
+A regular hostname is will work, but without redundancy of course.
 
 #### port
 Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if you set `encryption` to `none`. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
@@ -36,35 +53,18 @@ Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if
 `simple_tls` uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using `none`. Beware: your Active Directory Server needs a certificate for SSL to work. (Todo: need to test the specifics of this, will update documentation later, DBR)
 
 #### master_bind
-`master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
+Distinguished Name of an LDAP user object. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
 -> Create a new user in your Active Directory, for example `LeihsEnumUser`.
 Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. Just update the password in this case to the new value.
-The value of `master_bind_dn` should equal the LDAP `distinguishedName` attribute of your LeihsEnumUser user.
-
-To copy the whole distinguishedName out of the Active Directory console (for convenience):
-* Open the 'Active Directory Users and Computers' console
-* In the view menu enable "Advanced Features"
-* Open the properties of your new user and look for the "Attribute-Editor" register
-* Copy the contents of the attribute `distinguishedName` to the value of `master_bind_dn` in the config file.
 
 #### base_dn
-The Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
-
-If using ActiveDirectory and a Windows client joined to your domain, you can find out the base_dn via this command on a Windows session for a normal user:
-
-     whoami /FQDN
-
+Distinguished Name of an Active Directory Object Unit (OU): the Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
 
 #### admin_dn
-The `distinguishedName` of the LDAP group you intend to give admin rights to in Leihs. This MUST be a group, a single user is not a tested/supported scenario.
-
-If using ActiveDirectory and a Windows client joined to your domain, you can find out the base_dn via this command on a Windows session for an admin user:
-
-     whoami /FQDN
-
+Distinguished Name of the LDAP group you intend to give admin rights to in Leihs. This MUST be a group, a single user is not a tested/supported scenario.
 
 #### unique_id_field
-`unique_id_field` is any field in your LDAP that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique.
+`unique_id_field` is any attribute-field of an LDAP user, that contains a completely unique ID for the user in question. This can be the same as `search_field` if you are sure that it's unique.
 DBR: I have read that `sAMAccountName` normally is unique on the Active Directory domain level (not forest level). For practical purposes it can be considered 'unique' I guess. Source:
 [http://blogs.msdn.com/b/openspecification/archive/2009/07/10/understanding-unique-attributes-in-active-directory.aspx](http://blogs.msdn.com/b/openspecification/archive/2009/07/10/understanding-unique-attributes-in-active-directory.aspx)
 
