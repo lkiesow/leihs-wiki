@@ -32,12 +32,9 @@ WARNING: be sure to include a space after the `:` characters:
 * Paste the whole string to your config file where needed.
 
 Examples
-A user:
-CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
-An Object Unit (folder):
-OU=users,DC=example,DC=org
-A user group object:
-CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org
+* A user: 'CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org'
+* An Object Unit (folder): 'OU=users,DC=example,DC=org'
+* A user group object: 'CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org'
 
 #### host
 The hostname of your LDAP server.
