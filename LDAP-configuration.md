@@ -20,8 +20,8 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
 `unique_id_field`, `master_bind_dn` and `master_bind_pw` are all required.
 
 WARNING: be sure to include a space after the `:` characters:
-* wrong: 'master_bind_pw:12345'
-* correct: 'master_bind_pw: 12345'
+* wrong: `master_bind_pw:12345`
+* correct: `master_bind_pw: 12345`
 
 #### Distinguished Names
 'Distinguished Name' is LDAP speak for "complete, unambiguous path to an object inside LDAP". You will need to specify DN strings in LDAP.yml. It can be hard /error prone to build a complete DN string by hand. To make your life easier copy the whole distinguishedName of an object out of the 'Active Directory Users and Computers' console:
@@ -32,9 +32,9 @@ WARNING: be sure to include a space after the `:` characters:
 * Paste the whole string to your config file where needed.
 
 Examples
-* A user: 'CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org'
-* An Object Unit (folder): 'OU=users,DC=example,DC=org'
-* A user group object: 'CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org'
+* A user: `CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org`
+* An Object Unit (folder): `OU=users,DC=example,DC=org`
+* A user group object: `CN=grpAllLeihsAdmins,OU=Users,OU=Groups,DC=example,DC=org`
 
 #### host
 The hostname of your LDAP server.
