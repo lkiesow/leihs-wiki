@@ -101,19 +101,20 @@ Finally, you need to tell Leihs that you want to use LDAP and not the user crede
 
 Start a Rails console inside your Leihs directory:
 
+    $ cd /home/leihs/leihs-n.n.n
     $ RAILS_ENV=production bundle exec rails c
 
 Then enable LDAP authentication as default but leave database authentication enabled for now:
 
-        >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
-        >> ldap.is_default = true
-        >> ldap.is_active = true
-        >> ldap.save
+    ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
+    ldap.is_default = true
+    ldap.is_active = true
+    ldap.save
 
-        >> db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
-        >> db.is_default = false
-        >> db.is_active = true
-        >> db.save
+    db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
+    db.is_default = false
+    db.is_active = true
+    db.save
 
 #### First login with LeihsAdmin over LDAP
 Now restart your Rails application. Next time you try to access it, you should be forwarded to `/authenticator/ldap/login` instead of `/authenticator/db/login`, where you can log in via LDAP. If login was successful, the information stored in LDAP (email, surname, name, phone, etc.) gets copied to your Leihs database as a new user is created in table `users`. It can be (locally) edited later in the admin dashboard of Leihs. You may still login with the local database users by simply changing the URL in your browser to ...`/authenticator/db/login`
@@ -136,19 +137,20 @@ Delete your browser cache if repeated login attempts fail unexpectedly (I notice
 #### Turning off database authentication for good
 After you made your first login with LeihsAdmin and everything runs as it should, you might disable database authentication for your production server:
 
+    $ cd /home/leihs/leihs-n.n.n
     $ RAILS_ENV=production bundle exec rails c
 
 Enable only LDAP authentication and switch off database authentication:
 
-        >> ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
-        >> ldap.is_default = true
-        >> ldap.is_active = true
-        >> ldap.save
+    ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
+    ldap.is_default = true
+    ldap.is_active = true
+    ldap.save
 
-        >> db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
-        >> db.is_default = false
-        >> db.is_active = false
-        >> db.save
+    db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
+    db.is_default = false
+    db.is_active = false
+    db.save
 
 Restart your webserver afterwards.
 
