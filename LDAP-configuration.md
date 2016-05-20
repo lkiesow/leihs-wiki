@@ -115,6 +115,7 @@ Then enable LDAP authentication as default but leave database authentication ena
     db.is_default = false
     db.is_active = true
     db.save
+    exit
 
 #### First login with LeihsAdmin over LDAP
 Now restart your Rails application. Next time you try to access it, you should be forwarded to `/authenticator/ldap/login` instead of `/authenticator/db/login`, where you can log in via LDAP. If login was successful, the information stored in LDAP (email, surname, name, phone, etc.) gets copied to your Leihs database as a new user is created in table `users`. It can be (locally) edited later in the admin dashboard of Leihs. You may still login with the local database users by simply changing the URL in your browser to ...`/authenticator/db/login`
@@ -131,7 +132,11 @@ After you eliminated all errors (no errors visible in browser and the logfile) y
 You might get thrown back to the login page as your user is created in the database and not immediately see
 the Leihs interface. In this case simply enter your credentials for LeihsAdmin one more time. This time you should be able to see the Leihs dashboard and have admin permissions (verify this in the `users` page).
 
-Delete your browser cache if repeated login attempts fail unexpectedly (I noticed this problem now and then on Windows with Firefox, DBR).
+Delete your browser cache if repeated login attempts fail unexpectedly.
+
+
+#### User-Information is not updated automatically
+I tested changing user information in Active Directory afterwards (email, telephone). There does not seem to be any synchronisation mechanism between LDAP and the Leihs database. Leihs 3.34.0, DBR
 
 
 #### Turning off database authentication for good
@@ -151,6 +156,7 @@ Enable only LDAP authentication and switch off database authentication:
     db.is_default = false
     db.is_active = false
     db.save
+    exit
 
 Restart your webserver afterwards.
 
