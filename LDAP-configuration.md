@@ -46,7 +46,7 @@ Examples
 The hostname of your LDAP server.
 Active Directory: enter your AD domain name here, not just a hostname. The domain name resolves to all available Domain Controllers - good for redundancy. In the example above the value should read
 'example.org'
-A regular hostname is will work, but without redundancy of course.
+A regular FQDN of any single Domaincontroller will work too, but without redundancy of course.
 
 #### port
 Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if you set `encryption` to `none`. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
@@ -56,9 +56,11 @@ Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if
 `simple_tls` uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using `none`. Beware: your Active Directory Server needs a certificate for SSL to work. (Todo: need to test the specifics of this, will update documentation later, DBR)
 
 #### master_bind
-Distinguished Name of an LDAP user object. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to.
--> Create a new user in your Active Directory, for example `LeihsEnumUser`.
-Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. Just update the password in this case to the new value.
+Distinguished Name of an LDAP user object. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to. Needs read-only access to your LDAP.
+As usual, it is best practice to create a new user in your Active Directory, dedicated only to this purpose. Name it `LeihsEnumUser` for example.
+Mind your password policy: if the password changes in AD automatically, you will not be able to log in to Leihs anymore. If this happens, just update the password of your master_bind user in your config file.
+
+To prevent this, make sure to check the "Password never expires" box for this user in 'Users and Computers' console.
 
 #### base_dn
 Distinguished Name of an Active Directory Object Unit (OU): the Ldap-tree that is searched for usernames. Active Directory: Copy the `distinguishedName` of the top Organization Unit your users are stored in. The search will look in all subdirectories of this OU for a user with an attribute you specify in `search_field`.
