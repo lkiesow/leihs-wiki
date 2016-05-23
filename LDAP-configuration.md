@@ -8,8 +8,11 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
           host: ldapserver.example.org
           port: 636
           encryption: simple_tls
-          log_file: log/ldap_server.log
-          log_level: warn
+          #Logging to extra file for LDAP module is not implemented (since at least Leihs 3.34.0)
+          #LDAP errors will be written to STDERR, Debug messages to STDOUT
+          #If you run Apache (production environment), check your Apache error log instead
+          #log_file: log/ldap_server.log
+          #log_level: warn
           master_bind_dn: CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
           master_bind_pw: 12345
           base_dn: OU=users,DC=example,DC=org
@@ -135,8 +138,10 @@ the Leihs interface. In this case simply enter your credentials for LeihsAdmin o
 Delete your browser cache if repeated login attempts fail unexpectedly.
 
 
-#### User-Information is not updated automatically
-I tested changing user information in Active Directory afterwards (email, telephone). There does not seem to be any synchronisation mechanism between LDAP and the Leihs database. Leihs 3.34.0, DBR
+#### User-Information is updated on logon
+I tested changing user information in Active Directory afterwards (email, telephone, address). On next login of the user, his/her information was updated from Active Directory to the Leihs user table. Updating works only in the direction Active Directory -> Leihs.
+Therefore, do not manually update user information in Leihs, or it will get overwritten.
+Allow for some time to pass for the information to be pulled from AD again (AD replication, caching, etc.). In my testing, the information was only updated to the current values after I waited a bit. DBR, Leihs 3.34.0
 
 
 #### Turning off database authentication for good
