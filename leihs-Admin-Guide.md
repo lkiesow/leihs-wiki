@@ -7,6 +7,8 @@ leihs is web-based inventory handling and resource booking system. It allows use
 
 This guide shows you how to install a leihs server. The guide is written from the perspective of a system administrator or developer. If you are interested in running leihs in your own organization but aren't a sysadmin, talk to your IT department. leihs is not intended to be installed on a client, so any software installation on your own machine isn't necessary. All you need is a web browser, the rest can be taken care of by your IT department.
 
+Be aware that this guide does *not* give you a full walkthrough to build a "production" system. It will show you how to set up Leihs in a simple environment. See below for further hints on how to setup an Apache based installation with Phusion Passenger.
+
 ## Commercial support
 
 Consulting and installation services are also available from independent companies supporting Free Software all around the world. Ask around for a company or individual who knows Ruby on Rails applications, you will surely find someone who can help you install leihs.
@@ -51,6 +53,8 @@ These steps apply for both Debian-based and RPM-based distributions.
         $ wget https://github.com/zhdk/leihs/archive/n.n.n.tar.gz
         $ tar xvfz n.n.n.tar.gz
 
+Note: For a production environment, it is best practice to change ownership of the leihs directory and all subdirectories (except those few directories mentioned later), to root. The goal is to deny write-access to the process running Leihs, so the content of the website cannot be changed in case of a security hole.
+
 2. Install the RubyGems that leihs needs. Bundler can do this automatically:
 
         # su - leihs
@@ -90,9 +94,18 @@ These steps apply for both Debian-based and RPM-based distributions.
 6. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
         $ cd /home/leihs/leihs-n.n.n
-        $ mkdir -p public/images/attachments tmp/sessions tmp/cache
+        $ mkdir -p ./public/images/attachments ./tmp/sessions ./tmp/cache
+        $ chown -R leihs ./public/images/attachments ./tmp/sessions ./tmp/cache
+        $ chmod -R ug=rwx,o=rx ./public/images/attachments ./tmp/sessions ./tmp/cache
 
-Note: the pre-existing directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
+    For production environments: The execute flag seems to be needed in order for Apache to be able to write logs and upload images. Be sure to check 'x' is set, if no log gets written / you get an error while uploading images.
+DBR, Leihs 3.34.0 
+
+    Note: the pre-existing directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
+
+        $ cd /home/leihs/leihs-n.n.n
+        $ chown -R leihs ./log
+        $ chmod -R ug=rwx,o=rx ./log
 
 7. Precompile the assets (images, javascripts, etc.):
 
