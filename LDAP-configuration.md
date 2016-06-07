@@ -193,14 +193,15 @@ See:
 Use `ldp.exe` test tool (included in Windows Server) to connect to your Domain Controller. Choose `Connection` -> `connect...`
 Enter your DC's hostname, port 636 and tick the 'SSL' box. Click 'connect'. On successful connection over SSL, I got the following results:
 
-`ld = ldap_sslinit("mydchostname", 636, 1);
+```
+ld = ldap_sslinit("ldapserver.example.org", 636, 1);
 Error 0 = ldap_set_option(hLdap, LDAP_OPT_PROTOCOL_VERSION, 3);
 Error 0 = ldap_connect(hLdap, NULL);
 Error 0 = ldap_get_option(hLdap,LDAP_OPT_SSL,(void*)&lv);
 Host supports SSL, SSL cipher strength = 256 bits
-Established connection to mydchostname.
+Established connection to ldapserver.
 Retrieving base DSA information...
-`
+```
 ### LDAP Library
 Leihs uses the gem net-ldap for connectivity to LDAP (as of leihs 3.16.0).
 [https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
