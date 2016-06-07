@@ -8,9 +8,6 @@ Copy config/LDAP.yml.example to config/LDAP.yml and adapt the configuration to y
           host: ldapserver.example.org
           port: 636
           encryption: simple_tls
-          #Logging to extra file for LDAP module is not implemented (since at least Leihs 3.34.0)
-          #LDAP errors will be written to STDERR, Debug messages to STDOUT
-          #If you run Apache (production environment), check your Apache error log instead
           #log_file: log/ldap_server.log
           #log_level: warn
           master_bind_dn: CN=LeihsEnumUser,OU=NonHuman,OU=users,DC=example,DC=org
@@ -48,12 +45,26 @@ Active Directory: enter your AD domain name here, not just a hostname. The domai
 'example.org'
 A regular FQDN of any single Domaincontroller will work too, but without redundancy of course.
 
-#### port
-Active Directory: Use 636 if you want to use `simple_tls` encryption. Use 389 if you set `encryption` to `none`. Open your firewall to allow either 636 TCP or 389 (UDP, TCP).
+#### port, encryption
+Talk to LDAP server encrypted over SSL (LDAPS) or unencrypted in plaintext LDAP.
+Using encryption for LDAP traffic between leihs and LDAP server is highly recommended, as passwords will be sent in plaintext over the network using `encryption: none`. Be aware that LDAP over SSL requires a certificate on your LDAP server. It may be self-signed, though as no validation of the cert is performed.
 
-#### encryption
-`encryption` can be set to `none` for unencrypted or `simple_tls` for SSL encrypted connections.
-`simple_tls` uses SSL encryption for the communication with the LDAP server. Strongly recommended, as passwords will be sent in plaintext over the network using `none`. Beware: your Active Directory Server needs a certificate for SSL to work. (Todo: need to test the specifics of this, will update documentation later, DBR)
+If you want to use encryption for LDAP traffic:
+```
+port: 636
+encryption: simple_tls
+```
+
+If you do not want to use encryption:
+```
+port: 389
+encryption: none
+```
+Open your firewall to allow either 636 TCP or 389 (UDP, TCP) on your LDAP server.
+
+Warning: Net::LDAP library used by leihs does not validate certificate authenticity using `simple_tls`. **It will accept any certificate the LDAP server presents without warning.** Other, stricter methods of SSL are currently not implemented in leihs. This is not a huge problem, as long as you trust your DNS server.
+[http://www.rubydoc.info/github/ruby-ldap/ruby-net-ldap/Net/LDAP:encryption](http://www.rubydoc.info/github/ruby-ldap/ruby-net-ldap/Net/LDAP:encryption)
+
 
 #### master_bind
 Distinguished Name of an LDAP user object. `master_bind_dn` and `master_bind_pw` are the credentials for an LDAP user that has permission to query enough of the LDAP tree so that it can find all the users you want to grant entry to leihs to. Needs read-only access to your LDAP.
@@ -80,12 +91,6 @@ Warning: do not use the AD `objectGUID`attribute for this. Though tempting, the 
 #### search_field
 The `search_field` dictates what users will have to write in the "Login" field on login.
 You may have to adapt the `search_field` option to point to the LDAP attribute that contains your usernames. In Active Directory this should normally be the `sAMAccountName` attribute, which is the "User-Logon-Name (pre Windows 2000)" in the GUI.
-
-#### LDAP Library
-Leihs uses the gem net-ldap for connectivity to LDAP (as of leihs 3.16.0).
-[https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
-It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the source code/documentation. Normally the information given above should be enough to get Leihs running, so this is just for reference.
-[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod)
 
 #### Example Admin
 For the sake of simplicity we will use a user called `LeihsAdmin`, which is a member of the group `grpAllLeihsAdmins` we configured above as `admin_dn`. Therefore, this user will automatically have complete administrative control in the Leihs dashboard. When I speak of 'LeihsAdmin', your LDAP user is meant.
@@ -167,8 +172,44 @@ Enable only LDAP authentication and switch off database authentication:
 
 Restart your webserver afterwards.
 
+## Encryption (LDAPS) with Active Directory
+I successfully tested binding to Active Directory with Leihs 3.34.0 and a Server 2012 R2 RODC Domain Controller over SSL (using 'simple_tls' and port '636'. A wireshark trace did not show any cleartext transmission of user credentials between the leihs web server and Domain Controller.
+Disclaimer: The LDAP ruby code was modified by me, before testing. I *think* the vanilla version of the code should work just fine, as I did not touch those parts. I hope these modifications will be integrated into the main branch of leihs in the future (pull request pending).
+DBR, June 2016
+
+####Cert requirements
+Your Active Directory Server needs a certificate for SSL to work.
+Please read up on Knowledgebase article 321051. You cert will need to match certain criteria to be accepted for LDAP usage by your domain controller. 
+[https://support.microsoft.com/en-us/kb/321051](https://support.microsoft.com/en-us/kb/321051)
+
+All you need to do is to import a suitable certificate (using MMC console with snapin "Certificates") into the local machine personal store of your Domain Controller. Upon reboot, LDAP will look for certificates and start serving connections to port 636, if a matching cert is found.
+
+Your Domain Controller will automatically use the first certificate it deems fitting out of its
+`local machine\personal` store. You can however, if you want to enforce a specific certificate to be used, import the Cert into the Active Directory integrated Cert store for the machine `NTDS\personal`. This will override the local certificates.
+See:
+[http://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx](http://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx)
+
+####Testing LDAPS without leihs
+Use `ldp.exe` test tool (included in Windows Server) to connect to your Domain Controller. Choose `Connection` -> `connect...`
+Enter your DC's hostname, port 636 and tick the 'SSL' box. Click 'connect'. On successful connection over SSL, I got the following results:
+
+`ld = ldap_sslinit("mydchostname", 636, 1);
+Error 0 = ldap_set_option(hLdap, LDAP_OPT_PROTOCOL_VERSION, 3);
+Error 0 = ldap_connect(hLdap, NULL);
+Error 0 = ldap_get_option(hLdap,LDAP_OPT_SSL,(void*)&lv);
+Host supports SSL, SSL cipher strength = 256 bits
+Established connection to mydchostname.
+Retrieving base DSA information...
+`
+### LDAP Library
+Leihs uses the gem net-ldap for connectivity to LDAP (as of leihs 3.16.0).
+[https://github.com/ruby-ldap/ruby-net-ldap](https://github.com/ruby-ldap/ruby-net-ldap)
+It is a port of the perl library Net::LDAP. More detailed information about the parameters can be found in the source code/documentation. Normally the information given above should be enough to get Leihs running, so this is just for reference.
+[http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod](http://search.cpan.org/~marschap/perl-ldap/lib/Net/LDAP.pod)
+
+
 #### Contribute!
-Do you want to be able to configure all these settings directly in LDAP.yml so it's easier to hook up to your LDAP server? Feel free to improve our LDAP connector and send us a pull request on GitHub. Alternatively, you could also pay some Rails developers (even us!) to develop this feature for you.
+Feel free to improve our LDAP connector and send us a pull request on GitHub. Alternatively, you could also pay some Rails developers (even us!) to develop this feature for you.
 
 #### A fair warning
 Warning: Please make sure that your Rails application server has SSL enabled before you put this configuration into production. You don't want to send passwords unencrypted over the web using plain HTTP.
