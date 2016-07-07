@@ -24,9 +24,9 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
         # apt-get install build-essential make git libssl-dev libxslt-dev libmysqlclient-dev libxml2-dev curl imagemagick libmagickwand-dev
 
-2. Install [RVM](http://rvm.io/) and Bundler. When you're done, install Ruby:
+2. Install [rbenv](https://github.com/rbenv/rbenv), [ruby-build](https://github.com/rbenv/ruby-build) and Bundler. When you're done, install Ruby:
 
-        # rvm install 2.1.5
+        # rbenv install 2.3.0
         # gem install bundler
 
 
@@ -38,9 +38,9 @@ Please note that **this distribution is not officially supported**, but you are 
 
         # yum install curl gcc gcc-c++ libreadline-devel openssl-devel git libxslt-devel libxml2-devel libxml2 mysql-devel ImageMagick ImageMagick-devel
 
-2. Install [RVM](http://rvm.io/) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
+2. Install [rbenv](https://github.com/rbenv/rbenv), [ruby-build](https://github.com/rbenv/ruby-build) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # rvm install 2.1.5
+        # rbenv install 2.3.0
         # gem install bundler
 
 ## Installing the platform-independent components
@@ -59,7 +59,7 @@ Note: For a production environment, it is best practice to change ownership of t
 
         # su - leihs
         $ cd leihs-n.n.n
-        $ rvm use 2.1.5
+        $ rbenv shell 2.3.0
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
@@ -135,13 +135,12 @@ DBR, Leihs 3.34.0
 
     Then use something like the following shell script to actually execute what's necessary. We use a shell script wrapper like this because getting RVM and crontab to cooperate is not so easy otherwise.
 
-        #!/bin/bash
+        #!/bin/bash --login
 
-        source /usr/local/rvm/environments/ruby-2.1.5
-        rvm use 2.1.5
-        cd /home/leihs/leihs-n.n.n
+        rbenv shell 2.3.0
+        cd /home/leihs/production/current
         RAILS_ENV=production bundle exec rake leihs:cron
-
+        exit $?
 
     The important bit here is to run the "leihs:cron" rake task. How you do this exactly is irrelevant.
 
