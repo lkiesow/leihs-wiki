@@ -15,9 +15,20 @@ Consulting and installation services are also available from independent compani
 Companies known to offer commercial support for leihs can be found on the [respective wiki page](https://github.com/zhdk/leihs/wiki/Commercial-support). You can also add your company there and find out what skills are required in order to offer support.
 
 
+## System requirements
+
+ * Debian GNU/Linux
+ * 1 GB RAM
+ * Apache 2
+ * [Phusion Passenger](https://www.phusionpassenger.com)
+ * Ruby 2.3 (via [rbenv](https://github.com/rbenv/rbenv)
+ * MariaDB 10.0 or MySQL 5.5
+
+Please note that installation can also be done in an almost entirely automated way using our [Ansible](https://www.ansible.com) playbooks. They are available from [their own repository](https://github.com/leihs/ansible-leihs-setup).
+
 ## Installation of the base system on Debian GNU/Linux
 
-These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (wheezy). They might also work on Ubuntu. You might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
+These instructions were tested on a minimal install of Debian GNU/Linux 8.5 (jessie). They might also work on Ubuntu. If you try on Ubuntu, you might have to substitute `sudo su` for `su` because Ubuntu does not configure a root password, thus `su` would not work.
 
 1. Install some build essentials, Ruby, Bundler, irb, libxslt-dev, MySQL client libraries, libxml2-dev etc.:
 
@@ -25,7 +36,7 @@ These instructions were tested on a minimal install of Debian GNU/Linux 7.0 (whe
 
 2. Install [rbenv](https://github.com/rbenv/rbenv), [ruby-build](https://github.com/rbenv/ruby-build) and Bundler. When you're done, install Ruby:
 
-        # rbenv install 2.3.0
+        # rbenv install 2.3.1
         # gem install bundler
 
 
@@ -39,7 +50,7 @@ Please note that **this distribution is not officially supported**, but you are 
 
 2. Install [rbenv](https://github.com/rbenv/rbenv), [ruby-build](https://github.com/rbenv/ruby-build) and Bundler, since CentOS doesn't have an up to date Ruby version as a package. When you're done, install Ruby:
 
-        # rbenv install 2.3.0
+        # rbenv install 2.3.1
         # gem install bundler
 
 ## Installing the platform-independent components
@@ -58,7 +69,7 @@ Note: For a production environment, it is best practice to change ownership of t
 
         # su - leihs
         $ cd leihs-n.n.n
-        $ rbenv shell 2.3.0
+        $ rbenv shell 2.3.1
         $ bundle install --deployment --without cucumber development
 
 3. Configure database access for this installation of leihs. Copy the file config/database_local.yml to config/database.yml and set things up according to your needs. You will need a MySQL database for leihs (MariaDB will also work, but this guide does not cover installing MariaDB). Here is an example of a production database configuration:
@@ -136,7 +147,7 @@ DBR, Leihs 3.34.0
 
         #!/bin/bash --login
 
-        rbenv shell 2.3.0
+        rbenv shell 2.3.1
         cd /home/leihs/production/current
         RAILS_ENV=production bundle exec rake leihs:cron
         exit $?
