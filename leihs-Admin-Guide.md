@@ -21,7 +21,7 @@ Companies known to offer commercial support for leihs can be found on the [respe
  * 1 GB RAM
  * Apache 2
  * [Phusion Passenger](https://www.phusionpassenger.com)
- * Ruby 2.3 (via [rbenv](https://github.com/rbenv/rbenv)
+ * Ruby 2.3 (via [rbenv](https://github.com/rbenv/rbenv))
  * MariaDB 10.0 or MySQL 5.5
 
 Please note that installation can also be done in an almost entirely automated way using our [Ansible](https://www.ansible.com) playbooks. They are available from [their own repository](https://github.com/leihs/ansible-leihs-setup).
