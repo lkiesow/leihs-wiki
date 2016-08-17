@@ -1,5 +1,4 @@
 # leihs administration and installation guide
-Ramon Cahenzli <ramon.cahenzli@zhdk.ch>
 
 ## Introduction
 
@@ -13,7 +12,7 @@ Be aware that this guide does *not* give you a full walkthrough to build a "prod
 
 Consulting and installation services are also available from independent companies supporting Free Software all around the world. Ask around for a company or individual who knows Ruby on Rails applications, you will surely find someone who can help you install leihs.
 
-Companies known to offer commercial support for leihs can be found on the [respective wiki page](https://github.com/zhdk/leihs/wiki/Commercial-support). You can also add your company there.
+Companies known to offer commercial support for leihs can be found on the [respective wiki page](https://github.com/zhdk/leihs/wiki/Commercial-support). You can also add your company there and find out what skills are required in order to offer support.
 
 
 ## Installation of the base system on Debian GNU/Linux
