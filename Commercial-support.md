@@ -22,4 +22,4 @@ Depending on what the customer wants to connect to leihs, the following experien
  * LDAP or Active Directory
  * Shibboleth
 
-Please note that if you use the [Ansible](https://www.ansible.com/) automation system, setup is almost completely automated. You can find a deployment playbook for leihs [in their own repository](https://github.com/leihs/ansible-leihs-setup). 
+Please note that if you use the [Ansible](https://www.ansible.com/) automation system, setup is almost completely automated. You can find a deployment playbook for leihs [in the respective repository](https://github.com/leihs/ansible-leihs-setup). 
