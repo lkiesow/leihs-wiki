@@ -124,7 +124,7 @@ DBR, Leihs 3.34.0
 
 8. Enable serving static assets by changing the setting in `config/environments/production.rb`:
 
-        config.serve_static_assets = true
+        config.serve_static_files = true
 
     This is only for testing! You will disable this again once you start setting up a real production environment using Phusion Passenger. See 'Setting up a production environment' below for some hints about this.
 
