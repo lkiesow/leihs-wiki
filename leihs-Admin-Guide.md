@@ -104,14 +104,14 @@ Note: For a production environment, it is best practice to change ownership of t
 6. Create the temporary directories that are necessary for e.g. image uploads, temporary files etc. Make sure to create these directories so that the leihs user has write permission to them.
 
         $ cd /home/leihs/leihs-n.n.n
-        $ mkdir -p ./public/images/attachments ./tmp/sessions ./tmp/cache
-        $ chown -R leihs ./public/images/attachments ./tmp/sessions ./tmp/cache
-        $ chmod -R ug=rwx,o=rx ./public/images/attachments ./tmp/sessions ./tmp/cache
+        $ mkdir -p ./public/images/attachments ./public/attachments ./tmp/sessions ./tmp/cache ./log
+        $ chown -R leihs ./public/images/attachments ./public/attachments ./tmp/sessions ./tmp/cache
+        $ chmod -R ug=rwx,o=rx ./public/images/attachments ./public/attachments ./tmp/sessions ./tmp/cache
 
     For production environments: The execute flag seems to be needed in order for Apache to be able to write logs and upload images. Be sure to check 'x' is set, if no log gets written / you get an error while uploading images.
 DBR, Leihs 3.34.0 
 
-    Note: the pre-existing directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
+    Note: the directory `./log` will need write permission for logs to be written as well. It is useful for debugging but should not be given write permission in production, as the resultant logs are quite verbose and take lots of space over time.
 
         $ cd /home/leihs/leihs-n.n.n
         $ chown -R leihs ./log
@@ -179,12 +179,19 @@ It is possible to use LDAP for logins. The procedure is described under [[LDAP c
 
 Almost all Leihs upgrades work the same way:
 
-* Put the new leihs source code somewhere.
+* Put the new leihs source code somewhere. For example
+  * new directory: /home/leihs/leihs-N.N.N
+  * old directory: /home/leihs/leihs-O.O.O
 * Copy the following things from your old leihs installation to your new installation:
- * `config/database.yml`
- * `config/initializers/secret_token.rb`
- * `config/LDAP.yml` (if it exists and is used by your installation)
- * `public/images/attachments`
+
+        $ cd /home/leihs/leihs-O.O.O
+        $ cp -a -r ./public/images/attachments /home/leihs/leihs-N.N.N/public/images/
+        $ cp -a -r ./public/attachments /home/leihs/leihs-N.N.N/public/
+        $ cp -a ./config/database.yml /home/leihs/leihs-N.N.N/config/
+        $ cp -a ./config/initializers/secret_token.rb /home/leihs/leihs-N.N.N/config/initializers/
+        $ cp -a ./config/LDAP.yml /home/leihs/leihs-N.N.N/config/
+
+* Create and set permissions to directories needing write-access. Use the same commands as during installation. See "Create the temporary directories that are necessary for e.g. image uploads". Do not forget the log file directory.
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
 * Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
 * Change the hardcoded path to the new Leihs directory inside your cronjob shellscript
