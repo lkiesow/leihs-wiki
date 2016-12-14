@@ -43,8 +43,6 @@ The demo installation is located at http://demo.leihs.zhdk.ch.
  * [Downloadable packages](https://github.com/zhdk/leihs/releases) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
  * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project. And we mean the project, not the software itself!
  * [Issues/discussion](http://github.com/zhdk/leihs/issues), where anyone can discuss new feature ideas and report bugs.
- * [Pivotal Tracker page](http://www.pivotaltracker.com/projects/130496) Where the ZHdK itself plans its internal work on leihs. This is just listed here for completeness.
- * Chat with us on IRC, channel #leihs on [Freenode](http://freenode.net/). If you don't have an IRC client, you can use [webchat](https://webchat.freenode.net/?channels=#leihs).
 
 ## References (Who uses leihs?)
 
