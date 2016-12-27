@@ -14,6 +14,14 @@ Please follow these guidelines so that your contribution can be integrated as ea
 
 If you have any trouble, do not hesitate to create a new issue under the 'question' tag and we'll try to help you.
 
+### General expectations
+
+Your code:
+
+* Must not break existing tests
+* Must satisfy our coding guidelines as verified by [Rubocop](https://github.com/bbatsov/rubocop)
+* Must be covered by new tests if it introduces new functionality
+
 
 ### Contributing translations
 
