@@ -192,6 +192,7 @@ Almost all Leihs upgrades work the same way:
         $ cp -a ./config/LDAP.yml /home/leihs/leihs-N.N.N/config/
 
 * Create and set permissions to directories needing write-access. Use the same commands as during installation. See "Create the temporary directories that are necessary for e.g. image uploads". Do not forget the log file directory.
+* Run in the new leihs directory: `bundler install` to upgrade your gems and tools the new version needs.
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake db:migrate`
 * Run in the new leihs directory: `RAILS_ENV=production bundle exec rake assets:precompile`
 * Restart your leihs server (how you do this depends on how you're running leihs, whether standalone, through Phusion Passenger, etc.)
