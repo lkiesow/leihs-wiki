@@ -184,12 +184,12 @@ Almost all Leihs upgrades work the same way:
   * old directory: /home/leihs/leihs-O.O.O
 * Copy the following things from your old leihs installation to your new installation:
 
-        $ cd /home/leihs/leihs-O.O.O
-        $ cp -a -r ./public/images/attachments /home/leihs/leihs-N.N.N/public/images/
-        $ cp -a -r ./public/attachments /home/leihs/leihs-N.N.N/public/
-        $ cp -a ./config/database.yml /home/leihs/leihs-N.N.N/config/
-        $ cp -a ./config/initializers/secret_token.rb /home/leihs/leihs-N.N.N/config/initializers/
-        $ cp -a ./config/LDAP.yml /home/leihs/leihs-N.N.N/config/
+        cd /home/leihs/leihs-O.O.O
+        cp -a -r ./public/images/attachments ../leihs-N.N.N/public/images/
+        cp -a -r ./public/attachments ../leihs-N.N.N/public/
+        cp -a ./config/database.yml ../leihs-N.N.N/config/
+        cp -a ./config/initializers/secret_token.rb ../leihs-N.N.N/config/initializers/
+        cp -a ./config/LDAP.yml ../leihs-N.N.N/config/
 
 * Create and set permissions to directories needing write-access. Use the same commands as during installation. See "Create the temporary directories that are necessary for e.g. image uploads". Do not forget the log file directory.
 * Run in the new leihs directory: `bundler install` to upgrade your gems and tools the new version needs.
