@@ -19,9 +19,8 @@ If you have any trouble, do not hesitate to create a new issue under the 'questi
 Your code:
 
 * Must not break existing tests
-* Must satisfy our coding guidelines as verified by [Rubocop](https://github.com/bbatsov/rubocop)
+* Must satisfy our coding guidelines as verified by [Rubocop](https://github.com/bbatsov/rubocop), [Flay](https://github.com/seattlerb/flay) and [Flog](https://github.com/seattlerb/flog)
 * Must be covered by new tests if it introduces new functionality
-
 
 ### Contributing translations
 
