@@ -1,1 +1,1 @@
-leihs is covered by a suite of automated tests. As outlined in [Contributing], if you add new code, you must also cover it with tests.
+leihs is covered by a suite of automated tests. As outlined in [Contributing](https://github.com/leihs/leihs/wiki/Contributing), if you add new code, you must also cover it with tests.
