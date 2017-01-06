@@ -1,5 +1,9 @@
 # Feature Tests aka Scenarios (WIP)
 
+* **write testable application code**
+ * implement features with testing in mind
+ * don't be afraid to write line of code whose purpose is to make a maintainable and stable test, although it does not make much sense in the application environment (e.g. certain CSS class attributes in favor of `capybara` and/or `selenium` web driver).
+
 * **don't use personas**:
  * use factories instead
  * the DB should be empty upon running a scenario (or with minimal test data, like settings, etc.)
