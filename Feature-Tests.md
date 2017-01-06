@@ -27,3 +27,6 @@
  * each scenario should prepare its own test data
  * the test data should be minimal => only what is required for the scope of the scenario
  * scenarios testing functionality for big data load (or performance) should be separate
+
+* **dealing with test results**
+ * test results on Cider-CI are more important than those on your local machine. if you can't get it green on Cider-CI, then delete or disable the test.
