@@ -1,18 +1,10 @@
-## leihs -- the equipment booking and inventory management system
+# leihs -- the equipment booking and inventory management system
 
 leihs is a system with which universities or other organizations can **manage, book, lend and procure their equipment (and software)**. People can place reservations/bookings on items and then pick them up at e.g. a reservation desk. The system keeps track of who has which items and gives equipment managers time to worry about other things. Besides, leihs system features a module for budgeting procurements and supporting the procurement process of the existing and new equipment.
 
-## Documentation
+# Live demo
 
-* **Installation and administration:** To install leihs, you need a GNU/Linux server capable of running Ruby and Ruby on Rails. The installation itself is covered in the [[leihs-Admin-Guide]].
-
-* **Development:** You can extend and adapt leihs to your needs. Some specific topics (such as how to help us translate leihs) are covered in the [[leihs-Developer-Guide]]. Also, see **[[Contributing]]** for information about how to get your contributions back into the project.
-
-* **User guide:** There is no user guide for leihs yet. Do you want to write one? Feel free to start a new page on this wiki.
-
-## Live demo
-
-You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable release available. If the demo happens to be down, please contact Ramon at ramon.cahenzli@zhdk.ch.
+You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable release available. If the demo happens to be down, please contact Nadja at nadja.weisskopf@zhdk.ch.
 
 Demo data is deleted and reset every 24 hours.
 
@@ -36,14 +28,11 @@ Can manage the system, create system-wide categories, create and remove new inve
 
 The demo installation is located at http://demo.leihs.zhdk.ch.
 
+# leihs Blog
 
-## Most important links
+[here](https://blog.zhdk.ch/leihs)
 
- * [Downloadable packages](https://github.com/zhdk/leihs/releases) of major releases (2.0, 2.1 etc.). It's often better to get the latest versions of leihs through git, though.
- * [Leihs blog](http://blog.zhdk.ch/leihs), where end users can get news about what's going on in the project. And we mean the project, not the software itself!
- * [Issues/discussion](http://github.com/zhdk/leihs/issues), where anyone can discuss new feature ideas and report bugs.
-
-## References (Who uses leihs?)
+# References (Who uses leihs?)
 
 leihs is in use at several universities and organizations:
 
@@ -57,12 +46,12 @@ leihs is in use at several universities and organizations:
  * [Middle Tennessee State University](http://www.mtsu.edu), Tennessee, USA
  * Fachhochschule Vorarlberg, Austria
  * [Konstfack Stockholm](http://www.konstfack.se), Sweden
- * Your university? Send a note to [Ramón Cahenzli](mailto:ramon.cahenzli@zhdk.ch) if you would like to be listed here
+ * Your university? Send a note to [Nadja Weisskopf](mailto:nadja.weisskopf@zhdk.ch) if you would like to be listed here
 
-## Versioning
+# Versioning
 
 We subscribe to the [Semantic Versioning](http://semver.org/) approach.
 
-## License
+# License
 
 leihs is [Free Software](http://www.gnu.org/philosophy/free-sw.html), licensed under the [GNU General Public License (GPL) version 3.0](http://www.gnu.org/licenses/gpl-3.0.txt).
