@@ -20,12 +20,10 @@ ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 
 After installation, a default user is created for the Database Authentication module.
 
-Username: admin
-Password: password
+- Username: admin
+- Password: password
 
 Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
-
-If logging in does not work, you should try deleting your browser cache/cookies. Some users had issues using older versions of Firefox (32.x).
 
 The roles themselves are described under [Roles](Roles).
 
@@ -51,7 +49,7 @@ ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 
 1. Install the new `v4` server as described above.
 
-2. Ensure your `v3` server is at version [3.45.1](https://github.com/leihs/leihs/releases/tag/3.45.1). For this follow our upgrade instructions described [here](https://github.com/leihs/leihs/wiki/leihs-Admin-Guide#performing-upgrades)
+2. Ensure your `v3` server is at version [3.45.1](https://github.com/leihs/leihs/releases/tag/3.45.1). For this follow our upgrade instructions described [here](https://github.com/leihs/leihs/wiki/Upgrades).
 
 3. Export your data from your `v3` server and import it into the new `v4` server. Our Ansible example command:
 ```
