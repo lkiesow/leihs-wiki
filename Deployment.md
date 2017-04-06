@@ -6,9 +6,8 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 ```
 git clone --recursive https://github.com/leihs/leihs.git
 cd leihs
-git submodule init
 git checkout origin/v4
-git submodule update --recursive
+git submodule update --init --recursive
 ```
 
 2. Create your own Ansible inventory. See our example in `zhdk-inventory`.
