@@ -1,9 +1,6 @@
-Setting up leihs with Ansible
-=============================
-
 You are advised to install `v4`. Earlier version `v3` is **neither supported, not maintained anymore**. If you are still at `v3`, please upgrade as soon as possible.
 
-## Installing v4 from scratch
+# Installing v4 from scratch
 
 1. Clone, checkout `v4` and update submodules with Git:
 ```
@@ -20,7 +17,24 @@ git submodule update --recursive
 ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 ```
 
-## Upgrading v4
+### Default admin username/password
+
+After installation, a default user is created for the Database Authentication module.
+
+Username: admin
+Password: password
+
+Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
+
+If logging in does not work, you should try deleting your browser cache/cookies. Some users had issues using older versions of Firefox (32.x).
+
+The roles themselves are described under [Roles](Roles).
+
+### Hooking up to LDAP for logins
+
+It is possible to use LDAP for logins. The procedure is described under [[LDAP configuration]].
+
+# Upgrading v4
 
 1. Checkout the desired version tag and update submodules with Git:
 ```
@@ -34,7 +48,7 @@ git submodule update --recursive
 ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 ```
 
-## Upgrading from v3 to v4
+# Upgrading from v3 to v4
 
 1. Install the new `v4` server as described above.
 
