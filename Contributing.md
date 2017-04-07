@@ -8,7 +8,7 @@ Please follow these guidelines so that your contribution can be integrated as ea
 * Create a fork of the leihs project.
 * Base your changes off the `v4` branch.
 * Make your changes in your own fork of leihs.
-* Write tests for your work and ensure they pass. See the [[leihs-Developer-Guide]] for some hints on how to do that.
+* Write tests for your work and ensure they pass. See the [[Developer-Guide]] for some hints on how to do that.
 * Flatten your changes into one single commit. Push to your own fork.
 * Submit a pull request.
 * If our review approves it and if it applies cleanly, we'll run the whole test suite on our CI and in case all is green, merge it as soon as we can.
@@ -25,7 +25,7 @@ Your code:
 
 ### Contributing translations
 
-You can translate leihs into your language quite easily! See the [[leihs-Developer-Guide]] for instructions on how to create a translation.
+You can translate leihs into your language quite easily! See the [[Developer-Guide]] for instructions on how to create a translation.
 
 ### Sponsoring the development of features
 
