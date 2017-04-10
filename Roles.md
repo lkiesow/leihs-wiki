@@ -1,4 +1,4 @@
-## Admin
+# Admin
 
 Admins take decisions that affect the entire system, but they don't take part in lending or inventory management. This is instead delegated to specialized managers. Admins can:
 
@@ -6,12 +6,13 @@ Admins take decisions that affect the entire system, but they don't take part in
 * Create and edit inventory pools.
 * Assign inventory managers to inventory pools.
 * Change an inventory pool's settings.
+* Create procurement admin users
 * Change system-wide settings.
 * Perform database checks and maintenance.
 
-Note that an admin can additionally also be inventory or lending manager in case your staff shares both roles.
+Note that an admin can additionally also be inventory or lending manager in case your staff shares both roles. Once the admin has created at least 1 procurement admin, he looses the access to the procurement module.
 
-## Inventory manager
+# Inventory manager
 
 Inventory managers are the people responsible for procurement/purchases, they are the ones that create and maintain the inventory inside leihs. They can:
 
@@ -20,7 +21,7 @@ Inventory managers are the people responsible for procurement/purchases, they ar
 * Create user groups inside their inventory pools.
 * Create and edit models, items, packages. They can set their items to "inventory relevant".
 
-## Lending manager
+# Lending manager
 
 Lending managers take care of the everyday work of handing over and taking back items and printing lending contracts (if enabled). They can also create items and models, but only those that are not inventory relevant. They can:
 
@@ -30,7 +31,7 @@ Lending managers take care of the everyday work of handing over and taking back 
 * Print contracts, if enabled.
 * Create models and items that are not inventory relevant.
 
-## Group manager
+# Group manager
 
 Group managers are responsible for orders placed by users that are in a group. They can validate (not approve) orders that contain models that are exclusive to this group. They can approve an order if it contains **only** models exclusive to this group.
 
@@ -39,7 +40,7 @@ Group managers are responsible for orders placed by users that are in a group. T
 
 They cannot perform hand overs or take backs, this is the responsibility of the lending manager.
 
-## User
+# User
 
 Normal users only see the lending part of the system. They can:
 
@@ -47,3 +48,30 @@ Normal users only see the lending part of the system. They can:
 * Add models to their order.
 * Submit orders.
 * List their open orders, reprint contracts and value lists.
+
+In addition to the above roles a user may additionally have access to the procurement module as one of the following roles:
+
+## Roles in Procurement Module
+
+### Procurement Admin
+
+Procurement Admins are responsible for setting up the procurement module. They:
+
+* Create budget periods
+* Create requesters
+* Create categories and authorize the respective inspectors
+
+### Procurement Inspector
+
+Procurement Inspectors approve requests pertaining to the categories they are assigned to. They:
+
+* Review and approve procurement requests
+* Modify certain attributes of the procurement requests
+* Organize requests in respect to the different categories
+* Create requests in the name of particular requesters
+
+### Procurement Inspector
+
+Procurement Requesters create requests for particular categories and their organizational units. They
+
+* Create requests

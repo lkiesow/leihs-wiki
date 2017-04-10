@@ -4,27 +4,35 @@ leihs is a system with which universities or other organizations can **manage, b
 
 # Live demo
 
-You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable release available. If the demo happens to be down, please contact Nadja at nadja.weisskopf@zhdk.ch.
+You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable development release. If the demo happens to be down, please contact Nadja at nadja.weisskopf@zhdk.ch.
 
 Demo data is deleted and reset every 24 hours.
 
-### Manager
-**Username**: manager_user  
-**Password**: password
+Below are the login details you can use. For the description of the roles see [here](Roles.md).
 
-Can manage inventory, hand over items, create contracts, take back equipment and much more. They are mostly active in the backend, that's why they don't need frontend access.
+### Normal User
+* **Username**: normal_user
+* **Password**: password
 
-### Normal user
-**Username**: normal_user  
-**Password**: password
+### Group Manager
+* **Username**: group_manager
+* **Password**: password
 
-Can book equipment through the frontend and has no backend access.
+### Lending Manager
+* **Username**: lending_manager
+* **Password**: password
 
-### Admin user
-**Username**: admin  
-**Password**: password
+### Inventory Manager
+* **Username**: inventory_manager
+* **Password**: password
 
-Can manage the system, create system-wide categories, create and remove new inventory pools.
+### Procurement Admin User
+* **Username**: procurement_admin
+* **Password**: password
+
+### Admin User
+* **Username**: admin
+* **Password**: password
 
 The demo installation is located at http://demo.leihs.zhdk.ch.
 
