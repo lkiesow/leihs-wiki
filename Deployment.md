@@ -2,6 +2,14 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 
 # Installing v4 from scratch
 
+## Prerequisites
+
+* Debian / Ubuntu server.
+* Acquaintance with [Ansible](https://www.ansible.com/).
+* SSH key setup on the server (root) and on the client running ansible playbooks.
+
+## Procedure
+
 1. Clone, checkout `v4` and update submodules with Git:
 ```
 git clone --recursive https://github.com/leihs/leihs.git
