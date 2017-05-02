@@ -1,3 +1,5 @@
+Use this guide if you want to setup developer environment on your local machine. For installing leihs on a server use following [instructions](https://github.com/leihs/leihs/wiki/Deployment).
+
 # Code setup
 
 ```
