@@ -8,7 +8,7 @@ You can try out a live installation of leihs (the address is below). It's always
 
 Demo data is deleted and reset every 24 hours.
 
-Below are the login details you can use. For the description of the roles see [here](Roles.md).
+Below are the login details you can use. For the description of the roles see [here](https://github.com/leihs/leihs/wiki/Roles).
 
 ### Normal User
 * **Username**: normal_user
