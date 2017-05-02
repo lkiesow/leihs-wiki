@@ -26,14 +26,7 @@ ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 
 ### Default admin username/password
 
-After installation, a default user is created for the Database Authentication module.
-
-- Username: admin
-- Password: password
-
-Please change the admin password immediately after logging in the first time. Otherwise other people will also be able to log in using the well known default password.
-
-The roles themselves are described under [Roles](Roles).
+*** **TO BE DONE** ***
 
 ### Hooking up to LDAP for logins
 
