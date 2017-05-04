@@ -21,7 +21,7 @@ git submodule update --init --recursive
 2. Create your own Ansible inventory. See our example in `zhdk-inventory`.
 3. Install with Ansible. We at ZHdK use the following command:
 ```
-ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
+ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 ```
 
 ### Default admin username/password
@@ -43,7 +43,7 @@ git submodule update --recursive
 
 2. Install the new version with Ansible. We at ZHdK use the following command:
 ```
-ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
+ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 ```
 
 # Upgrading from v3 to v4
@@ -54,5 +54,5 @@ ansible-playbook -v -i ../zhdk-inventory/prod-hosts deploy_play.yml
 
 3. Export your data from your `v3` server and import it into the new `v4` server. Our Ansible example command:
 ```
-ansible-playbook import-v3-into-v4_play.yml -i ../zhdk-inventory/prod-hosts
+ansible-playbook import-v3-into-v4_play.yml -i <YOUR_OWN_INVENTORY>
 ```
