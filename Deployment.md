@@ -1,4 +1,4 @@
-You are advised to install `v4`. Earlier version `v3` is **neither supported, not maintained anymore**. If you are still at `v3`, please upgrade as soon as possible.
+You are advised to install `v4`. Earlier version `v3` is **neither supported, nor maintained anymore**. If you are still at `v3`, please upgrade as soon as possible.
 
 # Installing v4 from scratch
 
