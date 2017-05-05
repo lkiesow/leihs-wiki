@@ -2,11 +2,11 @@
 
 leihs is a system with which universities or other organizations can **manage, book, lend and procure their equipment (and software)**. People can place reservations/bookings on items and then pick them up at e.g. a reservation desk. The system keeps track of who has which items and gives equipment managers time to worry about other things. Besides, the leihs system features a module for budgeting procurements and supporting the procurement process of existing and new equipment.
 
-# Live demo
+# <a href="https://demo.leihs.zhdk.ch" target="_blank">Live demo</a>
 
 You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable development release. If the demo happens to be down, please contact Nadja at nadja.weisskopf@zhdk.ch.
 
-Demo data is deleted and reset every 24 hours.
+Demo data is deleted and reset every 24 hours. It may also be deleted at any time during the day as deployment to the demo server is part of our continuous testing / deployment workflow.
 
 Below are the login details you can use. For the description of the roles see [here](https://github.com/leihs/leihs/wiki/Roles).
 
