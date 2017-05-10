@@ -109,19 +109,25 @@ Make *sure* you do not use any email address for the LeihsAdmin user that is alr
 #### Enabling LDAP authentication in the system
 Finally, you need to tell Leihs that you want to use LDAP and not the user credentials stored in your local database. We will keep local database authentication enabled at first. This is to show you that local and LDAP authentication may be enabled at the same time. This might be useful as a fall-back method in case there is a problem with the initial LDAP configuration.
 
-Start a Rails console inside your Leihs directory:
+Start a Rails console inside your Leihs Legacy directory:
 
-    $ cd /home/leihs/leihs-n.n.n
-    $ RAILS_ENV=production bundle exec rails c
+    $ su leihs-legacy
+    $ cd /leihs/legacy
+    $ export PATH=$HOME/.rubies/ruby-<leihs_legacy_ruby_version>/bin:$PATH
+    $ RAILS_ENV=production bundle exec rails console
+
+You can find the value for `leihs_legacy_ruby_version` in `/leihs/deploy/all.yml`.
 
 Then enable LDAP authentication as default but leave database authentication enabled for now:
 
-    ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
+    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LDAPAuthentication')
+    ldap.name ||= 'LDAP Authentication'
     ldap.is_default = true
     ldap.is_active = true
     ldap.save
 
-    db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
+    db = AuthenticationSystem.find_or_initialize_by(class_name:'DatabaseAuthentication')
+    db.name ||= 'Database Authentication'
     db.is_default = false
     db.is_active = true
     db.save
@@ -154,19 +160,25 @@ Allow for some time to pass for the information to be pulled from AD again (AD r
 #### Turning off database authentication for good
 After you made your first login with LeihsAdmin and everything runs as it should, you might disable database authentication for your production server:
 
-    $ cd /home/leihs/leihs-n.n.n
-    $ RAILS_ENV=production bundle exec rails c
+    $ su leihs-legacy
+    $ cd /leihs/legacy
+    $ export PATH=$HOME/.rubies/ruby-<leihs_legacy_ruby_version>/bin:$PATH
+    $ RAILS_ENV=production bundle exec rails console
+
+You can find the value for `leihs_legacy_ruby_version` in `/leihs/deploy/all.yml`.
 
 Enable only LDAP authentication and switch off database authentication:
 
-    ldap = AuthenticationSystem.find_by_class_name("LDAPAuthentication")
+    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LDAPAuthentication')
+    ldap.name ||= 'LDAP Authentication'
     ldap.is_default = true
     ldap.is_active = true
     ldap.save
 
-    db = AuthenticationSystem.find_by_class_name("DatabaseAuthentication")
+    db = AuthenticationSystem.find_or_initialize_by(class_name:'DatabaseAuthentication')
+    db.name ||= 'Database Authentication'
     db.is_default = false
-    db.is_active = false
+    db.is_active = true
     db.save
     exit
 
