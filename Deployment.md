@@ -24,9 +24,9 @@ git submodule update --init --recursive
 ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 ```
 
-### Default admin username/password
+### First admin user and password
 
-*** **TO BE DONE** ***
+You will be provided with a simple GUI interface to create your first admin user and password when you open leihs in the browser.
 
 ### Hooking up to LDAP for logins
 
