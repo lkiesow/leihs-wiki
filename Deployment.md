@@ -19,7 +19,7 @@ git submodule update --init --recursive
 ```
 
 2. Create your own Ansible inventory. See our example in `zhdk-inventory`.
-3. Install with Ansible. We at ZHdK use the following command:
+3. Install with Ansible:
 ```
 ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 ```
@@ -41,7 +41,7 @@ git checkout <tag>
 git submodule update --recursive
 ```
 
-2. Install the new version with Ansible. We at ZHdK use the following command:
+2. Install the new version with Ansible:
 ```
 ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 ```
@@ -52,7 +52,7 @@ ansible-playbook -v -i <YOUR_OWN_INVENTORY> deploy_play.yml
 
 2. Ensure your `v3` server is at version [3.45.1](https://github.com/leihs/leihs/releases/tag/3.45.1). For this follow our upgrade instructions described [here](https://github.com/leihs/leihs/wiki/Upgrades).
 
-3. Export your data from your `v3` server and import it into the new `v4` server. Our Ansible example command:
+3. Export your data from your `v3` server and import it into the new `v4` server:
 ```
 ansible-playbook import-v3-into-v4_play.yml -i <YOUR_OWN_INVENTORY>
 ```
