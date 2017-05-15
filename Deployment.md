@@ -5,7 +5,7 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 ## Prerequisites
 
 * Debian / Ubuntu server.
-* Acquaintance with [Ansible](https://www.ansible.com/).
+* Acquaintance with [Ansible](https://docs.ansible.com/).
 * SSH key setup on the server (root) and on the client running ansible playbooks.
 
 ## Procedure
