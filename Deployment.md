@@ -4,9 +4,9 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 
 ## Prerequisites
 
-* Debian / Ubuntu server.
-* Acquaintance with [Ansible](https://docs.ansible.com/).
-* SSH key setup on the server (root) and on the client running ansible playbooks.
+* Server running Debian or Ubuntu (managed node).
+* Acquaintance with [Ansible](https://docs.ansible.com/). This includes having installed Ansible (and related stuff) on the control machine and managed node (see: [Intro Installation](https://docs.ansible.com/ansible/intro_installation.html)).
+* SSH access as *root* from the control machine to the managed node (public/private key-pair setup).
 
 ## Procedure
 
