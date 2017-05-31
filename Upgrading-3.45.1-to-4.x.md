@@ -1,0 +1,1 @@
+For the instructions see the [relevant section in the deployment guide](https://github.com/leihs/leihs/wiki/Deployment#upgrading-from-v3-to-v4).
