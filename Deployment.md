@@ -6,7 +6,7 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 * Acquaintance with [Ansible](https://docs.ansible.com/). This includes having installed Ansible (and related stuff) on the control machine and managed node (see: [Intro Installation](https://docs.ansible.com/ansible/intro_installation.html)).
 * SSH access as *root* from the control machine to the managed node (public/private key-pair setup).
 
-# Installing v4 from scratch
+That should be enough. However, if the playbooks don't run through for some reasons, one may take a look at [the possible caveats](https://github.com/leihs/leihs/wiki/Deployment-Caveats).
 
 1. Clone, checkout `v4` and update submodules with Git:
 ```
