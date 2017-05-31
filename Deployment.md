@@ -8,6 +8,8 @@ You are advised to install `v4`. Earlier version `v3` is **neither supported, no
 
 That should be enough. However, if the playbooks don't run through for some reasons, one may take a look at [the possible caveats](https://github.com/leihs/leihs/wiki/Deployment-Caveats).
 
+# Installing v4 from scratch
+
 1. Clone, checkout `v4` and update submodules with Git:
 ```
 git clone --recursive https://github.com/leihs/leihs.git
