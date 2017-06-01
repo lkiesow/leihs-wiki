@@ -120,7 +120,7 @@ You can find the value for `leihs_legacy_ruby_version` in `/leihs/deploy/all.yml
 
 Then enable LDAP authentication as default but leave database authentication enabled for now:
 
-    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LDAPAuthentication')
+    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LdapAuthentication')
     ldap.name ||= 'LDAP Authentication'
     ldap.is_default = true
     ldap.is_active = true
@@ -169,7 +169,7 @@ You can find the value for `leihs_legacy_ruby_version` in `/leihs/deploy/all.yml
 
 Enable only LDAP authentication and switch off database authentication:
 
-    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LDAPAuthentication')
+    ldap = AuthenticationSystem.find_or_initialize_by(class_name: 'LdapAuthentication')
     ldap.name ||= 'LDAP Authentication'
     ldap.is_default = true
     ldap.is_active = true
