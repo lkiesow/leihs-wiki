@@ -36,9 +36,13 @@ Below are the login details you can use. For the description of the roles see [h
 
 The demo installation is located at http://demo.leihs.zhdk.ch.
 
+# Support
+
+If you are having troubles with the deployment, setting up the development environment or encounter bugs, please **first take a look at our existing [issue list](https://github.com/leihs/leihs/issues)**. If you can't find an answer to your problem or question, then kindly make a new issue. We will occasionally take a look at it, while we don't guarantee any particular response time from our side.
+
 # leihs Blog
 
-[here](https://blog.zhdk.ch/leihs)
+Presently not maintained anymore, but some old useful information may be find [there](https://blog.zhdk.ch/leihs).
 
 # References (Who uses leihs?)
 
