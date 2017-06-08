@@ -5,7 +5,7 @@ Use this guide if you want to setup developer environment on your local machine.
 ```
 git clone --recursive https://github.com/leihs/leihs.git
 cd leihs
-git checkout origin/v4
+git checkout origin/master
 git submodule update --init --recursive
 ```
 

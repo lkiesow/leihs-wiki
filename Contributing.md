@@ -6,7 +6,7 @@ Please follow these guidelines so that your contribution can be integrated as ea
 
 * Look through the [Issue list](http://github.com/leihs/leihs/issues) before you implement something, to make sure no one else is working on a similar feature.
 * Create a fork of the leihs project.
-* Base your changes off the `v4` branch.
+* Base your changes off the `master` branch.
 * Make your changes in your own fork of leihs.
 * Write tests for your work and ensure they pass. See the [[Developer-Guide]] for some hints on how to do that.
 * Flatten your changes into one single commit. Push to your own fork.
