@@ -36,6 +36,10 @@ Below are the login details you can use. For the description of the roles see [h
 
 The demo installation is located at http://demo.leihs.zhdk.ch.
 
+# Features
+
+An up-to-date, human-readable specification of all our scenarios is to be found [here](https://relishapp.com/leihs/).
+
 # Browsers
 
 Firefox, Chrome and Safari are the only supported browsers.
