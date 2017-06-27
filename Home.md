@@ -4,7 +4,7 @@ leihs is a system with which universities or other organizations can **manage, b
 
 # <a href="https://demo.leihs.zhdk.ch" target="_blank">Live demo</a>
 
-You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable development release. If the demo happens to be down, please contact Nadja at nadja.weisskopf@zhdk.ch.
+You can try out a live installation of leihs (the address is below). It's always pointing to the latest stable development release. If the demo happens to be down, please create an issue.
 
 Demo data is deleted and reset every 24 hours. It may also be deleted at any time during the day as deployment to the demo server is part of our continuous testing / deployment workflow.
 
