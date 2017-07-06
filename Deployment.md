@@ -19,7 +19,7 @@ git submodule update --init --recursive
 Create your own Ansible inventory:
 ```
 cp -R zhdk-inventory my-inventory
-cp my-inventory/host_vars/leihs-v4-prod.yml my-inventory/host_vars/my-host.yml
+cp my-inventory/host_vars/zhdk-leihs-prod.yml my-inventory/host_vars/my-host.yml
 cp my-inventory/prod-hosts my-inventory/my-hosts
 ```
 
