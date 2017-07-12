@@ -69,9 +69,17 @@ It is possible to use LDAP for logins. The procedure is described under [[LDAP c
 
 # Upgrading
 
-From within the `leihs` directory, checkout the desired version tag and update submodules with Git:
+From within the `leihs` directory *on the control machine*, checkout the desired version tag and update submodules with Git:
 ```
-git fetch
+git fetch --all
+git checkout <tag>
+git submodule update --recursive
+```
+
+If the control machine does not have the `leihs` directory yet, then do the following:
+```
+git clone --recursive https://github.com/leihs/leihs.git
+cd leihs
 git checkout <tag>
 git submodule update --recursive
 ```
