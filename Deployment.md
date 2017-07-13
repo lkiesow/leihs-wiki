@@ -4,7 +4,7 @@ You are advised to install latest version 4 (`master` branch). Earlier version 3
 
 * Server running Debian or Ubuntu (referred to as managed node from here on).
 * Acquaintance with [Ansible](https://docs.ansible.com/). This includes having installed Ansible (and related stuff) on the control machine and met the requirements on the managed node (see: [Intro Installation](https://docs.ansible.com/ansible/intro_installation.html)).
-* SSH access as *root* from the control machine to the managed node (public/private key-pair setup).
+* SSH access as *root* from the control machine to the managed node [using shared keys](https://wiki.debian.org/SSH#Using_shared_keys).
 * [Git](https://git-scm.com/) installed on the control machine.
 
 # Installing from scratch
