@@ -87,7 +87,7 @@ Wennn nötig den Text im PR schreiben/editieren, damit kollaboriert werden kann.
 NEXT_RELEASE=$(git rev-parse origin/master)
 
 # push auf `next`, um diese Referenz zu "speichern"
-git push origin +$NEXT_RELEASE:next
+git push origin +${NEXT_RELEASE}:refs/heads/next
 
 # Änderungsliste aus dem git holen:
 ./dev/release-notes
