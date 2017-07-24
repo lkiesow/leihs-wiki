@@ -2,7 +2,7 @@ Commercial support is available from the following companies:
 
 ## Companies and individuals offering commercial support
 
- * The Zürich University of the Arts. Contact person: Nadja Weisskopf
+ * The Zürich University of the Arts supports interests of external customers only if the university has the required resources and as long as the requirement covers the interests of ZHdK - Please create a ticket describing your requirement
 
 Add yourself to this list by editing this wiki page if you want to offer services around leihs.
 
