@@ -162,7 +162,7 @@ git commit -m 'release: v1.0.0'
 git tag --sign -f 'v1.0.0' -m 'v1.0.0' HEAD
 git push origin HEAD:next
 git push origin HEAD:release
-git push origin HEAD:deploy/zhdk
+git push origin HEAD:zhdk/deploy
 
 # nun auf `master` zurück-mergen (eventuell nicht-linear)
 RELEASE=$(git rev-parse HEAD)
