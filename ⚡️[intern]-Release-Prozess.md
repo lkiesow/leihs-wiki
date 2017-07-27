@@ -52,7 +52,7 @@ Alle anderen sind Arbeits-Branches für Entwickler (im Idealfall mit Initialen-P
     - neuester **stabiler** Release/-Candidate
     - für alle externen Instanzen **die** offizielle Referenz bzgl. Updates, Support, etc.
 
-- `deploy/zhdk`
+- `zhdk/deploy`
     - ***nur relevant für Ops (nicht Dev)***
     - im Normalfall gleicher Stand wie `stable` (aber wir haben Flexibilität)
 
