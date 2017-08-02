@@ -173,6 +173,10 @@ git merge -m "Merge branch 'release'"
 git push origin HEAD:master
 ```
 
+### 👸 Release ankündigen
+
+[TODO]
+
 ## Probleme
 
 1. merge `release` auf `master` *kann* nicht-linear sein. 
