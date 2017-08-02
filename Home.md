@@ -70,7 +70,8 @@ leihs is in use at several universities and organizations:
  * [Middle Tennessee State University](http://www.mtsu.edu), Tennessee, USA
  * Fachhochschule Vorarlberg, Austria
  * [Konstfack Stockholm](http://www.konstfack.se), Sweden
- * Your university? Please create an issue if you would like to be listed here.
+ * [School of Business and Engineering Vaud HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Switzerland
+ * Please create an issue if you would like to be listed here.
 
 # Versioning
 
