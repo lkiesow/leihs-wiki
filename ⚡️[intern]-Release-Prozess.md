@@ -122,6 +122,7 @@ git add ./config/releases.yml
 
 # make release commit and push to next
 git commit -m 'release: v1.0.0-RC.1'
+git push origin --tags
 git push origin HEAD:next
 
 # PR wird nun gemerged:
@@ -160,6 +161,7 @@ git add ./config/releases.yml
 # make release commit and push
 git commit -m 'release: v1.0.0'
 git tag --sign -f 'v1.0.0' -m 'v1.0.0' HEAD
+git push origin --tags
 git push origin HEAD:next
 git push origin HEAD:release
 git push origin HEAD:zhdk/deploy
