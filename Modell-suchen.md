@@ -1,7 +1,5 @@
 Die Suche des geeigneten Modells kann auf drei Arten erfolgen
 
-
-
 1. Allgemeine Suche
 In der Allgemeinen Suche kann nach Modellnamen gesucht werden. Die Suchergebnisse werden unabhängig von einer Kategorie angezeigt. Im Weiteren kann die Filterung nach Datum oder Gerätepark eingeschränkt werden.
 
