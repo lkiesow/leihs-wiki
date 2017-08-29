@@ -19,7 +19,7 @@ git submodule update --init --recursive
 # Database setup
 
 1. Install [PostgreSQL](https://www.postgresql.org/).
-2. Create and/or change `legacy/config/database.yml` according to your needs. You might take a look at the example file: `legacy/config/database_pg.yml`.
+2. The config for the DB is in `legacy/config/database.yml`. Look at `legacy/config/database_example.yml` for an example how this could look like. Note that you have to create the listed DB's manually. 
 
 # Data setup
 
