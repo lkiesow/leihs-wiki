@@ -32,6 +32,12 @@ git submodule update --init --recursive
 1. `bundle exec rails server`
 2. You can login for example as an admin user "gino". All users have password "password".
 
+# Compile assets
+
+Before the tests or for check-in to CI you have to run the assets compilation:
+
+    bundle exec rake assets:recompile
+
 # Running the tests
 
 Create your test database, it will be populated later with database dumps representing a known state of the system:
