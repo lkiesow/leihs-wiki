@@ -36,7 +36,7 @@ git submodule update --init --recursive
 
 Before the tests or for check-in to CI you have to run the assets compilation:
 
-    bundle exec rake assets:recompile
+    ./bin/recompile-assets
 
 # Running the tests
 
