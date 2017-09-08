@@ -170,7 +170,7 @@ git push origin HEAD:zhdk/deploy
 RELEASE=$(git rev-parse HEAD)
 git checkout master
 git reset --hard origin/master
-git merge -m "Merge branch 'release'" origin/release
+git merge -m "Merge branch 'release'" $RELEASE
 # deal with CI, then push to master
 git push origin HEAD:master
 ```
