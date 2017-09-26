@@ -122,7 +122,6 @@ git add ./config/releases.yml
 
 # make release commit and push to next
 git commit -m 'release: v1.0.0-RC.1'
-git push origin --tags
 git push origin HEAD:next
 
 # PR wird nun gemerged:
