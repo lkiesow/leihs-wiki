@@ -9,7 +9,7 @@ You are advised to install latest version 4 (`master` branch). Earlier version 3
 
 # Installing from scratch
 
-Clone, checkout `origin/master` and update submodules with Git:
+Clone, checkout `origin/stable` and update submodules with Git:
 ```
 git clone --recursive https://github.com/leihs/leihs.git
 cd leihs
