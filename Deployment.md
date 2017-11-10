@@ -13,7 +13,7 @@ Clone, checkout `origin/master` and update submodules with Git:
 ```
 git clone --recursive https://github.com/leihs/leihs.git
 cd leihs
-git checkout origin/master
+git checkout origin/stable
 git submodule update --init --recursive
 ```
 
