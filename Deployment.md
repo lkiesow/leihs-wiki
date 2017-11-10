@@ -1,4 +1,4 @@
-You are advised to install latest version 4 (`master` branch). Earlier version 3 (`v3` branch) is **neither supported, nor maintained anymore**. If you are still at `v3`, please upgrade as soon as possible.
+You are advised to install latest version 4 (`stable` branch). Earlier version 3 (`v3` branch) is **neither supported, nor maintained anymore**. If you are still at `v3`, please upgrade as soon as possible.
 
 # General prerequisites
 
