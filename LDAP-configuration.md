@@ -178,7 +178,7 @@ Enable only LDAP authentication and switch off database authentication:
     db = AuthenticationSystem.find_or_initialize_by(class_name:'DatabaseAuthentication')
     db.name ||= 'Database Authentication'
     db.is_default = false
-    db.is_active = true
+    db.is_active = false
     db.save
     exit
 
