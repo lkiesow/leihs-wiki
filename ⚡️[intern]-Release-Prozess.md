@@ -162,9 +162,7 @@ git add ./config/releases.yml
 git commit -m 'release: v1.0.0'
 git tag --sign -f 'v1.0.0' -m 'v1.0.0' HEAD
 git push origin --tags
-git push origin HEAD:next
-git push origin HEAD:release
-git push origin HEAD:zhdk/deploy
+BRANCHES="next release stable zhdk/deploy"; for RB in $BRANCHES; do git push origin HEAD:${RB}; done
 
 # nun auf `master` zurück-mergen (eventuell nicht-linear)
 RELEASE=$(git rev-parse HEAD)
