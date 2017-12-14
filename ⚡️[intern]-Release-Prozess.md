@@ -159,8 +159,9 @@ open config/releases.yml
 git add ./config/releases.yml
 
 # make release commit and push
-git commit -m 'release: v1.0.0'
-git tag --sign -f 'v1.0.0' -m 'v1.0.0' HEAD
+SEMVER='1.0.0'
+git commit -m "release: $SEMVER"
+git tag --sign -f "$SEMVER" -m "$SEMVER" HEAD
 git push origin --tags
 BRANCHES="next release stable zhdk/deploy"; for RB in $BRANCHES; do git push origin HEAD:${RB}; done
 
