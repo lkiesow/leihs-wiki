@@ -90,8 +90,7 @@ NEXT_RELEASE=$(git rev-parse origin/master)
 git push origin +${NEXT_RELEASE}:refs/heads/next
 
 # Änderungsliste aus dem git holen:
-./deploy/bin/git-release-notes $NEXT_RELEASE
-# ./dev/release-notes # Madek
+./dev/git-release-notes $NEXT_RELEASE
 
 # PR machen (von next auf release!)
 open "https://github.com/Madek/madek/compare/release...next?expand=1"
