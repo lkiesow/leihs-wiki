@@ -181,8 +181,4 @@ git push origin HEAD:master
 
 1. Note: "Good To Merge" muss nicht Grün sein für den Release, falls der Release nicht vom Master HEAD gemacht wird, sondern von einem früheren Commit. Dies wird erst ein Thema, wenn man auf den Master zurück merged, siehe nächste Punkte.
 
-1. merge `release` auf `master` *kann* nicht-linear sein. 
-  - Meta-Check sollte diesen Spezialfall erkennen und erlauben
-  - aktuell nötig: [config anpassen (`GIT_LINEAR_HISTORY_CHECK_START_SHA`)](https://github.com/Madek/madek/commit/e064b603daeaf4079e6d4b4cdfe12a03044d838a)
-
 1. commit message body nicht im changes skript enthalten
