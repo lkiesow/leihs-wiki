@@ -46,7 +46,7 @@ db_backup_keep_days: 4
 db_backup_nigthly_enabled: Yes
 
 ssh_keys_present:
-  - "{{lookup('file', inventory_dir + '/ssh_keys/my-key')}}"
+  - "{{lookup('file', inventory_dir + '/ssh_keys/my-key.pub')}}"
 
 database_dump_restore_file_path: '{{inventory_dir}}/../legacy/tmp/db_production.pgbin'
 ```
