@@ -12,9 +12,11 @@ git submodule update --init --recursive
 # Rbenv and bundler setup
 
 1. `cd legacy`
-1. Install [rbenv](https://github.com/rbenv/rbenv) and follow the instruction on the home page to set the correct Ruby version (see `deploy` submodule).
-2. `gem install bundler`
-3. `bundle install`
+1. Install [rbenv](https://github.com/rbenv/rbenv).
+  Use the command `rbenv version` to confirm you are using the recommended version
+  checked into the repository (should something like `x.x.x (set by …/leihs/legacy/.ruby-version)`)
+1. `gem install bundler`
+1. `bundle install`
 
 # Database setup
 
