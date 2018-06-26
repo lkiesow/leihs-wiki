@@ -40,6 +40,9 @@ The demo installation is located at http://demo.leihs.zhdk.ch.
 
 An up-to-date, human-readable specification of all our scenarios is to be found [here](https://relishapp.com/leihs/).
 
+# Release Notes
+The list of changes made to Leihs has changed. Since version 4.5 the human readable change list is only updated [here](https://github.com/leihs/leihs/blob/master/config/releases.yml)
+
 # Browsers
 
 Firefox, Chrome and Safari are the only supported browsers.
