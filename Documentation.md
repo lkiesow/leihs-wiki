@@ -6,3 +6,7 @@ Our scenarios are specified within the`.feature` files and written in a human-re
 
 Is to be found within our [documentation submodule](https://github.com/leihs/leihs_documentation/tree/master).
 
+# Release Notes
+
+The list of changes made to Leihs has changed. Since version 4.5 the human readable change list is only updated [here](https://github.com/leihs/leihs/blob/master/config/releases.yml)
+
