@@ -77,12 +77,12 @@ ansible_host: yourv4leihsserver.example.com
 ansible_user: root
 leihs_master_secret: secret
 database_dump_restore_file_path: '{{inventory_dir}}/normal.pgbin'
-#this file will only be relevant from v4.15.0 and upwards
+#this file will only be mandatory from v4.15.0 and upwards
 settings_file_path: '{{inventory_dir}}/settings/leihs_settings.yml'
 ```
 
 * settings.yml
-Create and edit 'settings/settings.yml'. This file will only be used v4.15.0 and upwards
+Create and edit 'settings/settings.yml'. From v4.15.0 and upwards deployment will throw an error if this file is missing.
 (change everything here to fit your environment)
 ```yaml
 smtp_address: localhost
