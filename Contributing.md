@@ -1,6 +1,6 @@
 ## Contributing
 
-### Contributing to the docuementation
+### Contributing to the documentation
 * If you would like to enhance the documentation with your personal experiences, than please feel free to contribute [here](https://github.com/leihs/community).
 ** reports and tipps on installing leihs
 ** reports and tipps on upgrading leihs
