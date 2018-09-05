@@ -1,3 +1,5 @@
+If you need support please create an issue on the leihs-community repository - https://github.com/leihs/community.
+
 Commercial support is available from the following companies:
 
 ## Companies and individuals offering commercial support
