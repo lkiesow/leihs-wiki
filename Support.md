@@ -2,7 +2,7 @@ If you need support please create an issue on the leihs-community repository - h
 
 ## Companies and individuals offering commercial support
 
- * The Zürich University of the Arts supports external customers only if the instance does not differ from the documented standard leihs-environment. The hourly rate for support is CHF 150 / hour. 
+ * The Zürich University of the Arts supports external customers only if the instance does not differ from the documented standard leihs-environment. Please create a ticket to ask for support. We invoice on an hourly basis.
 
 Add yourself to this list by editing this wiki page if you want to offer services around leihs.
 
