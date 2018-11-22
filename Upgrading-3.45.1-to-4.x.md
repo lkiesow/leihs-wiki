@@ -33,5 +33,6 @@ Replace `my-old-host`, `my-old-host-name`, `path-to-leihs-directory-on-my-old-ho
 Export your data from your `v3` server and import it into the new server.
 
 ```
+ansible-playbook deploy/fetch-v3-data_play.yml -i my-inventory/my-hosts
 ansible-playbook deploy/import-v3-into-v4_play.yml -i my-inventory/my-hosts
 ```
