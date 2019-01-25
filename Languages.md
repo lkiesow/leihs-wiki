@@ -18,4 +18,14 @@ A developer can extend leihs with a new language following [this guide](https://
 
 ## Configuration
 
-Each individual leihs instance can activate/deactive the existing languages as well as set its default one by configuring its deployment inventory accordingly. 
+Each individual leihs instance can activate/deactive the existing languages as well as set its default one by configuring its deployment inventory accordingly:
+```yaml
+active_locales:
+  de-CH: true
+  en-GB: true
+  es: true
+  gsw-CH: true
+  en-US: false
+
+default_locale: "de-CH"
+```
