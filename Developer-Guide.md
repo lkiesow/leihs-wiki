@@ -124,6 +124,6 @@ Next, copy the translation template file locale/leihs.pot into the new directory
 
     $ cp locale/leihs.pot locale/ro/leihs.po
 
-The new locale has also to be added to the list of the available ones in this [rails initializer](https://github.com/leihs/leihs_legacy/blob/master/config/initializers/gettext.rb#L14), as well as to the list of seeded default languages [here](https://github.com/leihs/leihs_legacy/blob/master/config/initializers/gettext.rb#L14).
+The new locale has also to be added to the list of the available ones in this [rails initializer](https://github.com/leihs/leihs_legacy/blob/master/config/initializers/gettext.rb#L14). It has also either to be added to the list of seeded default languages [here](https://github.com/leihs/leihs_legacy/blob/master/config/initializers/gettext.rb#L14) or inserted in the `languages` table for a particular leihs instance.
 
 Now continue as described under _Adding missing translations in existing .po files_.
