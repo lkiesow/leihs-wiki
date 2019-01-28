@@ -70,6 +70,10 @@ Procurement Inspectors approve requests pertaining to the categories they are as
 * Organize requests in respect to the different categories
 * Create requests in the name of particular requesters
 
+### Procurement Viewer
+
+Procurement Viewer simply review (read-only) requests pertaining to the categories they are assigned to. They:
+
 ### Procurement Requester
 
 Procurement Requesters create requests for particular categories and their organizational units. They
