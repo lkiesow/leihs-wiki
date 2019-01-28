@@ -1,18 +1,29 @@
 # Admin
 
-TODO: this information is missing information and has become to some extend incorrect 
+Admins take decisions that affect the entire system, but they don't take part
+in lending or inventory management. This is instead delegated to specialized
+managers. Since version 5 the previous admin admin role hase been split into
+_leihs-Admins_ and _System-Admins_. This separation is an ongoing process and
+will be further refined in the future.
 
-Admins take decisions that affect the entire system, but they don't take part in lending or inventory management. This is instead delegated to specialized managers. Admins can:
+
+## Leihs-Admins
 
 * Create and edit users.
+* Create and edit groups.
+* Associate users to groups.
+* Associate users (or groups) to `authentication_systems`.
 * Create and edit inventory pools.
 * Assign inventory managers to inventory pools.
 * Change an inventory pool's settings.
 * Create procurement admin users
 * Change system-wide settings.
-* Perform database checks and maintenance.
 
-Note that an admin can additionally also be inventory or lending manager in case your staff shares both roles. Once the admin has created at least 1 procurement admin, he looses the access to the procurement module.
+## System-Admins
+
+* Manage `authentication_systems`.
+* Perform database management tasks such as clean-up. 
+
 
 # Inventory manager
 
