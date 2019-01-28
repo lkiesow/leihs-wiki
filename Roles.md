@@ -1,5 +1,7 @@
 # Admin
 
+TODO: this information is missing information and has become to some extend incorrect 
+
 Admins take decisions that affect the entire system, but they don't take part in lending or inventory management. This is instead delegated to specialized managers. Admins can:
 
 * Create and edit users.
