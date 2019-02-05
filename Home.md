@@ -34,7 +34,7 @@ Below are the login details you can use. For the description of the roles see [h
 * **Username**: admin
 * **Password**: password
 
-The demo installation is located at http://demo.leihs.zhdk.ch.
+The demo installation is located at https://demo.leihs.zhdk.ch.
 
 # Features
 
