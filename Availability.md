@@ -60,7 +60,7 @@ The *changes* are computed as follows:
 * For every reservation in *running reservations* do:
     1. Determine the time span in which the quantity of one item of the model is unavailable for. Factors to consider:
         * Is an item already assigned?
-        * Do we deal with a delayed, outstanding return of the item? If yes, what is the replacement interval? (What is it exactly??? Currently it's 1 month.)
+        * Do we deal with a delayed, outstanding return of the item? If yes, what is the replacement interval? <mark>(What is it exactly??? Currently it's 1 month.)</mark>
         * Is start or end date in the past?
         * What is the maintenance period of the model?
 
