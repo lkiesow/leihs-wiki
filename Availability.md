@@ -68,7 +68,7 @@ The *changes* are computed as follows:
 
     2. Check and ensure existence of changes in respect to the lower and upper bound dates of the time span:
         1. Unless a change exists for the lower bound date, then create one.
-        2. Unless a change exists for the date *just 1 day after* the lower bound date, then create one.
+        2. Unless a change exists for the date *just 1 day after* the upper bound date, then create one.
        
        The newly created changes get the copy of the group allocations from those preceding them.
 
