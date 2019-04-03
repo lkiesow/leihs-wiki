@@ -74,7 +74,7 @@ The *changes* are computed as follows:
 
     3. Determine the *inner changes* for the time span whose available quantities need to be updated. They are the ones, which lie between the lower and upper bound dates of the time span (`lower_bound_date <= inner_change_date < upper_bound_date`).
 
-    4. Determine the entitlement group, whose available quantities will be subtracted from for each of the *inner changes*:
+    4. Determine the entitlement group, whose available quantities will be subtracted from each of the *inner changes*:
         1. Get the group candidates. They are prioritized and sorted as follows:
             1. Entitlement groups where the user of the reservation is member or; **sorted by name ascending**.
             2. General group, all users are member of.
