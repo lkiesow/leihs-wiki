@@ -36,7 +36,7 @@ https://github.com/leihs/leihs_legacy/blob/master/app/models/availability/main.r
 The starting position for the computation are the so-called **running reservations** for the model in the inventory pool. Each of these reservations must fulfill the following conditions:
 * The type is an `ItemLine`.
 * The status is not `rejected` or `closed`.
-* The `unsubmitted` reservation is not from an expired basket (`settings.timeout_minutes`).
+* The `unsubmitted` reservation is **not** from an expired basket (expired: `updated_at < (now() - settings.timeout_minutes)`).
 * The return back date of the reservation is *not overdue*. It means that the end date is not in the past and at the same time an item is assigned.
      * Case: `status = 'signed' AND item_id IS NOT NULL` is clear (item handed over, in contract and not returned back yet).
      * But what about: `status = 'approved' AND item_id IS NOT NULL` ???
