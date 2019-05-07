@@ -1,6 +1,6 @@
 ## Timer
 
-The timer for basket is configurable: `settings.timeout_minutes`. It gets reset all the time as long as the user performs any sort of requests in borrow section. A user has thus *theoretically* unlimited time to make and submit his or her order. The main idea is to release the reserved quantities of such an inactive users for the possible reservations of other users.
+The timer for basket is configurable: `settings.timeout_minutes`. It gets reset all the time as long as the user performs any sort of requests in borrow section. A user has thus *theoretically* unlimited time to make and submit his or her order. The main idea is to release the reserved quantities of the inactive users for the possible reservations of other (active) users.
 
 ## Examples
 
