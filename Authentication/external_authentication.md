@@ -56,7 +56,8 @@ and follow simpler procedures in some cases.
 * The tokens send forth and back to leihs follow the [JWT](https://jwt.io/)
   standard.
 
-* Leihs supports (currently exclusively) `EC256` keys, see also [JWT](https://jwt.io/).
+* Leihs supports (currently exclusively) `ES256` keys, see also [External
+  Authentication Keys](./external_authentication_keys).
 
 * Users are **associated directly** or via **groups** to authentication systems in
   _leihs._ 
@@ -88,6 +89,11 @@ See also [Roles](roles).
 
 The following implementations can be used as examples or starting points for own implementations.
 
+* [Azure Active Directory - leihs Authentication System](https://github.com/leihs/azure-active-directory-leihs-authentication-system)
+
+  This authentication system uses the [OpenID Connect](https://de.wikipedia.org/wiki/OpenID_Connect) 
+  feature of Azure Active Directory.
+
 * [ZHdK Switch-AAI Shibboleth leihs Authentication-System](https://github.com/leihs/leihs-zhdk-switchaai-shibboleth-auth-system)
 
   [Switch-AAI](https://www.switch.ch/aai/) is a federated  "Authentication and Authorization Infrastructure" provided by Switch.
@@ -97,5 +103,4 @@ The following implementations can be used as examples or starting points for own
 
   AGW is the name of the internal authentication system at the ZHdK. The sign in process used by AGW
   is very similar to the one used by [**OAuth**](https://oauth.net/).
-
 
