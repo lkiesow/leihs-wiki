@@ -1,5 +1,7 @@
 You are advised to install latest version 5 (`v/5.0-stable` branch). Earlier versions 3 and 4 (`v3` or `v/4.*` branch) are **neither supported, nor maintained anymore**. If you are still at `v3` or `v/4.*`, please upgrade as soon as possible.
 
+***IMPORTANT NOTE***: Upgrade to 5.1 leads to deletion of all database passwords, which have to be set again. For that there is a new reset password feature. If you are a new instance installing from scratch then there is no problem.
+
 # General prerequisites
 
 * Server running Debian or Ubuntu (referred to as managed node from here on).
