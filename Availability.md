@@ -42,11 +42,9 @@ The starting position for the computation are the so-called **running reservatio
      * But what about: `status = 'approved' AND item_id IS NOT NULL` ???
 
 They are sorted as follows:
-1. `start_date ASC`
-2. `end_date ASC`
-3. `created_at ASC`
+* `created_at ASC`
 
-***This order has impact on the outcome of the computation of the available quantities across entitlement groups. This means that in case of a conflict (overbooking), reservations of users starting sooner and lasting shorter are prioritized over those created sooner (see soft overbooking example; model's timeline; unavailable/not guaranteed item line).***
+***This order has impact on the outcome of the computation of the available quantities across entitlement groups. In case of a conflict (overbooking), reservations of users created sooner are prioritised higher (see soft overbooking example; model's timeline; unavailable/not guaranteed item line).***
 
 #### Changes of available quantities
 
@@ -75,7 +73,7 @@ The *changes* are computed as follows:
     3. Determine the *inner changes* for the time span whose available quantities need to be updated. They are the ones, which lie between the lower and upper bound dates of the time span (`lower_bound_date <= inner_change_date < upper_bound_date`).
 
     4. Determine the entitlement group, whose available quantities will be subtracted from each of the *inner changes*:
-        1. Get the group candidates. They are prioritized and sorted as follows:
+        1. Get the group candidates. They are prioritised and sorted as follows:
             1. Entitlement groups where the user of the reservation is member or; **sorted by name ascending**.
             2. General group, all users are member of.
             3. Entitlement groups where the user of the reservation is NOT member of; **sorted by name ascending**.
@@ -245,7 +243,7 @@ $ self.changes.sort.to_h # =>
 
 #### Booking calendar
 
-Given User C wants to reserve one more item of the model from 2018-06-27 to 2018-07-12, then the booking calendar looks like follows:
+Given User B wants to reserve one more item of the model from 2018-06-27 to 2018-07-12, then the booking calendar looks like follows:
 
 ![Image of booking calendar of User B](https://raw.githubusercontent.com/leihs/leihs_documentation/mk/master/sources/business_logic/availability_example/user_b_booking_calendar.png)
 
@@ -284,7 +282,7 @@ There is a difference between dealing with the availability data in borrow and l
 
 #### Soft overbooking
 
-It was described before, how the entitlement groups are prioritized and how a group candidate for the quantity allocation is determined. If there isn't sufficient quantity (at least 1) available in user's entitlement groups or the general one, then one of the other model's entitlement groups is selected, given it has the sufficient quantity available (at least 1).
+It was described before, how the entitlement groups are prioritised and how a group candidate for the quantity allocation is determined. If there isn't sufficient quantity (at least 1) available in user's entitlement groups or the general one, then one of the other model's entitlement groups is selected, given it has the sufficient quantity available (at least 1).
 
 ```ruby
 module Example
