@@ -25,8 +25,8 @@ machine where leihs is deployed to.  This is not a hard requirement but we
 found such a setup more flexible and less troublesome.
 
 Some additional configuration on the primary reverse proxy is needed in order
-not to derail the switch-aai apache module (it seems that it does ignores some
-of the additional headers added by the reverse proxys).  The configuration
+not to derail the switch-aai apache module (it seems that it does ignore some
+of the additional headers added by the reverse proxy).  The configuration
 values for the Apache HTTP Server read like the following:
 
         SSLProxyVerify none
