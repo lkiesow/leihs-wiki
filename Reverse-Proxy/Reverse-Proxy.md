@@ -5,7 +5,7 @@ The default deployment of leihs will setup a reverse proxy within the
 deployment target/host.  It is possible to run this host in a private network
 and route traffic through an additional reverse proxy.
 
-The following depicts an simple example of such an setup.
+The following depicts a simple example of such a setup.
 
 ![ZHdK Reverse Proxy Setup](./Reverse-Proxy/ZHdK-Reverse-Proxy.svg)
 
