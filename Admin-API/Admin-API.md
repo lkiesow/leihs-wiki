@@ -35,20 +35,16 @@ A request with the payload e.g.
 
 ```
 {
-   "ids":[
-      {
-         "id":"85cab111-4790-5b83-9c75-343e82037d41"
-      },
-      {
-         "id":"c0777d74-668b-5e01-abb5-f8277baa0ea8"
-      }
-   ]
+   "ids":[ "85cab111-4790-5b83-9c75-343e82037d41",
+           "c0777d74-668b-5e01-abb5-f8277baa0ea8"]
 }
 ```
 
-lets the target group have **exactly** the two users with the respective ids as
-members irregardless of the membership state before the request.
+sets the target group to have **exactly** the two users with the respective ids
+as members irregardless of the membership state before the request.
 
+Supplying the previously supported `org_ids` and `emails` keys in **leihs >=
+6.0** will result in an unprocessable entity 422 response.
 
 
 ### API Token-Authentication
