@@ -258,7 +258,6 @@ git push --tags --force
 # now publish the github release (tag already exists)
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
 
-
 # only for stable release
 git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
 open "https://github.com/Madek/madek/settings/branch_protection_rules/1950244"
@@ -284,6 +283,9 @@ git commit -m 'chore: sync release info'
 git push origin -f "HEAD:refs/heads/${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR"
 # wait for CI…
 git push origin HEAD:master
+
+# announcement
+echo ":bellhop_bell: Leihs ${RELEASE_NAME} was released :rocket: https://github.com/leihs/leihs/releases/tag/${RELEASE_NAME}"
 
 # update demo inventories:
 cd leihs-instance; ./scripts/release "$RELEASE_NAME"; cd -
