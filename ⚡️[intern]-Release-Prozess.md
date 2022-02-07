@@ -243,7 +243,7 @@ git push -f origin "${RELEASE_REF}:zhdk/staging"
 open "https://github.com/leihs/leihs/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 
-# build assets
+# build assets – upload to github release and save as draft
 export S3_ACCESS_KEY_ID="$(op get item "NAS MINIO S3 Server" --fields username)" && export S3_SECRET_ACCESS_KEY="$(op get item "NAS MINIO S3 Server" --fields password)"
 cd deploy
 bin/build-release-archive
@@ -255,6 +255,9 @@ open "./tmp/release-builds/${RELEASE_NAME}/"
 git tag --sign -f "${RELEASE_NAME}" -m "${RELEASE_NAME}" ${RELEASE_REF}
 git push --tags --force
 ./dev/git-tag-submodules "${RELEASE_NAME}"
+# now publish the github release (tag already exists)
+open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
+
 
 # only for stable release
 git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
