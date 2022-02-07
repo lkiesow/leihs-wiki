@@ -182,3 +182,107 @@ git push origin HEAD:master
 1. Note: "Good To Merge" muss nicht Grün sein für den Release, falls der Release nicht vom Master HEAD gemacht wird, sondern von einem früheren Commit. Dies wird erst ein Thema, wenn man auf den Master zurück merged, siehe nächste Punkte.
 
 1. commit message body nicht im changes skript enthalten
+
+
+### Shell Walkthrough
+
+> notes by @eins78
+
+* dont forget to check for or create a milestone for this release, and add the release PR to it!
+* some notes apple to [Madek](https://github.com/Madek) but most steps are the same so the process is only described here for convenience 
+
+```bash
+DEV_INITIALS=mfa
+RELEASE_MAJOR_MINOR=99.9
+RELASE_PATCH=9
+RELEASE_PRE='-RC.9' # or '' for stable release
+VERSION_PREFIX='' # for madek its 'v' 
+
+RELEASE_MAIN="${RELEASE_MAJOR_MINOR}.${RELASE_PATCH}"
+RELEASE="${RELEASE_MAIN}${RELEASE_PRE}"
+RELEASE_NAME="${VERSION_PREFIX}${RELEASE}"
+echo $RELEASE_MAIN
+echo $RELEASE
+echo $RELEASE_NAME
+
+git fetch -q
+
+# if new RC from master
+    git checkout origin/master 
+# or if target release is patch
+    git checkout "origin/v/$RELEASE_MAJOR_MINOR-stable"
+# or if RC>1
+    git checkout "origin/v/$RELEASE_MAJOR_MINOR-staging"
+
+git checkout -B ${DEV_INITIALS}/v/$RELEASE_MAJOR_MINOR-staging
+git submodule update --recursive --force --init
+
+git merge origin/master # if linear or feature release
+git pick … # if patch release
+# make sure to get all changes from remote (like release notes edited in github web):
+git merge --squash "origin/v/${RELEASE_MAJOR_MINOR}-staging"
+git merge --squash "origin/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
+
+git submodule update --recursive --force --init
+
+code "config/releases/${RELEASE_MAIN}.md"
+( ./dev/release-notes || ./dev/git-release-notes ) | pbcopy
+# edit
+git add "config/releases/${RELEASE_MAIN}.md"
+git commit -m "release: ${VERSION_PREFIX}${RELEASE}"
+RELEASE_REF="$(git log -n1 --format="%H" HEAD)"
+git push -f origin "${RELEASE_REF}:refs/heads/${DEV_INITIALS}/v/$RELEASE_MAJOR_MINOR-staging"
+
+# wait for CI…
+
+# push to release staging branches
+git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
+git push -f origin "${RELEASE_REF}:zhdk/staging"
+
+# make a PR
+open "https://github.com/leihs/leihs/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
+open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
+
+# build assets
+export S3_ACCESS_KEY_ID="$(op get item "NAS MINIO S3 Server" --fields username)" && export S3_SECRET_ACCESS_KEY="$(op get item "NAS MINIO S3 Server" --fields password)"
+cd deploy
+bin/build-release-archive
+open "./tmp/release-builds/${RELEASE_NAME}/"
+open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
+
+# tag (leihs: all releases, madek: only stable)
+git tag --sign -f "${RELEASE_NAME}" -m "${RELEASE_NAME}" ${RELEASE_REF}
+git push --tags --force
+./dev/git-tag-submodules "${RELEASE_NAME}"
+
+# only for stable release
+git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
+open "https://github.com/Madek/madek/settings/branch_protection_rules/1950244"
+git push -f origin "${RELEASE_REF}:refs/heads/stable"
+git push -f origin "${RELEASE_REF}:zhdk/deploy"
+
+# cleanup
+git push origin ":refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
+git push origin ":refs/heads/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
+
+# always merge back to master so we have the correct release history there
+git checkout origin/master
+git checkout -B ${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR
+git checkout ${RELEASE_REF} -- "config/releases/${RELEASE_MAIN}.md"
+# new release file! increment patch, set pre to "dev" 
+(( next_patch_version = $RELASE_PATCH + 1 ))
+NEXT_VERSION="${RELEASE_MAJOR_MINOR}.${next_patch_version}"
+cp "config/releases/${RELEASE_MAIN}.md" "config/releases/${NEXT_VERSION}.md"
+code "config/releases/${NEXT_VERSION}.md"
+# edit yaml (increase version, set pre to 'dev') and replace text with '…'. For RCs add a new section.
+git add config/releases/
+git commit -m 'chore: sync release info'
+git push origin -f "HEAD:refs/heads/${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR"
+# wait for CI…
+git push origin HEAD:master
+
+# update demo inventories:
+cd leihs-instance; ./scripts/release "$RELEASE_NAME"; cd -
+cd demo.leihs.zhdk.ch; ./scripts/release "$RELEASE_NAME"; cd -
+
+```
