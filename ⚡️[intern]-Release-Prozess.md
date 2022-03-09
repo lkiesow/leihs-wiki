@@ -247,6 +247,7 @@ open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-s
 export S3_ACCESS_KEY_ID="$(op get item "NAS MINIO S3 Server" --fields username)" && export S3_SECRET_ACCESS_KEY="$(op get item "NAS MINIO S3 Server" --fields password)"
 cd deploy
 bin/build-release-archive
+cd ..
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
 open "./tmp/release-builds/${RELEASE_NAME}/"
