@@ -11,23 +11,23 @@ Demo data is deleted and reset every 24 hours. It may also be deleted at any tim
 Below are the login details you can use. For the description of the roles see [here](https://github.com/leihs/leihs/wiki/Roles).
 
 ### Normal User
-* **Username**: normal_user
+* **Username**: lynn.steuber@strosin.co.uk
 * **Password**: password
 
 ### Group Manager
-* **Username**: group_manager
+* **Username**: ruben@rempellueilwitz.biz
 * **Password**: password
 
 ### Lending Manager
-* **Username**: lending_manager
+* **Username**: brooke.weinat@baileydaniel.com
 * **Password**: password
 
 ### Inventory Manager
-* **Username**: inventory_manager
+* **Username**: dewayne@goyettestroman.com
 * **Password**: password
 
 ### Procurement Admin User
-* **Username**: procurement_admin
+* **Username**: ava_luettgen@treutelkoepp.com
 * **Password**: password
 
 ### Admin User
