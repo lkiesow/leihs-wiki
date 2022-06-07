@@ -248,9 +248,9 @@ export S3_ACCESS_KEY_ID="$(op get item "NAS MINIO S3 Server" --fields username)"
 cd deploy
 bin/build-release-archive
 cd ..
-cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
+cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 
 # tag (leihs: all releases, madek: only stable)
 git tag --sign -f "${RELEASE_NAME}" -m "${RELEASE_NAME}" ${RELEASE_REF}
