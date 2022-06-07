@@ -264,7 +264,6 @@ git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
 open "https://github.com/Madek/madek/settings/branch_protection_rules/1950244"
 git push -f origin "${RELEASE_REF}:refs/heads/stable"
 git push -f origin "${RELEASE_REF}:zhdk/deploy"
-
 # cleanup
 git push origin ":refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
 git push origin ":refs/heads/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
