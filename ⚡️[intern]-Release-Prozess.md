@@ -243,7 +243,8 @@ git push -f origin "${RELEASE_REF}:zhdk/staging"
 open "https://github.com/leihs/leihs/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 
-# LEIHS: build assets – upload `madek.tar.gz` to github release and save as draft
+###
+# MADEK: build assets – upload `madek.tar.gz` to github release and save as draft
 cd deploy
 bin/archive-build
 cd ..
@@ -259,7 +260,7 @@ cd ..
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
-
+###
 
 # tag (leihs: all releases, madek: only stable)
 git tag --sign -f "${RELEASE_NAME}" -m "${RELEASE_NAME}" ${RELEASE_REF}
