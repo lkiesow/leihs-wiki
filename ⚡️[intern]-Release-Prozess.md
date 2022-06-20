@@ -14,7 +14,7 @@ Einige Zwischenschritte wie z.B. "Fix Showstoppers" sind natürlich nur relevant
 Bei "kleineren" Releases (wenige Commits/Entwickler in der Iteration),
 können die Pull-Request auch weggelassen werden (sind nur für dezentrale Kollaboration und Nachvollziehbarkeit).
 
-Die Arbeitsschritte für RC und Release unnterscheiden sich in wenigen Details.
+Die Arbeitsschritte für RC und Release unterscheiden sich in wenigen Details.
 
 ```diff
 + Frage: Auch für releases immer PR machen?
@@ -243,14 +243,23 @@ git push -f origin "${RELEASE_REF}:zhdk/staging"
 open "https://github.com/leihs/leihs/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 
-# build assets – upload to github release and save as draft
-export S3_ACCESS_KEY_ID="$(op get item "NAS MINIO S3 Server" --fields username)" && export S3_SECRET_ACCESS_KEY="$(op get item "NAS MINIO S3 Server" --fields password)"
+# LEIHS: build assets – upload `madek.tar.gz` to github release and save as draft
+cd deploy
+bin/archive-build
+cd ..
+open deploy
+open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}"
+open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
+cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
+
+# LEIHS: build assets – upload `build-artefacts.tar.gz` to github release, paste notes and save as draft
 cd deploy
 bin/build-release-archive
 cd ..
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
+
 
 # tag (leihs: all releases, madek: only stable)
 git tag --sign -f "${RELEASE_NAME}" -m "${RELEASE_NAME}" ${RELEASE_REF}
