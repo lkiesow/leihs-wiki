@@ -268,6 +268,7 @@ git push --tags --force
 ./dev/git-tag-submodules "${RELEASE_NAME}"
 # now publish the github release (tag already exists)
 open "https://github.com/leihs/leihs/releases/"
+open "https://github.com/Madek/Madek/releases/"
 
 # only for stable release
 git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
