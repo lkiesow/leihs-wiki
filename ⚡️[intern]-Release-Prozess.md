@@ -239,7 +239,7 @@ git push -f origin "${RELEASE_REF}:refs/heads/${DEV_INITIALS}/v/$RELEASE_MAJOR_M
 git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
 git push -f origin "${RELEASE_REF}:zhdk/staging"
 
-# make a PR
+# make a PR if RC.1
 open "https://github.com/leihs/leihs/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-staging?expand=1"
 
