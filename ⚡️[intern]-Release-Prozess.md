@@ -194,7 +194,7 @@ git push origin HEAD:master
 ```bash
 DEV_INITIALS=mfa
 RELEASE_MAJOR_MINOR=99.9
-RELASE_PATCH=9
+RELEASE_PATCH=9
 RELEASE_PRE='-RC.9' # or '' for stable release
 VERSION_PREFIX='' # for madek its 'v' 
 
@@ -284,7 +284,7 @@ git checkout origin/master
 git checkout -B ${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR
 git checkout ${RELEASE_REF} -- "config/releases/${RELEASE_MAIN}.md"
 # new release file! increment patch, set pre to "dev" 
-(( next_patch_version = $RELASE_PATCH + 1 ))
+(( next_patch_version = $RELEASE_PATCH + 1 ))
 NEXT_VERSION="${RELEASE_MAJOR_MINOR}.${next_patch_version}"
 cp "config/releases/${RELEASE_MAIN}.md" "config/releases/${NEXT_VERSION}.md"
 code "config/releases/${NEXT_VERSION}.md"
