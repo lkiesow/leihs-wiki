@@ -294,7 +294,7 @@ code "config/releases/${NEXT_VERSION}.md"
 # edit yaml (increase version, set pre to 'dev') and replace text with '…'. For RCs add a new section.
 git add config/releases/
 git commit -m 'chore: sync release info'
-git push origin -f "HEAD:refs/heads/${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR"
+git push origin -f HEAD:$DEV_INITIALS/merge-$RELEASE_MAJOR_MINOR
 # wait for CI…
 git push origin HEAD:master
 
