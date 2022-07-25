@@ -270,12 +270,12 @@ git push --tags --force
 open "https://github.com/leihs/leihs/releases/"
 open "https://github.com/Madek/Madek/releases/"
 
-# only for stable release
-git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
 # Madek: adjust branch protection rules if necessary
 open "https://github.com/Madek/madek/settings/branches/"
 # leihs: adjust branch protection rules if necessary
 open "https://github.com/leihs/leihs/settings/branches/"
+# only for stable release
+git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
 git push -f origin "${RELEASE_REF}:refs/heads/stable"
 git push -f origin "${RELEASE_REF}:zhdk/deploy"
 # cleanup
