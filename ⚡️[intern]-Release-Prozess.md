@@ -272,7 +272,10 @@ open "https://github.com/Madek/Madek/releases/"
 
 # only for stable release
 git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
-open "https://github.com/Madek/madek/settings/branch_protection_rules/1950244"
+# Madek: adjust branch protection rules if necessary
+open "https://github.com/Madek/madek/settings/branches/"
+# leihs: adjust branch protection rules if necessary
+open "https://github.com/leihs/leihs/settings/branches/"
 git push -f origin "${RELEASE_REF}:refs/heads/stable"
 git push -f origin "${RELEASE_REF}:zhdk/deploy"
 # cleanup
