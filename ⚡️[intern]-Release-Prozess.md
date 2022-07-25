@@ -276,11 +276,11 @@ open "https://github.com/Madek/madek/settings/branches/"
 open "https://github.com/leihs/leihs/settings/branches/"
 # only for stable release
 git push -f origin $RELEASE_REF:v/$RELEASE_MAJOR_MINOR-stable
-git push -f origin ${RELEASE_REF:stable
+git push -f origin $RELEASE_REF:stable
 git push -f origin $RELEASE_REF:zhdk/deploy
 # cleanup
-git push origin ":refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
-git push origin ":refs/heads/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
+git push origin :v/$RELEASE_MAJOR_MINOR-staging
+git push origin :$DEV_INITIALS/v/$RELEASE_MAJOR_MINOR-staging
 
 # always merge back to master so we have the correct release history there
 git checkout origin/master
