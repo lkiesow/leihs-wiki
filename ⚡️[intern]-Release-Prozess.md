@@ -275,9 +275,9 @@ open "https://github.com/Madek/madek/settings/branches/"
 # leihs: adjust branch protection rules if necessary
 open "https://github.com/leihs/leihs/settings/branches/"
 # only for stable release
-git push -f origin "${RELEASE_REF}:refs/heads/v/${RELEASE_MAJOR_MINOR}-stable"
-git push -f origin "${RELEASE_REF}:refs/heads/stable"
-git push -f origin "${RELEASE_REF}:zhdk/deploy"
+git push -f origin $RELEASE_REF:v/$RELEASE_MAJOR_MINOR-stable
+git push -f origin ${RELEASE_REF:stable
+git push -f origin $RELEASE_REF:zhdk/deploy
 # cleanup
 git push origin ":refs/heads/v/${RELEASE_MAJOR_MINOR}-staging"
 git push origin ":refs/heads/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
