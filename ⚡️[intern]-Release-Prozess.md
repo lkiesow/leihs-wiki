@@ -303,8 +303,8 @@ echo ":bellhop_bell: Leihs ${RELEASE_NAME} was released :rocket: https://github.
 echo ":bellhop_bell: Madek ${RELEASE_NAME} was released :rocket: https://github.com/Madek/Madek/releases/tag/${RELEASE_NAME}"
 
 # update demo inventories:
-cd leihs-instance; ./scripts/release "$RELEASE_NAME"; cd -
-cd demo.leihs.zhdk.ch; ./scripts/release "$RELEASE_NAME"; cd -
+cd ../leihs-instance; ./scripts/update_leihs_latest; cd -
+cd ../demo.leihs.zhdk.ch; ./scripts/update_leihs_latest; cd -
 
 cd madek-instance; ./scripts/update_madek_latest stable; …
 
