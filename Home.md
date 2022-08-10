@@ -73,6 +73,7 @@ leihs is in use at several universities and organizations:
  * [Konstfack Stockholm](http://www.konstfack.se), Sweden
  * [School of Business and Engineering Vaud HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Switzerland
  * [Staatliche Hochschule für Musik Trossingen](http://www.mh-trossingen.de), Trossingen, Germany
+ * Bauhaus-Universität Weimar, Germany
  * Please create an issue if you would like to be listed here.
 
 # Versioning
