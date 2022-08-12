@@ -250,7 +250,6 @@ open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-s
 cd deploy
 bin/archive-build
 cd ..
-open deploy
 open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}"&target=stable
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
