@@ -192,6 +192,7 @@ git push origin HEAD:master
 * some notes apple to [Madek](https://github.com/Madek) but most steps are the same so the process is only described here for convenience 
 
 ```bash
+# you can also edit and source ./dev/release.sh
 DEV_INITIALS=mfa
 RELEASE_MAJOR_MINOR=99.9
 RELEASE_PATCH=9
@@ -250,7 +251,7 @@ cd deploy
 bin/archive-build
 cd ..
 open deploy
-open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}"
+open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}"&target=stable
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 
@@ -258,7 +259,7 @@ cat "config/releases/${RELEASE_MAIN}.md" | pbcopy
 cd deploy
 bin/build-release-archive
 cd ..
-open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"
+open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"&target=stable
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 ###
