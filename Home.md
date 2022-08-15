@@ -72,6 +72,7 @@ leihs is in use at several universities and organizations:
  * Fachhochschule Vorarlberg, Austria
  * [Konstfack Stockholm](http://www.konstfack.se), Sweden
  * [School of Business and Engineering Vaud HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Switzerland
+ * [Fachhochschule Kärnten](https://www.fh-kaernten.at/), Austria
  * [Staatliche Hochschule für Musik Trossingen](http://www.mh-trossingen.de), Trossingen, Germany
  * [Bauhaus-Universität Weimar](https://www.uni-weimar.de), Germany
  * Please create an issue if you would like to be listed here.
