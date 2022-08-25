@@ -250,7 +250,7 @@ open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-s
 cd deploy
 bin/archive-build
 cd ..
-open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}"&target=stable
+open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}&target=stable"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 
@@ -258,7 +258,7 @@ cat "config/releases/${RELEASE_MAIN}.md" | pbcopy
 cd deploy
 bin/build-release-archive
 cd ..
-open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}"&target=stable
+open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}&target=stable"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 ###
