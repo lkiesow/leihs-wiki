@@ -275,13 +275,15 @@ open "https://github.com/Madek/Madek/releases/"
 open "https://github.com/Madek/madek/settings/branches/"
 # leihs: adjust branch protection rules if necessary
 open "https://github.com/leihs/leihs/settings/branches/"
+
 # only for stable release
-git push -f origin $RELEASE_REF:v/$RELEASE_MAJOR_MINOR-stable
-git push -f origin $RELEASE_REF:stable
-git push -f origin $RELEASE_REF:zhdk/deploy
+RELEASE_REF="$(git log -n1 --format="%H" HEAD)"
+git push -f origin HEAD:refs/heads/v/$RELEASE_MAJOR_MINOR-stable
+git push -f origin $RELEASE_REF:refs/heads/stable
+git push -f origin $RELEASE_REF:refs/heads/zhdk/deploy
 # cleanup
-git push origin :v/$RELEASE_MAJOR_MINOR-staging
-git push origin :$DEV_INITIALS/v/$RELEASE_MAJOR_MINOR-staging
+git push origin :refs/heads/v/$RELEASE_MAJOR_MINOR-staging
+git push origin :refs/heads/$DEV_INITIALS/v/$RELEASE_MAJOR_MINOR-staging
 
 # always merge back to master so we have the correct release history there
 git checkout origin/master
