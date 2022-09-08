@@ -251,7 +251,7 @@ cd deploy
 RELEASE=$RELEASE bin/archive-build
 cd ..
 open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}&target=stable"
-open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
+open "./deploy/"
 cat "config/releases/${RELEASE_MAIN}.md" | pbcopy 
 
 # LEIHS: build assets – upload `build-artefacts.tar.gz` to github release, paste notes and save as draft
