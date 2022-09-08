@@ -248,7 +248,7 @@ open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-s
 ###
 # MADEK: build assets – upload `madek.tar.gz` to github release and save as draft
 cd deploy
-bin/archive-build
+RELEASE=$RELEASE bin/archive-build
 cd ..
 open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}&target=stable"
 open "./deploy/tmp/release-builds/${RELEASE_NAME}/"
