@@ -288,10 +288,11 @@ git push origin :refs/heads/$DEV_INITIALS/v/$RELEASE_MAJOR_MINOR-staging
 # always merge back to master so we have the correct release history there
 git checkout origin/master
 git checkout -B ${DEV_INITIALS}/merge-$RELEASE_MAJOR_MINOR
-git checkout ${RELEASE_REF} -- "config/releases/${RELEASE_MAIN}.md"
+git checkout ${RELEASE_REF} -- "config/releases/"
 # new release file! increment patch, set pre to "dev" 
-(( next_patch_version = $RELEASE_PATCH + 1 ))
-NEXT_VERSION="${RELEASE_MAJOR_MINOR}.${next_patch_version}"
+# (( next_patch_version = $RELEASE_PATCH + 1 ))
+# NEXT_VERSION="${RELEASE_MAJOR_MINOR}.${next_patch_version}"
+NEXT_VERSION="#{RELEASE_MAJOR}.x.y"
 cp "config/releases/${RELEASE_MAIN}.md" "config/releases/${NEXT_VERSION}.md"
 code "config/releases/${NEXT_VERSION}.md"
 # edit yaml (increase version, set pre to 'dev') and replace text with '…'. For RCs add a new section.
