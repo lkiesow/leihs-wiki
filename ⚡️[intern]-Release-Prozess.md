@@ -314,6 +314,8 @@ echo ":bellhop_bell: Madek ${RELEASE_NAME} was released :rocket: https://github.
 cd ../leihs-instance; ./scripts/update_leihs_latest "${RELEASE_NAME}"; cd -
 cd ../demo.leihs.zhdk.ch; ./scripts/update_leihs_latest "${RELEASE_NAME}"; cd -
 
+# deploy to demo from cider
+
 cd ../madek-instance; ./scripts/update_madek_latest "#{RELEASE_NAME}"; cd -
 
 ```
