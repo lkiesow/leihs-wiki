@@ -250,6 +250,7 @@ open "https://github.com/Madek/Madek/compare/stable...v/${RELEASE_MAJOR_MINOR}-s
 ###
 # MADEK: build assets – upload `madek.tar.gz` to github release and save as draft
 cd deploy
+# asdf shell python 2.7.18
 RELEASE=$RELEASE bin/archive-build
 cd ..
 open "https://github.com/Madek/Madek/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Madek%20${RELEASE_NAME}&target=stable"
@@ -258,6 +259,7 @@ cat "config/releases/${RELEASE_MAIN}.md" | pbcopy
 
 # LEIHS: build assets – upload `build-artefacts.tar.gz` to github release, paste notes and save as draft
 cd deploy
+# asdf shell python 2.7.18
 bin/build-release-archive
 cd ..
 open "https://github.com/leihs/leihs/releases/new?tag=${RELEASE_NAME}&prerelease=$(test -z $RELEASE_PRE || echo 1)&title=Leihs%20${RELEASE_NAME}&target=stable"
