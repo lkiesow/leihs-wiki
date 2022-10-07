@@ -229,8 +229,8 @@ git merge --squash "origin/${DEV_INITIALS}/v/${RELEASE_MAJOR_MINOR}-staging"
 git submodule update --recursive --force --init
 
 # copy the content from the last release file, delete it and paste the content to the new one
-code "config/releases/${RELEASE_MAIN}.md"
 ( ./dev/release-notes || ./dev/git-release-notes ) | pbcopy
+code "config/releases/${RELEASE_MAIN}.md"
 # edit
 git add "config/releases/${RELEASE_MAIN}.md"
 git commit -m "release: ${VERSION_PREFIX}${RELEASE}"
