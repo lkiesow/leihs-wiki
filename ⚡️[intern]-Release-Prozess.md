@@ -192,7 +192,7 @@ git push origin HEAD:master
 * some notes apple to [Madek](https://github.com/Madek) but most steps are the same so the process is only described here for convenience 
 
 ```bash
-# you can also edit and source ./dev/release.sh
+# you can also edit and source ./dev/release-env.sh
 DEV_INITIALS=mfa
 RELEASE_MAJOR_MINOR=99.9
 RELEASE_PATCH=9
@@ -205,6 +205,8 @@ RELEASE_NAME="${VERSION_PREFIX}${RELEASE}"
 echo $RELEASE_MAIN
 echo $RELEASE
 echo $RELEASE_NAME
+
+# source ./dev/release-env.sh
 
 git fetch -q
 
