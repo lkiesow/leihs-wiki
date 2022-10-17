@@ -19,21 +19,30 @@ using an _external authentication sytem_.
    form of the `email`, `login`, or `org_id`) and requests to sign in via the
    _leihs_ UI.
 
-2. Leihs evaluates this requests and offers available authentication methods 
-  for the particular user. 
+2. Leihs evaluates this requests and offers available authentication methods for
+   the particular user. Available authentication methods are:
 
-3. The user proceeds for example with an external authentication system.
+    * Authentication systems specifically assigned to a user.
+    * Authentication systems assigned to a group the user belogs to.
+    * Authentication systems which `sign_up_email_match` field matches the user
+      input of an unregistered user.
 
-4. _leihs_ prepares an _authentication token_ and forwards the user to the 
-  external service via an HTTP redirect (sending the token via URL parameters).  
+3. The user proceeds, for example, with an external authentication system.
+
+4. _leihs_ prepares an JWT _authentication token_ and forwards the user to the
+   external service via an HTTP redirect. The redirected URL will include a URL
+   parameter `token`, holding the JWT data. For more details about the token,
+   see the section [Authentication Token](#authentication-token) below.
 
 5. The external authentication system will (in general first) _verify origin_
-   and _validity_ of the token. 
-   
+   and _validity_ of the token.
+
 6. The external service performs authentication of he user.
 
 7. The external service creates a further token which proves successful
-   authentication and redirects the user back to _leihs_. 
+   authentication and redirects the user back to _leihs_ using the path
+   contained in the authentication token and providing the _success token_ via
+   the URL parameter `token`.
 
 8. _leihs_ will _verify origin_ and _validity_ of the token and creates a
    session for the user.
@@ -62,6 +71,69 @@ and follow simpler procedures in some cases.
 * Users are **associated directly** or via **groups** to authentication systems in
   _leihs._ 
 
+
+### Authentication Token
+
+When using an external authentication system, _leihs_ will send data to the
+external system by providing a [JWT token](https://jwt.io/) as URL parameter
+`token`. For example, this would look like this:
+
+    https://leihs-auth.example.com/?token=eyJhbGciOiJFUzI1NiJ9.eyJlbWF…
+
+The payload of this _authentication token_ will look similar to this:
+
+```json
+{
+  "email": "user@example.com",
+  "login": null,
+  "org_id": null,
+  "exp": 1666039040,
+  "iat": 1666038950,
+  "server_base_url": "https://leihs.example.com",
+  "return_to": "/",
+  "path": "/sign-in/external-authentication/external-auth/sign-in"
+}
+```
+
+Token fields:
+
+* `email`, `login`, `org_id`: _leihs_ will try to find an existing user for the
+  username or email typed in during log-in and will fill in these fields
+  accordingly. If no user can be found, but `sign_up_email_match` matches, the
+  matching value is provided as `email`. Empty fields are provided as `null`.
+* `exp`: Timestamp specifying when this token will expire. The token provided by
+  _leihs_ is valid for 90 seconds by default.
+* `iat`: Timestamp specifying when this token was issued.
+* `server_base_url`: The base URL of the server issuing this token. This should
+  be the URL _leihs_ is deployed at.
+* `path`: The path to which the user should be sent after successfully logging
+  in and obtaining a _success token_
+
+After verifying the token and authenticating the user, the external
+authentication system will then generate a _success token_ and send it via
+`token` URL parameter to _leihs_ at `server_base_url` + `path` like this:
+
+    https://leihs.example.com/sign-in/external-authentication/external-auth/sign-in?token=eyJhbGciOiJFUzI1NiJ9.eyJlbWFpbCI6I…
+
+The payload of this _success token_ should look similar to this:
+
+```json
+{
+  "sign_in_request_token": "eyJhbGciOiJFUzI1NiJ9.eyJlbWFpbCI6Imxhcg…",
+  "email": "user@example.com",
+  "iat": 1666042616,
+  "exp": 1666042736,
+  "success": true
+}
+```
+
+Token fields:
+
+* `email`, `login`, `org_id`: Field used to identify the user.
+* `exp`: Timestamp specifying when this token will expire.
+* `iat`: Timestamp specifying when this token was issued.
+* `success`: Must be `true` if the log-in was successful.
+* `sign_in_request_token`: The _authentication token_ provided by _leihs_ .
 
 
 ### Configuration within an _leihs_ Instance
