@@ -1,8 +1,6 @@
 External Authentication Systems in _leihs_
 ===========================================
 
-## _External Authentication Systems_ in _leihs_
-
 An external authentication system consist of an **HTTP service** and a
 corresponding **configuration in _leihs_**. The role of the external service is to
 assert that a user who desires to sign in to _leihs_ is who he or she claims to
@@ -10,7 +8,8 @@ be and forward this assertion to _leihs_.
 
 ![Diagram External Authentication](./Authentication/external_authentication.svg)
 
-### The Flow of Data during a Sign-in Process as an Example
+
+## The Flow of Data during a Sign-in Process as an Example
 
 The following steps are carried out during a successful sign in process when
 using an _external authentication sytem_. 
@@ -51,7 +50,7 @@ The procedure state above is the most general case. _leihs_ can shortcut steps
 and follow simpler procedures in some cases. 
 
 
-### Some Key Properties of External Authentication in _leihs_
+## Some Key Properties of External Authentication in _leihs_
 
 * An external authentication system is bound to leihs with a public/private key
   pair (PKI) and via an URL. 
@@ -72,7 +71,7 @@ and follow simpler procedures in some cases.
   _leihs._ 
 
 
-### Authentication Token
+## Authentication Token
 
 When using an external authentication system, _leihs_ will send data to the
 external system by providing a [JWT token](https://jwt.io/) as URL parameter
@@ -136,7 +135,7 @@ Token fields:
 * `sign_in_request_token`: The _authentication token_ provided by _leihs_ .
 
 
-### Configuration within an _leihs_ Instance
+## Configuration within an _leihs_ Instance
 
 Authentication systems can be managed via the admin UI. Creating, updating and
 deleting authentication systems requires the role of an _leihs system
@@ -144,20 +143,20 @@ administrator_.  Adding users and groups to an authentication system requires
 the role of an _leihs adminstrator_.
 
 See also [Roles](roles).
-  
 
-### Caveats 
+
+## Caveats
 
 * The sign-in process via an external or internal authentication system in
   leihs **does not create or update properties of a user**. We highlight this
   because **_leihs_ prior to version 4 behaved differently**.
-  
+
   The _leihs-admin_ service features an API to manage users and groups which
   should be used for this purpose.  It is possible (however not recommended) to
-  combine these two functionallities in the same service.
+  combine these two functionalities in the same service.
 
 
-### Implementations of Authentication-System Services 
+## Implementations of Authentication-System Services
 
 The following implementations can be used as examples or starting points for own implementations.
 
