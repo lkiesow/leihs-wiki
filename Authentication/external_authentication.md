@@ -175,3 +175,6 @@ The following implementations can be used as examples or starting points for own
   AGW is the name of the internal authentication system at the ZHdK. The sign in process used by AGW
   is very similar to the one used by [**OAuth**](https://oauth.net/).
 
+* [Leihs LDAP Authenticator](https://github.com/elan-ev/leihs-ldap-authenticator)
+
+  LDAP based authentication system used, for example, at Osnabrück University.
